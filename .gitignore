@@ -1,0 +1,78 @@
+# .gitignore file for oscMrk II 
+# the only files we want in our repo are source files and build stuff for vs
+
+
+#CPP SPECIFIC
+# compliled object files
+
+*.slo
+*.o
+*.obj
+*.lo
+
+# Compiled dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compliled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Exeutables
+*.exe
+*.out
+*.app
+
+#VISUAL STUDIO SPECIFIC
+
+#User-specific files
+*.suo
+*.user
+*.sln.docstates
+*.sdf
+
+#build folders
+[Db]ebug/
+[Rr]elease/
+
+#Temp build stuff
+
+*_i.c
+*_p.c
+*_i.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.idb
+*.pdb
+*.svclog
+*.scc
+*.tlog
+*.lastbuildstate
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile

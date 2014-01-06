@@ -67,7 +67,7 @@ static float GetSpeed(TYPE const& type){
 	switch (type)
 	{
 	case test:
-		return 250;
+		return 300;
 		break;
 	case special:
 		return 200;
@@ -83,7 +83,7 @@ static int GetAggroDist(TYPE const& type){
 	switch (type)
 	{
 	default:
-		return 735;
+		return 200;
 		break;
 	}
 	return 0;
@@ -140,7 +140,7 @@ static int GetTimeBetweenPathing(TYPE const& type){
 	switch (type)
 	{
 	default:
-		return 2;
+		return 1;
 		break;
 	}
 }
@@ -149,7 +149,7 @@ static int GetPathingDistance(TYPE const& type){
 	switch (type)
 	{
 	default:
-		return 10;
+		return 2;
 		break;
 	}
 	return 0;

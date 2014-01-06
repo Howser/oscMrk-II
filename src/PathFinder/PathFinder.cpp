@@ -10,6 +10,7 @@ PathFinder::PathFinder(std::vector<std::vector<gen::Tile>>* tilePtr, sf::Vector2
 }
 
 PathFinder::~PathFinder(){
+
 }
 
 void PathFinder::GetMap(std::vector<std::vector<gen::Tile>>* map){
@@ -72,6 +73,10 @@ int PathFinder::GetIndexOf(sf::Vector2i* node){
 	return node->x + (node->y * mapSize.x);
 }
 
+int PathFinder::GetIndexOf(const sf::Vector2i& node){
+	return node.x + (node.y * mapSize.x);
+}
+
 int PathFinder::GetIndexOf(std::vector<int> & list, Node* node){
 	for (unsigned int i = 0; i < list.size(); i++)
 	{
@@ -83,7 +88,7 @@ int PathFinder::GetIndexOf(std::vector<int> & list, Node* node){
 	return -1;
 }
 
-std::vector<sf::Vector2i> PathFinder::GetPath(sf::Vector2i start, sf::Vector2i destination){
+std::vector<sf::Vector2i> PathFinder::GetPath(sf::Vector2i start, sf::Vector2i destination, bool tiles){
 	if (start.x > 1 && start.x < mapSize.x - 1 && start.y > 1 && start.y < mapSize.y - 1 && destination.x > 1 && destination.x < mapSize.x - 1 && destination.y > 1 && destination.y < mapSize.y - 1 && (nodes[destination.x + destination.y * mapSize.x].id == 1 || nodes[destination.x + destination.y * mapSize.x].id == 3) && nodes[start.x + start.y * mapSize.x].id == 1)
 	{
 		path.clear();
@@ -114,7 +119,6 @@ std::vector<sf::Vector2i> PathFinder::GetPath(sf::Vector2i start, sf::Vector2i d
 
 			if (currentNode < 0 || currentNode > mapSize.x* mapSize.y)
 				break;
-			
 
 			if (nodes[currentNode - 1].id == 1 && !nodes[currentNode - 1].closed)
 			{
@@ -245,17 +249,23 @@ std::vector<sf::Vector2i> PathFinder::GetPath(sf::Vector2i start, sf::Vector2i d
 				CalculateHGF(&nodes[currentNode + 1 + mapSize.x], &nodes[currentNode]);
 			}
 		}
-		SetPath(&start, &destination);
+		SetPath(destination, tiles);
 	}
 	return path;
 }
 
-void PathFinder::SetPath(sf::Vector2i* start, sf::Vector2i* destination){
+void PathFinder::SetPath(const sf::Vector2i & destination, bool tiles){
 	Node current = nodes[GetIndexOf(destination)];
 	path.push_back(sf::Vector2i(current.x, current.y));
 	while (current.parent != nullptr)
 	{
-		path.push_back(sf::Vector2i(current.parent->x, current.parent->y));
+		if (tiles)
+		{
+			path.push_back(sf::Vector2i(current.parent->x, current.parent->y));
+		}else
+		{
+			path.push_back(sf::Vector2i(current.parent->x*WIDTH + WIDTH/2, current.parent->y*HEIGHT + HEIGHT/2));
+		}
 		current = *current.parent;
 	}
 }

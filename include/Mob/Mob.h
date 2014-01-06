@@ -41,10 +41,12 @@ public:
 	///<summary>Used to relocate the mob in the tree.</summary>
 	sf::Vector2f prevPos;
 	
-	std::vector<sf::Vector2f> path;
+	std::vector<sf::Vector2i> path;
 	int ID, width, height, health;//, damage, aggroDist, armor, speed, attackSpeed;
 	int m_branch;
 	float timeSincePath;
+	///<summary>Get a new path to the player when this is <= 0.</summary>
+	float updatePath;
 	void checkCollision(std::vector<std::vector<gen::Tile>>* map);
 	virtual void die() = 0;
 protected:

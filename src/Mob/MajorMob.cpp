@@ -69,11 +69,12 @@ void MajorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		die();
 	}else
 	{
-		sf::Vector2f pos = getPosition();
-		specialTimer += deltaTime.asSeconds();
-		if (specialTimer >= GetSpecialTimer(type))
+		if (aggro)
 		{
-			spcl::Special(type, &specialTimer);
+			if (updatePath > 0)
+			{
+				updatePath -= deltaTime.asSeconds();
+			}
 		}
 		if (!aggro && path.empty())
 		{
@@ -82,6 +83,11 @@ void MajorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		checkCollision(map);
 		followPath(deltaTime);
 		move(velocity);
+		specialTimer += deltaTime.asSeconds();
+		if (specialTimer >= GetSpecialTimer(type))
+		{
+			spcl::Special(type, &specialTimer);
+		}
 	}
 }
 

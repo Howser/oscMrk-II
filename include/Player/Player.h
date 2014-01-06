@@ -19,7 +19,7 @@
 #include "Inventory\DeleteItem.h"
 
 #define TERMINAL_VELOCITY 250
-#define LOOT_DISTANCE 160
+#define LOOT_DISTANCE 32
 
 class Player : 
 	public sf::Transformable, 

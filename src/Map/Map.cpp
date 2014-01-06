@@ -199,7 +199,7 @@ void gen::Map::Cave(){
 								sf::Vector2f pos(cells[c].x, cells[c].y);
 								if (s <= 25 && math::distance(pos, rooms[0].getCenter()) > 50)
 								{
-									MobSpawner spawner(p.x, p.y, math::random(1, 5), TYPE::test, math::random(1, 2), TYPE::special);
+									MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::test, math::random(1, 2), TYPE::special);
 									mobSpawners.push_back(spawner);
 								}
 							}

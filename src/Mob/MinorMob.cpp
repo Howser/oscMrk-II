@@ -65,7 +65,13 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		die();
 	}else
 	{
-		sf::Vector2f pos = getPosition();
+		if (aggro)
+		{
+			if (updatePath > 0)
+			{
+				updatePath -= deltaTime.asSeconds();
+			}
+		}
 		if (!aggro && path.empty())
 		{
 			timeSincePath += deltaTime.asSeconds();
@@ -174,7 +180,7 @@ void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map){
 void Mob::followPath(sf::Time& dt){
 	if (!path.empty())
 	{
-		float dist = vec::length(getPosition() - path.back());
+		float dist = vec::length(getPosition() - (sf::Vector2f)path.back());
 		if (dist < 17.f)
 		{
 			path.pop_back();
@@ -186,7 +192,7 @@ void Mob::followPath(sf::Time& dt){
 
 		if (!path.empty())
 		{
-			sf::Vector2f target = path.back() - getPosition();
+			sf::Vector2f target = (sf::Vector2f)path.back() - getPosition();
 			target = vec::normalize(target);
 			velocity.x = target.x * GetSpeed(type) * dt.asSeconds();
 			velocity.y = target.y * GetSpeed(type) * dt.asSeconds();

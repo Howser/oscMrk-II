@@ -19,13 +19,11 @@ void MobManager::Add(Mob & mob){
 	if (!IsSpecial(mob.type))
 	{
 		MinorMob minor_mob = MinorMob(mob, &deadMobs);
-		minor_mob.ID = minorMobs.size();
 		minor_mob.lootTable = LootTables[minor_mob.type];
 		minorMobs.push_back(minor_mob);
 	}else
 	{
 		MajorMob major_mob = MajorMob(mob, &deadMobs);
-		major_mob.ID = majorMobs.size() + minorMobs.size();
 		major_mob.lootTable = LootTables[0];
 		majorMobs.push_back(major_mob);
 	}
@@ -46,7 +44,7 @@ void MobManager::Build_Tree(){
 	m_tree.build(p_tiles, mobs);
 }
 
-void MobManager::Update(sf::Time deltaTime, sf::Vector2<float> const& playerPosition){
+void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition){
 	for (Mobs::const_iterator i = mobs.begin(), j = m_tree.search(*mobs[(*i)->ID])->mobs.begin(); i != mobs.end(); ++i)
 	{
 		if (!(*i)->dead)
@@ -170,108 +168,83 @@ void MobManager::Update(sf::Time deltaTime, sf::Vector2<float> const& playerPosi
 				}
 				if (!(*i)->aggro)
 				{
-					if (pathing_IDs.size() < MAX_MOBS_PATHING)
+					//random movement
+					if ((*i)->path.size() <= 1)
 					{
-						//random movement
-						if ((*i)->path.empty())
+						if ((*i)->timeSincePath >= GetTimeBetweenPathing((*i)->type))
 						{
-							if ((*i)->timeSincePath >= GetTimeBetweenPathing((*i)->type))
+							if (math::random(1, 100) <= 100)
 							{
-								if (math::random(1, 100) <= WalkChancePct)
+								std::vector<gen::Tile> availableTiles;
+								for (int x = (*i)->startPos.x/WIDTH - GetPathingDistance((*i)->type), y = (*i)->startPos.y/HEIGHT - GetPathingDistance((*i)->type); x < (*i)->startPos.x/WIDTH + GetPathingDistance((*i)->type); x++)
 								{
-									std::vector<gen::Tile> availableTiles;
-									for (int x = (*i)->startPos.x/WIDTH - WalkingDistance, y = (*i)->startPos.y/HEIGHT - WalkingDistance; x < (*i)->startPos.x/WIDTH + WalkingDistance; x++)
+									for (y = (*i)->startPos.y/HEIGHT - GetPathingDistance((*i)->type); y < (*i)->startPos.y/HEIGHT + GetPathingDistance((*i)->type); y++)
 									{
-										for (y = (*i)->startPos.y/HEIGHT - WalkingDistance; y < (*i)->startPos.y/HEIGHT + WalkingDistance; y++)
+										if (x > 0 && x < tiles->size())
 										{
-											if (x > 0 && x < tiles->size())
+											if (y > 0 && y < (*tiles)[x].size())
 											{
-												if (y > 0 && y < (*tiles)[x].size())
+												if ((*tiles)[x][y].type == 1)
 												{
-													if ((*tiles)[x][y].type == 1)
-													{
-														availableTiles.push_back((*tiles)[x][y]);
-													}
+													availableTiles.push_back((*tiles)[x][y]);
 												}
 											}
 										}
 									}
-									if (!availableTiles.empty())
-									{
-										int index = math::random(0, availableTiles.size() - 1);
-										std::vector<sf::Vector2i> path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(availableTiles[index].x, availableTiles[index].y));
-										for (int j = 0; j < path.size(); j++)
-										{
-											path[j]*=WIDTH;
-											path[j].x += WIDTH/2;
-											path[j].y += HEIGHT/2;
-										}
-
-										(*i)->path.clear();
-										for (int j = 0; j < path.size(); j++)
-										{
-											(*i)->path.push_back(sf::Vector2f(path[j].x, path[j].y));
-										}
-										availableTiles.clear();
-									}
-								}else
-								{
-									(*i)->timeSincePath = 0;
 								}
+								if (!availableTiles.empty())
+								{
+									int index = math::random(0, availableTiles.size() - 1);
+									(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(availableTiles[index].x, availableTiles[index].y), true);
+									for (int j = 0; j < (*i)->path.size(); j++)
+									{
+										(*i)->path[j]*=WIDTH;
+										(*i)->path[j].x += WIDTH/2;
+										(*i)->path[j].y += HEIGHT/2;
+									}
+									availableTiles.clear();
+								}
+							}else
+							{
+								(*i)->timeSincePath = 0;
 							}
 						}
 					}
 				}else
 				{
-					if ((*i)->path.size() <= 1)
+					//path to the player
+					if (math::distance((*i)->getPosition(), playerPosition) >= WIDTH && (*i)->path.empty())// || ((*i)->path.back() != (sf::Vector2i)playerPosition))
 					{
 						Mob* p_mob = m_tree.m_branches[(*i)->m_branch].GetMobWithTarget((sf::Vector2i)playerPosition);
 						if (p_mob != NULL)
 						{
 							if (math::distance((*i)->getPosition(), playerPosition) > math::distance((*i)->getPosition(), p_mob->getPosition()))
 							{
-								std::vector<sf::Vector2i> path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(p_mob->getPosition().x/WIDTH, p_mob->getPosition().y/HEIGHT));
-								for (int j = 0; j < path.size(); j++)
+								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(p_mob->getPosition().x/WIDTH, p_mob->getPosition().y/HEIGHT), true);
+								for (int j = 0; j < (*i)->path.size(); j++)
 								{
-									path[j]*=WIDTH;
-									path[j].x += WIDTH/2;
-									path[j].y += HEIGHT/2;
-								}
-								for (int j = 0; j < path.size(); j++)
-								{
-									(*i)->path.push_back((sf::Vector2f)path[j]);
+									(*i)->path[j]*=WIDTH;
+									(*i)->path[j].x += WIDTH/2;
+									(*i)->path[j].y += HEIGHT/2;
 								}
 							}else
 							{
-								std::vector<sf::Vector2i> path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(playerPosition.x/WIDTH, playerPosition.y/HEIGHT));
-								for (int j = 0; j < path.size(); j++)
+								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(playerPosition.x/WIDTH, playerPosition.y/HEIGHT), true);
+								for (int j = 0; j < (*i)->path.size(); j++)
 								{
-									path[j]*=WIDTH;
-									path[j].x += WIDTH/2;
-									path[j].y += HEIGHT/2;
-								}
-								for (int j = 0; j < path.size(); j++)
-								{
-									(*i)->path.push_back((sf::Vector2f)path[j]);
+									(*i)->path[j]*=WIDTH;
+									(*i)->path[j].x += WIDTH/2;
+									(*i)->path[j].y += HEIGHT/2;
 								}
 							}
 						}else
 						{
-							if (math::distance((*i)->getPosition(), playerPosition) >= WIDTH && (*i)->path.size() <= 1)
+							(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(playerPosition.x/WIDTH, playerPosition.y/HEIGHT), true);
+							for (int j = 0; j < (*i)->path.size(); j++)
 							{
-								{
-									std::vector<sf::Vector2i> path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(playerPosition.x/WIDTH, playerPosition.y/HEIGHT));
-									for (int j = 0; j < path.size(); j++)
-									{
-										path[j]*=WIDTH;
-										path[j].x += WIDTH/2;
-										path[j].y += HEIGHT/2;
-									}
-									for (int j = 0; j < path.size(); j++)
-									{
-										(*i)->path.push_back((sf::Vector2f)path[j]);
-									}
-								}
+								(*i)->path[j]*=WIDTH;
+								(*i)->path[j].x += WIDTH/2;
+								(*i)->path[j].y += HEIGHT/2;
 							}
 						}
 					}
@@ -279,6 +252,7 @@ void MobManager::Update(sf::Time deltaTime, sf::Vector2<float> const& playerPosi
 			}
 		}
 	}
+	this->playerPosition = playerPosition;
 }
 
 bool MobManager::update(int const& id){
@@ -289,7 +263,7 @@ bool MobManager::update(int const& id){
 	return true;
 	}
 	}*/
-	return true;//math::distance(mobs[id]->getPosition(), playerPosition) <= std::sqrt((std::pow(1280/2, 2) + (std::pow(720/2, 2))));
+	return true;
 }
 
 void MobManager::SetView(sf::View const& view){

@@ -23,6 +23,8 @@
 ///<summary>In seconds.</summary>
 #define TimeBetweenPathing 0.5f
 
+#define UPDATE_PATH 1.f
+
 struct LootTable;
 
 struct DeadMob;
@@ -44,16 +46,16 @@ public:
 
 	std::vector<std::vector<gen::Tile>>* tiles;
 	std::vector<LootTable> LootTables;
-	std::vector<int> update_IDs;
+	/*std::vector<int> update_IDs;
 	std::vector<int> pathing_IDs;
-	std::vector<int> aggro_IDs;
+	std::vector<int> aggro_IDs;*/
 
 	mobtree::Tree m_tree;
 
 	void Add(Mob & mob);
 	void Build_Tree();
 
-	void Update(sf::Time deltaTime, sf::Vector2<float> const& playerPosition);
+	void Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition);
 	void SetView(sf::View const& view);
 	void draw(sf::RenderTarget & target, sf::RenderStates states) const;
 	

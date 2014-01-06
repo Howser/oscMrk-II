@@ -62,15 +62,13 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mMap.mobSpawners.clear();
 	for (int i = 0; i < mobManager.minorMobs.size(); i++)
 	{
+		mobManager.minorMobs[i].ID = mobManager.mobs.size();
 		mobManager.mobs.push_back(&mobManager.minorMobs[i]);
 	}
 	for (int i = 0; i < mobManager.majorMobs.size(); i++)
 	{
+		mobManager.majorMobs[i].ID = mobManager.mobs.size();
 		mobManager.mobs.push_back(&mobManager.majorMobs[i]);
-	}
-	for (int i = 0; i < MOBS_per_FRAME; i++)
-	{
-		mobManager.update_IDs.push_back(i);
 	}
 	mobManager.Build_Tree();
 	std::cout << "mobs: " << mobManager.mobs.size() << "\n";

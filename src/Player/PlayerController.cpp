@@ -149,7 +149,7 @@ void PlayerController::getPath(float x, float y)
 	{
 		sf::Vector2i start(playerPtr->getPosition().x / WIDTH, playerPtr->getPosition().y / HEIGHT);
 		mPathStart = playerPtr->getPosition();
-		std::vector<sf::Vector2i> tilepath = pathFinderPtr->GetPath(start, sf::Vector2i(x, y));
+		std::vector<sf::Vector2i> tilepath = pathFinderPtr->GetPath(start, sf::Vector2i(x, y), true);
 		std::vector<sf::Vector2f> pospath;
 
 		for (auto v = tilepath.begin(); v != tilepath.end()-1; ++v)

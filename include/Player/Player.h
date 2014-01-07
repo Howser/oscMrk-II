@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "ResourceHolders\TextureHolder.h"
+#include "ResourceHolders\FontHolder.h"
 #include "Animation\Animation.h"
 #include "Inventory\Inventory.h"
 #include "Item\BaseItem.h"
@@ -28,7 +29,7 @@ class Player :
 	public sf::Drawable
 {
 public:
-	Player(TextureHolder* textures, std::vector<Mob*>* mobsPtr);
+	Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr);
 	virtual ~Player();
 
 	void stop();

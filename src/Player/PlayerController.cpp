@@ -6,7 +6,8 @@ PlayerController::PlayerController(Player* player, PathFinder* pathfinder, gen::
 	pathFinderPtr(pathfinder),
 	mapPtr(map),
 	mPathStart(),
-	mobManagerPtr(mobManager)
+	mobManagerPtr(mobManager),
+	targetPtr(NULL)
 {
 }
 

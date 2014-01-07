@@ -14,7 +14,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mNormalTextures(),
 	mShader(),
 	mobManager(),
-	mPlayer(context.textures, &mobManager.mobs),
+	mPlayer(context.textures, context.fonts, &mobManager.mobs),
 	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager)
 {
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
@@ -38,10 +38,10 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-	Light l1(sf::Color(255, 0, 40, 255), sf::Vector3f(0.5f, 0.5f, 0.1f),sf::Vector3f(.4f, 3.f, 30.f));
+	Light l1(sf::Color(255, 200, 200, 255), sf::Vector3f(0.5f, 0.5f, 0.1f),sf::Vector3f(.4f, 3.f, 30.f));
 	Light l2(sf::Color(0, 40, 255, 255), sf::Vector3f(.7f, .1f, .05f), sf::Vector3f(.4, 3.f, 30.f));;
 	mLights.push_back(l1);
-	mLights.push_back(l2);
+	//mLights.push_back(l2);
 
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
 	context.mouse->setState(gui::Mouse::Attack);
@@ -142,7 +142,7 @@ void GameState::draw()
 	mShader.setParameter("texture", sf::Shader::CurrentTexture);
 	mShader.setParameter("normal", mNormalRender.getTexture());
 	mShader.setParameter("Resolution", window->getSize().x,  window->getSize().y);
-	mShader.setParameter("AmbientColor", .4, .4, .4, .5);
+	mShader.setParameter("AmbientColor", .1, .1, .1, .5);
 
 	passLightsToShader(&mShader, mLights);
 

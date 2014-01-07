@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-Player::Player(TextureHolder* textures, std::vector<Mob*>* mobsPtr)
+Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr)
 	:
 	p_texture_holder(textures),
 	p_mobs(mobsPtr),
@@ -28,6 +28,7 @@ Player::Player(TextureHolder* textures, std::vector<Mob*>* mobsPtr)
 	m_lootInvRect(sf::Rect<int>(m_lootInventory.slots[0][0].getPosition().x, m_lootInventory.slots[0][0].getPosition().y, m_lootInventory.width*SLOTWIDTH + m_lootInventory.width*5, m_lootInventory.height*SLOTHEIGHT + m_lootInventory.width*5))
 {
 	m_sprite.setTexture(*(textures->getTexture(Textures::Player)));
+	m_mouseSlot.fontPtr = fonts->getFont(Fonts::Main);
 	setOrigin(16, 16);
 	m_inventory.slots[0][0].Items.push_back(GearItem(Items::TestWeapon, *textures, -1));
 	Player::m_BootsSlot = Items::NOITEM;

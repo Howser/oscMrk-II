@@ -99,3 +99,17 @@ Mob* Branch::GetMobWithTarget(const sf::Vector2i & position){
 	}
 	return NULL;
 }
+
+Mob* Branch::GetMobWithTarget(const sf::Vector2i & position, const Mob & exclude){
+	for (unsigned int i = 0; i < mobs.size(); i++)
+	{
+		if (mobs[i]->ID != exclude.ID && mobs[i]->aggro && !mobs[i]->path.empty())
+		{
+			if (sf::Vector2i(mobs[i]->path.back().x/32, mobs[i]->path.back().y/32) == sf::Vector2i(position.x/32, position.y/32))
+			{
+				return mobs[i];
+			}
+		}
+	}
+	return NULL;
+}

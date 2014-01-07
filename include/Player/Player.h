@@ -19,14 +19,16 @@
 #include "Inventory\DeleteItem.h"
 
 #define TERMINAL_VELOCITY 250
-#define LOOT_DISTANCE 32
+#define LOOT_DISTANCE 100
+
+struct D_Gear;
 
 class Player : 
 	public sf::Transformable, 
 	public sf::Drawable
 {
 public:
-	Player(TextureHolder & textures, std::vector<Mob*>* mobsPtr);
+	Player(TextureHolder* textures, std::vector<Mob*>* mobsPtr);
 	virtual ~Player();
 
 	void stop();
@@ -77,4 +79,16 @@ private:
 	bool tabClicked;
 	bool leftMouseClicked, rightMouseClicked;
 	int mouseWheelDelta;
+
+	TextureHolder* p_texture_holder;
+
+	///<summary>[0]Helmet, [1]Chest, [2]Legs, [3]LHand, [4]RHand</summary>
+	std::vector<D_Gear> m_d_gear;
+	//sf::Sprite m_gear_sprites[5];
+};
+
+///<summary>Used to draw the gear on the player.</summary>
+struct D_Gear : public sf::Drawable, public sf::Transformable{
+	sf::Sprite m_sprite;
+	void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 };

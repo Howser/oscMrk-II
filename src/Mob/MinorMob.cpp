@@ -107,10 +107,10 @@ void MinorMob::die(){
 		switch (lootTable.lootItems[i].item)
 		{
 		default:
-			int q = math::random(lootTable.lootItems[i].minQ, lootTable.lootItems[i].maxQ);
-			for (int Q = 0; Q < q; Q++)
+			if (lootTable.lootItems[i].c >= math::random(1, 100))
 			{
-				if (lootTable.lootItems[i].c >= math::random(1, 100))
+				int q = math::random(lootTable.lootItems[i].minQ, lootTable.lootItems[i].maxQ);
+				for (int Q = 0; Q < q; Q++)
 				{
 					inventory.slots[inventory.GetFirstAvailableSlot(lootTable.lootItems[i].item).x][inventory.GetFirstAvailableSlot(lootTable.lootItems[i].item).y].Items.push_back(GearItem(lootTable.lootItems[i].item, *textureHolder, ID));
 				}

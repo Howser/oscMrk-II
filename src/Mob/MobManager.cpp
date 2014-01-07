@@ -50,7 +50,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 		if (!(*i)->dead)
 		{
 			(*i)->update(tiles, deltaTime);
-			if (math::distance((*i)->getPosition(), playerPosition) <= 735)//if it's on the screen, give it a path/check other mobs/do other shit. This isn't noticable to the player, but it gives us pretty drastic performance boosts
+			if (math::distance((*i)->getPosition(), playerPosition) <= 735 || (*i)->aggro)//if it's on the screen, give it a path/check other mobs/do other shit. This isn't noticable to the player, but it gives us pretty drastic performance boosts
 			{
 				if (math::distance((*i)->prevPos, (*i)->getPosition()) >= 32)
 				{
@@ -169,7 +169,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 				if (!(*i)->aggro)
 				{
 					//random movement
-					if ((*i)->path.size() <= 1)
+					if ((*i)->path.empty())
 					{
 						if ((*i)->timeSincePath >= GetTimeBetweenPathing((*i)->type))
 						{
@@ -213,40 +213,17 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 				}else
 				{
 					//path to the player
-					if (math::distance((*i)->getPosition(), playerPosition) >= WIDTH && (*i)->path.empty())// || ((*i)->path.back() != (sf::Vector2i)playerPosition))
+					if (math::distance((*i)->getPosition(), playerPosition) > WIDTH && (*i)->path.size() <= 1)
 					{
-						Mob* p_mob = m_tree.m_branches[(*i)->m_branch].GetMobWithTarget((sf::Vector2i)playerPosition);
-						if (p_mob != NULL)
+						std::auto_ptr<Mob> p_mob = (std::auto_ptr<Mob>)m_tree.m_branches[(*i)->m_branch].GetMobWithTarget((sf::Vector2i)playerPosition, *(*i));
+						if (p_mob.get() && math::distance((*i)->getPosition(), playerPosition) > math::distance((*i)->getPosition(), p_mob->getPosition()))
 						{
-							if (math::distance((*i)->getPosition(), playerPosition) > math::distance((*i)->getPosition(), p_mob->getPosition()))
-							{
-								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(p_mob->getPosition().x/WIDTH, p_mob->getPosition().y/HEIGHT), true);
-								for (int j = 0; j < (*i)->path.size(); j++)
-								{
-									(*i)->path[j]*=WIDTH;
-									(*i)->path[j].x += WIDTH/2;
-									(*i)->path[j].y += HEIGHT/2;
-								}
-							}else
-							{
-								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(playerPosition.x/WIDTH, playerPosition.y/HEIGHT), true);
-								for (int j = 0; j < (*i)->path.size(); j++)
-								{
-									(*i)->path[j]*=WIDTH;
-									(*i)->path[j].x += WIDTH/2;
-									(*i)->path[j].y += HEIGHT/2;
-								}
-							}
+							(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(p_mob->getPosition().x/WIDTH, p_mob->getPosition().y/HEIGHT), false);
 						}else
 						{
-							(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(playerPosition.x/WIDTH, playerPosition.y/HEIGHT), true);
-							for (int j = 0; j < (*i)->path.size(); j++)
-							{
-								(*i)->path[j]*=WIDTH;
-								(*i)->path[j].x += WIDTH/2;
-								(*i)->path[j].y += HEIGHT/2;
-							}
+							(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(playerPosition.x/WIDTH, playerPosition.y/HEIGHT), false);
 						}
+						p_mob.release();
 					}
 				}
 			}

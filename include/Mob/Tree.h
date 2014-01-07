@@ -7,7 +7,6 @@
 #define SIZE 4
 
 namespace mobtree{
-
 	struct Branch{
 		std::vector<std::vector<gen::Tile*>> tiles;
 		std::vector<Mob*> mobs;
@@ -17,6 +16,7 @@ namespace mobtree{
 		void RemoveMob(Mob* p_mob);
 
 		Mob* GetMobWithTarget(const sf::Vector2i & position);
+		Mob* GetMobWithTarget(const sf::Vector2i & position, const Mob & exclude);
 	};
 
 	struct Tree{

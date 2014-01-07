@@ -6,4 +6,5 @@ class GearSlot : public Slot{
 public:
 	void GearSlot::use(Inventory* inventory);
 	eGearSlot slot;
+	sf::Sprite m_sprite;
 };

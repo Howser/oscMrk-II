@@ -6,29 +6,30 @@
 
 #include <iostream>
 
-Player::Player(TextureHolder & textures, std::vector<Mob*>* mobsPtr)
+Player::Player(TextureHolder* textures, std::vector<Mob*>* mobsPtr)
 	:
+	p_texture_holder(textures),
 	p_mobs(mobsPtr),
 	m_sprite(),
 	m_velocity(),
 	m_path(),
 	m_animation(sf::Vector2i(32, 32), 1),
-	m_inventory(10, 10, 0, textures),
-	m_lootInventory(10, 10, 10*SLOTWIDTH + 10*5 + 100, textures),
-	m_Gear(textures, m_inventory.width*SLOTWIDTH + SLOTWIDTH),
+	m_inventory(10, 10, 0, *textures),
+	m_lootInventory(10, 10, 10*SLOTWIDTH + 10*5 + 100, *textures),
+	m_Gear(*textures, m_inventory.width*SLOTWIDTH + SLOTWIDTH),
 	inventoryState(false),
 	lootState(false),
 	tabClicked(false),
 	leftMouseClicked(false),
-	m_stackManager(textures),
-	m_tooltip(textures),
-	m_deleteItem(textures),
+	m_stackManager(*textures),
+	m_tooltip(*textures),
+	m_deleteItem(*textures),
 	m_invRect(sf::Rect<int>(0, 0, m_inventory.width*SLOTWIDTH + m_inventory.width*5, m_inventory.height*SLOTHEIGHT + m_inventory.height*5)),
 	m_lootInvRect(sf::Rect<int>(m_lootInventory.slots[0][0].getPosition().x, m_lootInventory.slots[0][0].getPosition().y, m_lootInventory.width*SLOTWIDTH + m_lootInventory.width*5, m_lootInventory.height*SLOTHEIGHT + m_lootInventory.width*5))
 {
-	m_sprite.setTexture(*textures.getTexture(Textures::Player));
+	m_sprite.setTexture(*(textures->getTexture(Textures::Player)));
 	setOrigin(16, 16);
-	m_inventory.slots[0][0].Items.push_back(GearItem(Items::TestWeapon, textures, -1));
+	m_inventory.slots[0][0].Items.push_back(GearItem(Items::TestWeapon, *textures, -1));
 	Player::m_BootsSlot = Items::NOITEM;
 	Player::m_ChestpieceSlot = Items::NOITEM;
 	Player::m_HelmetSlot = Items::NOITEM;
@@ -39,6 +40,12 @@ Player::Player(TextureHolder & textures, std::vector<Mob*>* mobsPtr)
 	m_Gear.slots[2].slot = eGearSlot::Leggings;
 	m_Gear.slots[3].slot = eGearSlot::lHand;
 	m_Gear.slots[4].slot = eGearSlot::rHand;
+
+	for (int i = 0; i < 5; i++)
+	{
+		m_d_gear.push_back(D_Gear());
+		m_d_gear.back().setPosition(getPosition());
+	}
 }
 
 Player::~Player()
@@ -111,6 +118,10 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 		m_animation.update();
 		m_sprite.setTextureRect(m_animation.getFrame());
 		move(m_velocity);
+		for (int i = 0; i < 5; i++)
+		{
+			m_d_gear[i].setPosition(getPosition());
+		}
 	}
 	resetInputs();
 }
@@ -253,18 +264,28 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 								{
 								case Helmet:
 									item.Equip(&m_Gear.slots[0], &m_inventory.slots[x][y], &m_inventory);
+									m_d_gear[0].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(13 + m_Gear.slots[0].Items[0].item))));
+									m_d_gear[0].m_sprite.setPosition(getPosition().x + m_sprite.getTextureRect().width/2 - m_d_gear[0].m_sprite.getTextureRect().width/2, getPosition().y);
 									break;
 								case Chestpiece:
 									item.Equip(&m_Gear.slots[1], &m_inventory.slots[x][y], &m_inventory);
+									m_d_gear[1].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(13 + m_Gear.slots[1].Items[0].item))));
+									m_d_gear[1].m_sprite.setPosition(getPosition().x + m_sprite.getTextureRect().width/2 - m_d_gear[1].m_sprite.getTextureRect().width/2, getPosition().y + 6);
 									break;
 								case Leggings:
 									item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
+									m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(13 + m_Gear.slots[2].Items[0].item))));
+									m_d_gear[2].m_sprite.setPosition(getPosition().x + m_sprite.getTextureRect().width/2 - m_d_gear[2].m_sprite.getTextureRect().width/2, getPosition().y);
 									break;
 								case lHand:
 									item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
+									m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture(Textures::d_TestWeapon)));
+									m_d_gear[3].setPosition(getPosition().x, getPosition().y);
 									break;
 								case rHand:
 									item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
+									m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(13 + m_Gear.slots[4].Items[0].item))));
+									m_d_gear[4].m_sprite.setPosition(getPosition().x + m_sprite.getTextureRect().width/2 - m_d_gear[4].m_sprite.getTextureRect().width/2, getPosition().y);
 									break;
 								}
 							}
@@ -356,6 +377,14 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
 	target.draw(m_sprite, states);
+
+	for (int i = 0; i < m_Gear.slots.size(); i++)
+	{
+		if (!m_Gear.slots[i].Items.empty())
+		{
+			m_d_gear[i].draw(target, states);
+		}
+	}
 }
 
 void Player::drawGUI(sf::RenderWindow* p_window){
@@ -411,4 +440,9 @@ void Player::resetInputs(){
 	rightMouseClicked = false;
 	leftMouseClicked = false;
 	tabClicked = false;
+}
+
+void D_Gear::draw(sf::RenderTarget & target, sf::RenderStates states)const{
+	states.transform=getTransform();
+	target.draw(m_sprite, states);
 }

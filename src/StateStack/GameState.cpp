@@ -14,7 +14,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mNormalTextures(),
 	mShader(),
 	mobManager(),
-	mPlayer(*context.textures, &mobManager.mobs),
+	mPlayer(context.textures, &mobManager.mobs),
 	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager)
 {
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);

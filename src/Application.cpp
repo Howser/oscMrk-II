@@ -124,6 +124,8 @@ void Application::loadResources()
 #pragma region Item Textures
 		mTextures.loadTexture(Textures::Test, "resources/graphics/item/test.png");
 		mTextures.loadTexture(Textures::TestWeapon, "resources/graphics/item/testWeapon.png");
+
+		mTextures.loadTexture(Textures::d_TestWeapon, "resources/graphics/player/gear/TestWeapon.png");
 #pragma endregion
 
 		// Fonts

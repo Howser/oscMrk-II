@@ -83,7 +83,7 @@ static int GetAggroDist(TYPE const& type){
 	switch (type)
 	{
 	default:
-		return 200;
+		return 525;
 		break;
 	}
 	return 0;

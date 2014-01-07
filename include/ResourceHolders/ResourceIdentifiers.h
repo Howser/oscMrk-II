@@ -19,9 +19,13 @@ namespace Textures
 		Tooltip,
 		DeleteItem,
 
-		///<summary>Items
+		///<summary>Items:
 		Test,
 		TestWeapon,
+		///<summary>Items that will be displayed on the palyer:
+		d_Test,
+		d_TestWeapon,
+		///</summary>
 		///</summary>
 	};
 }

@@ -274,7 +274,7 @@ LootTable* MobManager::GetLootTable(TYPE const& type){
 
 Items StringToItemEnum(std::string const& itemString)
 {
-	for (int t = Test; t != Items::end; t++)
+	for (int t = Arrow; t != Items::end; t++)
 	{
 		std::string name = ItemNames[t];
 		if (name == itemString)

@@ -4,27 +4,41 @@
 
 enum Items //sort by type
 {
-	Test,
-	TestWeapon,
-	TestArmor,
-	TestArmorH,
-	TestArmorC,
+	Arrow,
+	Helmet_Pain,
+	Helmet_Doubt,
+	Helmet_Torture,
+	Chest_Suffering,
+	Chest_Cold,
+	Chest_Destruction,
+	Legs_Enslaved,
+	Legs_Darkness,
+	Legs_Chaos,
+	Shield,
+	Sword,
+	Bow,
+	Mace,
 	NOITEM,
 	end,
 };
 
-static const char* ItemNames[2] = {"Test", "TestWeapon"};
+///<summary>Strings that equate to the enum names.</summary>
+static const char* ItemNames[14] = {"Arrow", "Helmet_Pain", "Helmet_Doubt", "Helmet_Torture", "Chest_Suffering", "Chest_Cold", "Chest_Destruction", "Legs_Enslaved", "Legs_Darkness", "Legs_Chaos", "Shield", "Sword", "Bow", "Mace"};
+
+///<summary>Strings for item names to display in tooltips, etc.</summary>
+static const char* w_ItemNames[14] = {"Arrow", "Helmet of Pain", "Helmet of Doubt", "Helmet of Torture", "Chest of Suffering", "Chest of Cold", "Chest of Destruction", "Legs of Enslaved", "Legs of Darkness", "Legs of Chaos", "Shield", "Sword", "Bow", "Mace"};
 
 enum eGearSlot{
 	lHand,
 	rHand,
+	TwoHand,
 	Helmet,
 	Chestpiece,
 	Leggings,
 	NoSlot,
 };
 
-static const char* GearSlotNames[5] = {"Left Hand", "Right Hand", "Helmet", "Chest", "Legs"};
+static const char* GearSlotNames[6] = {"Left Hand", "Right Hand", "Two Hander", "Helmet", "Chest", "Legs"};
 
 enum itemType{
 	Normal,
@@ -34,11 +48,47 @@ enum itemType{
 static int StackSize(Items const& item){
 	switch (item)
 	{
-	case Items::Test:
-		return 20;
+	case Helmet_Pain:
+		return 1;
+		break;
+	case Helmet_Doubt:
+		return 1;
+		break;
+	case Helmet_Torture:
+		return 1;
+		break;
+	case Chest_Suffering:
+		return 1;
+		break;
+	case Chest_Cold:
+		return 1;
+		break;
+	case Chest_Destruction:
+		return 1;
+		break;
+	case Legs_Enslaved:
+		return 1;
+		break;
+	case Legs_Darkness:
+		return 1;
+		break;
+	case Legs_Chaos:
+		return 1;
+		break;
+	case Shield:
+		return 1;
+		break;
+	case Sword:
+		return 1;
+		break;
+	case Bow:
+		return 1;
+		break;
+	case Mace:
+		return 1;
 		break;
 	default:
-		return 1;
+		return 20;
 		break;
 	}
 }
@@ -46,26 +96,50 @@ static int StackSize(Items const& item){
 static itemType GetType(Items item){
 	switch (item)
 	{
-	case Test:
-		return itemType::Normal;
+	case Arrow:
+		return Normal;
 		break;
-	case TestWeapon:
-		return itemType::Gear;
+	case Helmet_Pain:
+		return Gear;
 		break;
-	case TestArmor:
-		return itemType::Gear;
+	case Helmet_Doubt:
+		return Gear;
 		break;
-	case TestArmorH:
-		return itemType::Gear;
+	case Helmet_Torture:
+		return Gear;
 		break;
-	case TestArmorC:
-		return itemType::Gear;
+	case Chest_Suffering:
+		return Gear;
 		break;
-	case NOITEM:
-		return itemType::Normal;
+	case Chest_Cold:
+		return Gear;
+		break;
+	case Chest_Destruction:
+		return Gear;
+		break;
+	case Legs_Enslaved:
+		return Gear;
+		break;
+	case Legs_Darkness:
+		return Gear;
+		break;
+	case Legs_Chaos:
+		return Gear;
+		break;
+	case Shield:
+		return Gear;
+		break;
+	case Sword:
+		return Gear;
+		break;
+	case Bow:
+		return Gear;
+		break;
+	case Mace:
+		return Gear;
 		break;
 	default:
-		return itemType::Normal;
+		return Normal;
 		break;
 	}
 }
@@ -73,8 +147,13 @@ static itemType GetType(Items item){
 static int GetDamage(Items item){
 	switch (item)
 	{
-	case TestWeapon:
-		return 1;
+	case Sword:
+		return 5;
+	case Mace:
+		return 5;
+		break;
+	case Bow:
+		return 5;
 		break;
 	default:
 		return 0;
@@ -85,13 +164,35 @@ static int GetDamage(Items item){
 static int GetArmor(Items item){
 	switch (item)
 	{
-	case TestArmor:
+	case Helmet_Pain:
 		return 1;
-	case TestArmorH:
+		break;
+	case Helmet_Doubt:
+		return 5;
+		break;
+	case Helmet_Torture:
+		return 12;
+		break;
+	case Chest_Suffering:
+		return 3;
+		break;
+	case Chest_Cold:
+		return 8;
+		break;
+	case Chest_Destruction:
+		return 16;
+		break;
+	case Legs_Enslaved:
 		return 2;
 		break;
-	case TestArmorC:
-		return 2;
+	case Legs_Darkness:
+		return 7;
+		break;
+	case Legs_Chaos:
+		return 14;
+		break;
+	case Shield:
+		return 5;
 		break;
 	default:
 		return 0;
@@ -102,17 +203,44 @@ static int GetArmor(Items item){
 static eGearSlot GetSlot(Items item){
 	switch (item)
 	{
-	case TestWeapon:
+	case Helmet_Pain:
+		return Helmet;
+		break;
+	case Helmet_Doubt:
+		return Helmet;
+		break;
+	case Helmet_Torture:
+		return Helmet;
+		break;
+	case Chest_Suffering:
+		return Chestpiece;
+		break;
+	case Chest_Cold:
+		return Chestpiece;
+		break;
+	case Chest_Destruction:
+		return Chestpiece;
+		break;
+	case Legs_Enslaved:
+		return Leggings;
+		break;
+	case Legs_Darkness:
+		return Leggings;
+		break;
+	case Legs_Chaos:
+		return Leggings;
+		break;
+	case Shield:
 		return lHand;
 		break;
-	case TestArmor:
-		return Helmet;
+	case Sword:
+		return rHand;
 		break;
-	case TestArmorH:
-		return Helmet;
+	case Bow:
+		return TwoHand;
 		break;
-	case TestArmorC:
-		return Chestpiece;
+	case Mace:
+		return TwoHand;
 		break;
 	default:
 		return NoSlot;
@@ -121,22 +249,27 @@ static eGearSlot GetSlot(Items item){
 }
 
 ///<summary>FORMAT: TYPE, case gear{GEAR SLOT, case weapon{DAMAGE, SPEED} case armor{ARMOR}} case misc{} case consumable{}</summary>
+eGearSlot;
 static std::string GetStats(Items const& item, sf::Vector2i* size){
 	if (GetType(item) == itemType::Gear)
 	{
-		std::string stats = (std::string)ItemNames[item] + "\nSlot: " + GearSlotNames[GetSlot(item)];
-		if (item >= Items::TestWeapon && item <= Items::TestWeapon)
+		std::string stats = (std::string)w_ItemNames[item] + "\nSlot: " + GearSlotNames[GetSlot(item)];
+		if (GetSlot(item) == eGearSlot::rHand ||GetSlot(item) == eGearSlot::TwoHand)
 		{
-			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSpeed: " + "TODO: Make weapon speed";
+			//weapon
+			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + "TODO: Make weapon speed";
 			size->x = (6 + std::to_string(GetDamage(item)).length())*20;
 			size->y = 4*20;
 		}else
 		{
 			//armor
+			stats += "\nArmor: " + std::to_string(GetArmor(item));// + "\nSpeed: " + "TODO: Make weapon speed";
+			size->x = (6 + std::to_string(GetArmor(item)).length())*20;
+			size->y = 4*20;
 		}
 		return stats;
 	}else if (GetType(item) == itemType::Normal)
 	{
-		return (std::string)ItemNames[item] + "";
+		return (std::string)w_ItemNames[item] + "";
 	}
 }

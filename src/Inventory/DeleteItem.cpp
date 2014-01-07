@@ -38,7 +38,7 @@ void DeleteItem::draw(sf::RenderTarget & target, sf::RenderStates states)const{
 		target.draw(sprite, states);
 		sf::Text text;
 		std::string name, q;
-		name = ItemNames[p_slot->Items[0].item];
+		name = w_ItemNames[p_slot->Items[0].item];
 		q = " x" + std::to_string(p_slot->Items.size());
 		if (p_slot->Items.size() > 1)
 		{

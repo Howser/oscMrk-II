@@ -122,10 +122,35 @@ void Application::loadResources()
 #pragma endregion
 
 #pragma region Item Textures
-		mTextures.loadTexture(Textures::Test, "resources/graphics/item/test.png");
-		mTextures.loadTexture(Textures::TestWeapon, "resources/graphics/item/testWeapon.png");
+		mTextures.loadTexture(Textures::Arrow, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Helmet_Pain, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Helmet_Doubt, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Helmet_Torture, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Chest_Suffering, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Chest_Cold, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Chest_Destruction, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Legs_Enslaved, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Legs_Darkness, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Legs_Chaos, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Shield, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Sword, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Bow, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::Mace, "resources/graphics/item/test.png");
 
-		mTextures.loadTexture(Textures::d_TestWeapon, "resources/graphics/player/gear/TestWeapon.png");
+		mTextures.loadTexture(Textures::d_Arrow, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Helmet_Pain, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Helmet_Doubt, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Helmet_Torture, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Chest_Suffering, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Chest_Cold, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Chest_Destruction, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Legs_Enslaved, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Legs_Darkness, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Legs_Chaos, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Shield, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Sword, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Bow, "resources/graphics/item/test.png");
+		mTextures.loadTexture(Textures::d_Mace, "resources/graphics/item/test.png");
 #pragma endregion
 
 		// Fonts

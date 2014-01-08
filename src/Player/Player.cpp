@@ -31,6 +31,8 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_mouseSlot.fontPtr = fonts->getFont(Fonts::Main);
 	setOrigin(16, 16);
 	m_inventory.slots[0][0].Items.push_back(GearItem(Items::Sword, *textures, -1));
+	m_inventory.slots[1][0].Items.push_back(GearItem(Items::Shield, *textures, -1));
+	m_inventory.slots[2][0].Items.push_back(GearItem(Items::Mace, *textures, -1));
 	Player::m_BootsSlot = Items::NOITEM;
 	Player::m_ChestpieceSlot = Items::NOITEM;
 	Player::m_HelmetSlot = Items::NOITEM;
@@ -279,14 +281,60 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 									m_d_gear[2].setPosition(getPosition().x, getPosition().y);
 									break;
 								case lHand:
-									item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
-									m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
-									m_d_gear[3].setPosition(getPosition().x, getPosition().y);
+									if (!m_Gear.slots[4].Items.empty() && GetSlot(m_Gear.slots[4].Items.begin()->item) == eGearSlot::TwoHand)
+									{
+										if (m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x != -1)
+										{
+											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).y].Items.push_back(*m_Gear.slots[4].Items.begin());
+											m_Gear.slots[4].Items.clear();
+
+											item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
+											m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
+											m_d_gear[3].setPosition(getPosition().x, getPosition().y);
+										}
+									}else
+									{
+										item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
+										m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
+										m_d_gear[3].setPosition(getPosition().x, getPosition().y);
+									}
 									break;
 								case rHand:
-									item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
-									m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
-									m_d_gear[4].setPosition(getPosition().x, getPosition().y);
+									if (!m_Gear.slots[4].Items.empty() && GetSlot(m_Gear.slots[4].Items.begin()->item) == eGearSlot::TwoHand)
+									{
+										if (m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x != -1)
+										{
+											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).y].Items.push_back(*m_Gear.slots[4].Items.begin());
+											m_Gear.slots[4].Items.clear();
+
+											item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
+											m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
+											m_d_gear[4].setPosition(getPosition().x, getPosition().y);
+										}
+									}else
+									{
+										item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
+										m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
+										m_d_gear[4].setPosition(getPosition().x, getPosition().y);
+									}
+									break;
+								case TwoHand:
+									if (!m_Gear.slots[3].Items.empty())
+									{
+										m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[3].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[3].Items.begin()->item).y].Items.push_back(*m_Gear.slots[3].Items.begin());
+										m_Gear.slots[3].Items.clear();
+									}
+									if (!m_Gear.slots[4].Items.empty())
+									{
+										m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).y].Items.push_back(*m_Gear.slots[4].Items.begin());
+										m_Gear.slots[4].Items.clear();
+									}
+									if (m_Gear.slots[3].Items.empty() && m_Gear.slots[4].Items.empty())
+									{
+										item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
+										m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
+										m_d_gear[4].setPosition(getPosition().x, getPosition().y);
+									}
 									break;
 								}
 							}

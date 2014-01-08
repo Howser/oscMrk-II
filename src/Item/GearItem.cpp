@@ -6,7 +6,7 @@ GearItem::GearItem(Items item, TextureHolder & textureHolder, int ID) : eGearSlo
 	this->item = item;
 	this->ID = ID;
 	armor = (GetArmor(item));
-	sprite.setTexture(*textureHolder.getTexture((Textures::ID)(item + 12)));
+	sprite.setTexture(*textureHolder.getTexture((Textures::ID)(item + 13)));
 	setPosition(3, 3);
 }
 

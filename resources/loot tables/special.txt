@@ -1,4 +1,3 @@
-Arrow 1 1 10
 Helmet_Pain 1 1 10
 Helmet_Doubt 1 1 10
 Helmet_Torture 1 1 10

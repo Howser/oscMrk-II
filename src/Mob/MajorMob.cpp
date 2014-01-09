@@ -63,7 +63,7 @@ MajorMob::MajorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	aggro = false;
 }
 
-void MajorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime){
+void MajorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition){
 	if (health <= 0)
 	{
 		die();
@@ -80,9 +80,12 @@ void MajorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		{
 			timeSincePath += deltaTime.asSeconds();
 		}
-		checkCollision(map);
-		followPath(deltaTime);
-		move(velocity);
+		checkCollision(map, playerPosition);
+		if (!playerCollision)
+		{
+			followPath(deltaTime);
+			move(velocity);
+		}
 		specialTimer += deltaTime.asSeconds();
 		if (specialTimer >= GetSpecialTimer(type))
 		{
@@ -109,6 +112,9 @@ void MajorMob::takeDamage(int damage){
 	if (health <= 0)
 	{
 		die();
+	}else
+	{
+		aggro = true;
 	}
 }
 

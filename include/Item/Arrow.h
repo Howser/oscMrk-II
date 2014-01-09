@@ -17,12 +17,12 @@ namespace projectile{
 		~Arrow();
 		void update();
 		void draw(sf::RenderTarget & target, sf::RenderStates states)const;
+		void kill();
 		bool dead;
 		int m_damage;
+		sf::Sprite m_sprite;
 	private:
 		std::vector<std::vector<gen::Tile>>* p_tiles;
-		sf::Sprite m_sprite;
 		sf::Vector2<float> m_velocity;
-		
 	};
 };

@@ -21,12 +21,12 @@
 
 class Mob : public sf::Transformable, public sf::Drawable{
 public:
-	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime) = 0;
+	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition) = 0;
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 	virtual void takeDamage(int damage) = 0;
 	bool IntersectsWall(sf::Rect<int> const& position, std::vector<std::vector<gen::Tile>> const& map);
 	void stop();
-	bool worldCollision, dead, aggro, t_update;
+	bool worldCollision, playerCollision, dead, aggro, t_update;
 
 	TYPE type;
 	Inventory inventory;
@@ -47,7 +47,7 @@ public:
 	float timeSincePath;
 	///<summary>Get a new path to the player when this is <= 0.</summary>
 	float updatePath;
-	void checkCollision(std::vector<std::vector<gen::Tile>>* map);
+	void checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f & playerPosition);
 	virtual void die() = 0;
 protected:
 	void followPath(sf::Time& dt);

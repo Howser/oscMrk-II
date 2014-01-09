@@ -59,7 +59,7 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	aggro = false;
 }
 
-void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime){
+void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition){
 	if (health <= 0)
 	{
 		die();
@@ -76,9 +76,12 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		{
 			timeSincePath += deltaTime.asSeconds();
 		}
-		checkCollision(map);
-		followPath(deltaTime);
-		move(velocity);
+		checkCollision(map, playerPosition);
+		if (!playerCollision)
+		{
+			followPath(deltaTime);
+			move(velocity);
+		}
 	}
 }
 
@@ -92,6 +95,9 @@ void MinorMob::takeDamage(int damage){
 	if (health <= 0)
 	{
 		die();
+	}else
+	{
+		aggro = true;
 	}
 }
 
@@ -131,7 +137,14 @@ void Mob::stop(){
 	velocity.y = 0;
 }
 
-void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map){
+void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f & playerPosition){
+	if (sf::IntRect(getPosition().x - width/2 - 3 + velocity.x, getPosition().y - height/2 - 3 + velocity.y, width + 3, height + 3).intersects(sf::IntRect(playerPosition.x - 16, playerPosition.y - 16, 32, 32)))
+	{
+		playerCollision = true;
+	}else
+	{
+		playerCollision = false;
+	}
 	for (unsigned int x = (getPosition().x - width)/32 - 1, y = 0; x < (getPosition().x - width/2)/32 + 1; x++)
 	{
 		if (x > 0 && x < map->size())

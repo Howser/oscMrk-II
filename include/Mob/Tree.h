@@ -4,7 +4,7 @@
 #include "Mob\Mob.h"
 #include <vector>
 
-#define SIZE 4
+#define SIZE 8
 
 namespace mobtree{
 	struct Branch{

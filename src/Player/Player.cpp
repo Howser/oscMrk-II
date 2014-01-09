@@ -488,7 +488,7 @@ bool Player::isInRange(Mob* ptr_mob){
 		}
 	}else
 	{
-		return false;
+		return (math::distance(ptr_mob->getPosition(), getPosition()) <= MELEE_DISTANCE);
 	}
 }
 
@@ -499,7 +499,7 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 		switch (m_Gear.slots[4].Items[0].item)
 		{
 		case Items::Sword:
-			if (target != nullptr && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Sword))
+			if (target != nullptr && !target->dead && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Sword))
 			{
 				target->takeDamage(GetDamage(Items::Sword));
 				m_attackTimer.restart();
@@ -519,7 +519,7 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 			}
 			break;
 		case Items::Mace:
-			if (target != nullptr && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Mace))
+			if (target != nullptr && !target->dead && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Mace))
 			{
 				target->takeDamage(GetDamage(Items::Mace));
 				m_attackTimer.restart();

@@ -24,7 +24,7 @@ void MobManager::Add(Mob & mob){
 	}else
 	{
 		MajorMob major_mob = MajorMob(mob, &deadMobs);
-		major_mob.lootTable = LootTables[0];
+		major_mob.lootTable = LootTables[major_mob.type];
 		majorMobs.push_back(major_mob);
 	}
 }
@@ -49,7 +49,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 	{
 		if (!(*i)->dead)
 		{
-			(*i)->update(tiles, deltaTime);
+			(*i)->update(tiles, deltaTime, (sf::Vector2f)playerPosition);
 			if (math::distance((*i)->getPosition(), playerPosition) <= 735 || (*i)->aggro)//if it's on the screen, give it a path/check other mobs/do other shit. This isn't noticable to the player, but it gives us pretty drastic performance boosts
 			{
 				if (math::distance((*i)->prevPos, (*i)->getPosition()) >= 32)
@@ -57,12 +57,12 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 					m_tree.move((*i), m_tree.search(*mobs[(*i)->ID]), m_tree.search((*i)->getPosition()));
 					(*i)->prevPos = (*i)->getPosition();
 				}
-				//mob-mob collision
+#pragma region Mob-Mob Collision
 				for (j = m_tree.search(*mobs[(*i)->ID])->mobs.begin(); j != m_tree.search(*mobs[(*i)->ID])->mobs.end(); ++j)
 				{
 					if ((*i)->ID != (*j)->ID)
 					{
-						if (!(*j)->dead && !(*i)->worldCollision && !(*j)->worldCollision)
+						if (!(*j)->dead && !(*i)->worldCollision && !(*j)->worldCollision && !(*i)->playerCollision && !(*j)->playerCollision)
 						{
 							if (math::distance((*i)->getPosition(), (*j)->getPosition()) <= 32)
 							{
@@ -155,6 +155,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 						}
 					}
 				}
+#pragma endregion
 				if (math::distance((*i)->getPosition(), playerPosition) <= GetAggroDist((*i)->type))
 				{
 					if (!(*i)->aggro)
@@ -164,11 +165,17 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 					(*i)->aggro = true;
 				}else
 				{
-					(*i)->aggro = false;
+					if ((*i)->aggro)
+					{
+						if (math::distance((*i)->getPosition(), playerPosition) >= GetUnAggroDist((*i)->type))
+						{
+							(*i)->aggro = false;
+						}
+					}
 				}
 				if (!(*i)->aggro)
 				{
-					//random movement
+#pragma region Random Movement
 					if ((*i)->path.empty())
 					{
 						if ((*i)->timeSincePath >= GetTimeBetweenPathing((*i)->type))
@@ -210,21 +217,28 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 							}
 						}
 					}
+#pragma endregion
 				}else
 				{
-					//path to the player
-					if (math::distance((*i)->getPosition(), playerPosition) > WIDTH && (*i)->path.size() <= 1)
+#pragma region Move to the Player
+					if (!(*i)->playerCollision)
 					{
-						std::auto_ptr<Mob> p_mob = (std::auto_ptr<Mob>)m_tree.m_branches[(*i)->m_branch].GetMobWithTarget((sf::Vector2i)playerPosition, *(*i));
-						if (p_mob.get() && math::distance((*i)->getPosition(), playerPosition) > math::distance((*i)->getPosition(), p_mob->getPosition()))
+						float dist = math::distance((*i)->getPosition(), playerPosition);
+						if (!(*i)->worldCollision && dist > WIDTH/2 && dist <= 735 && ((*i)->path.size() <= 1 || (*i)->updatePath <= 0))
 						{
-							(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(p_mob->getPosition().x/WIDTH, p_mob->getPosition().y/HEIGHT), false);
-						}else
-						{
-							(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(playerPosition.x/WIDTH, playerPosition.y/HEIGHT), false);
+							std::auto_ptr<Mob> p_mob = (std::auto_ptr<Mob>)m_tree.m_branches[(*i)->m_branch].GetMobWithTarget((sf::Vector2i)playerPosition, *(*i));
+							if (p_mob.get() && math::distance((*i)->getPosition(), playerPosition) > math::distance((*i)->getPosition(), p_mob->getPosition()))
+							{
+								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i((p_mob->getPosition().x)/WIDTH, (p_mob->getPosition().y)/HEIGHT), false);
+							}else
+							{
+								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i((playerPosition.x + 16)/WIDTH, (playerPosition.y + 16)/HEIGHT), false);
+							}
+							(*i)->updatePath = 0.5f;
+							p_mob.release();
 						}
-						p_mob.release();
 					}
+#pragma endregion
 				}
 			}
 		}
@@ -433,5 +447,15 @@ Mob* MobManager::getAtPosition(float x, float y)
 
 Mob* MobManager::getAtPosition(sf::Vector2f position)
 {
+	for (int i = 0; i < m_tree.search(position)->mobs.size(); i++)
+	{
+		if (sf::Rect<float>(m_tree.search(position)->mobs[i]->getPosition().x - m_tree.search(position)->mobs[i]->width/2, m_tree.search(position)->mobs[i]->getPosition().y - m_tree.search(position)->mobs[i]->height/2, m_tree.search(position)->mobs[i]->width, m_tree.search(position)->mobs[i]->height).intersects(sf::Rect<float>(position.x, position.y, 1, 1)))
+		{
+			if (!mobs[i]->dead)
+			{
+				return m_tree.search(position)->mobs[i];
+			}
+		}
+	}
 	return getAtPosition(position.x, position.y);
 }

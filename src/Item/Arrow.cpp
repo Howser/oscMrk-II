@@ -18,16 +18,22 @@ void projectile::Arrow::update(){
 				{
 					if (sf::Rect<int>((int)getPosition().x, (int)getPosition().y, 1, 1).intersects(sf::Rect<int>(x*32, y*32, 32, 32)))
 					{
-						m_velocity = sf::Vector2<float>(0, 0);
+						kill();
 					}
 				}
 			}else
 			{
-				dead = true;
+				kill();
 			}
 		}
 	}
 	move(m_velocity);
+}
+
+void projectile::Arrow::kill(){
+	dead = true;
+	m_velocity.x = 0;
+	m_velocity.y = 0;
 }
 
 void projectile::Arrow::draw(sf::RenderTarget & target, sf::RenderStates states)const{

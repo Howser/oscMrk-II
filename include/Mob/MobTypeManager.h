@@ -67,10 +67,10 @@ static float GetSpeed(TYPE const& type){
 	switch (type)
 	{
 	case test:
-		return 300;
+		return 175;
 		break;
 	case special:
-		return 200;
+		return 100;
 		break;
 	default:
 		return 0;
@@ -83,23 +83,19 @@ static int GetAggroDist(TYPE const& type){
 	switch (type)
 	{
 	default:
-		return 525;
+		return 500;
 		break;
 	}
 	return 0;
 }
 
-static int GetUnAggroDist(TYPE const& type){
+static int GetUnAggroDist(const TYPE & type){
 	switch (type)
 	{
-	case test:
-		return 500;
-		break;
 	default:
-		return 0;
+		return GetAggroDist(type) + 64;
 		break;
 	}
-	return 0;
 }
 
 static int GetWidth(TYPE const& type){

@@ -9,10 +9,8 @@ public:
 	~ProjectileManager();
 
 	std::vector<projectile::Arrow> m_arrows;
-
 	void update();
 	void draw(sf::RenderTarget & target, sf::RenderStates states)const;
-
 private:
 	MobManager* m_mobManager;
 };

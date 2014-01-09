@@ -6,6 +6,7 @@ Tooltip::Tooltip(){
 
 Tooltip::Tooltip(TextureHolder const& textureHolder) : show(false){
 	sprite.setTexture(*textureHolder.getTexture(Textures::Tooltip));
+	sprite.setOrigin(10, 8);
 	font.loadFromFile("resources/fonts/00TT.TTF");
 }
 
@@ -28,12 +29,13 @@ void Tooltip::Hide(){
 
 void Tooltip::draw(sf::RenderTarget & target, sf::RenderStates states)const{
 	states.transform *= getTransform();
-	//target.draw(sprite, states);
+	target.draw(sprite, states);
 	sf::Text text;
 	text.setFont(font);
 	text.setColor(sf::Color::White);
 	text.setScale(0.55f, 0.55f);
 	text.setPosition(getPosition());
 	text.setString(stats);
+
 	target.draw(text);
 }

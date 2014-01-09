@@ -276,14 +276,14 @@ static std::string GetStats(Items const& item, sf::Vector2i* size){
 			//weapon
 			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + std::to_string(GetSpeed(item));
 			stats.erase ( stats.find_last_not_of('0') + 1, std::string::npos );
-			size->x = (6 + std::to_string(GetDamage(item)).length())*20;
-			size->y = 4*20;
+			size->x = 1;
+			size->y = 1;
 		}else
 		{
 			//armor
 			stats += "\nArmor: " + std::to_string(GetArmor(item));
-			size->x = (6 + std::to_string(GetArmor(item)).length())*20;
-			size->y = 4*20;
+			size->x = 1;
+			size->y = 1;
 		}
 		return stats;
 	}else if (GetType(item) == itemType::Normal)

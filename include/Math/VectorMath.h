@@ -22,7 +22,6 @@ namespace vec
 	///</summary>
 	template <typename T>
 	float angle(sf::Vector2<T> a);
-
 }
 
 #include "VectorMath.inl"

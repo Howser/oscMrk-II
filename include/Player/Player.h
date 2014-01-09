@@ -7,6 +7,8 @@
 
 #include <vector>
 
+#include "Item\ProjectileManager.h"
+#include "Item\Arrow.h"
 #include "ResourceHolders\TextureHolder.h"
 #include "ResourceHolders\FontHolder.h"
 #include "Animation\Animation.h"
@@ -21,6 +23,7 @@
 
 #define TERMINAL_VELOCITY 250
 #define LOOT_DISTANCE 100
+#define MELEE_DISTANCE 30
 
 struct D_Gear;
 
@@ -29,7 +32,7 @@ class Player :
 	public sf::Drawable
 {
 public:
-	Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr);
+	Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr, ProjectileManager* p_projectile_manager, std::vector<std::vector<gen::Tile>>* ptr_tiles);
 	virtual ~Player();
 
 	void stop();
@@ -39,6 +42,9 @@ public:
 	void updateInventory(sf::RenderWindow const& window, TextureHolder & textures);
 	void handleEvents(sf::Event const& event);
 	void drawGUI(sf::RenderWindow* p_window);
+
+	bool isInRange(Mob* ptr_mob);
+	void attack(const sf::RenderWindow & window);
 
 	bool isPathing();
 
@@ -71,7 +77,7 @@ private:
 	Animation m_animation;
 	sf::Vector2f m_velocity;
 	sf::Rect<int> m_invRect, m_lootInvRect;
-
+	std::vector<std::vector<gen::Tile>>* ptr_tiles;
 	std::vector<sf::Vector2f> m_path;
 	unsigned int m_health;
 	unsigned int m_damage;
@@ -80,12 +86,12 @@ private:
 	bool tabClicked;
 	bool leftMouseClicked, rightMouseClicked;
 	int mouseWheelDelta;
-
+	
 	TextureHolder* p_texture_holder;
 
 	///<summary>[0]Helmet, [1]Chest, [2]Legs, [3]LHand, [4]RHand</summary>
 	std::vector<D_Gear> m_d_gear;
-	//sf::Sprite m_gear_sprites[5];
+	ProjectileManager* p_projectile_manager;
 };
 
 ///<summary>Used to draw the gear on the player.</summary>

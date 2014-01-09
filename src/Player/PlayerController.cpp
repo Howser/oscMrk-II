@@ -24,9 +24,9 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 			getPath(targetPtr->getPosition().x/WIDTH, targetPtr->getPosition().y/HEIGHT);
 			mPathEnd = targetPtr->getPosition();
 		}
-		if (vec::length<float>(targetPtr->getPosition() - playerPtr->getPosition()) < (WIDTH+HEIGHT)/2)
+		//if (vec::length<float>(targetPtr->getPosition() - playerPtr->getPosition()) < (WIDTH+HEIGHT)/2)
 		{
-			if (!targetPtr->dead)
+			if (!targetPtr->dead && playerPtr->isInRange(targetPtr))
 			{
 				//some sort of timer or something
 				targetPtr->takeDamage(10);
@@ -57,8 +57,12 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 			getPath(mpos.x, mpos.y);
 		}
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt))
 	{
+		if (leftMouseClicked)
+		{
+			playerPtr->attack(window);
+		}
 		playerPtr->stop();
 		targetPtr = NULL;
 	}

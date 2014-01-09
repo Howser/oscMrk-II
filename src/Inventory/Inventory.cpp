@@ -214,3 +214,20 @@ void Inventory::RemoveItem(Items item, int Quantity){
 		}
 	}
 }
+
+bool Inventory::contains(const Items & item){
+	for (unsigned int x = 0, y = 0; x < width; x++)
+	{
+		for (y = 0; y < height; y++)
+		{
+			if (!slots[x][y].Items.empty())
+			{
+				if (slots[x][y].Items[0].item == item)
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}

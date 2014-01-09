@@ -32,6 +32,7 @@ public:
 
 	bool empty();
 	bool full();
+	bool contains(const Items & item);
 
 	sf::Font font;
 

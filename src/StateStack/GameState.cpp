@@ -14,7 +14,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mNormalTextures(),
 	mShader(),
 	mobManager(),
-	mPlayer(context.textures, context.fonts, &mobManager.mobs),
+	mPlayer(context.textures, context.fonts, &mobManager.mobs, &m_projectile_manager, &mMap.tiles),
 	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager)
 {
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
@@ -80,6 +80,8 @@ GameState::~GameState()
 
 bool GameState::update(sf::Time dt)
 {
+	std::cout << "X: " << sf::Mouse::getPosition(*getContext().window).x << "     Y: " << sf::Mouse::getPosition(*getContext().window).y << "\n";
+	std::cout << "X: " << mPlayer.getPosition().x - getContext().window->getView().getCenter().x - 1280/2 << "     Y: " << mPlayer.getPosition().y- getContext().window->getView().getCenter().y - 720/2 << "\n";
 	mView.setCenter(mPlayer.getPosition());
 	if (!mPlayer.inventoryState)
 	{
@@ -87,6 +89,7 @@ bool GameState::update(sf::Time dt)
 		mPlayer.update(dt, *getContext().window);
 		mobManager.Update(dt, mPlayer.getPosition());
 		mMap.update(dt);
+		m_projectile_manager.update();
 	}else
 	{
 		mPlayer.updateInventory(*getContext().window, *getContext().textures);
@@ -125,6 +128,7 @@ void GameState::draw()
 	mDiffuseRender.draw(mMap);
 
 	// Mobs and player
+	mDiffuseRender.draw(m_projectile_manager);
 	mDiffuseRender.draw(mobManager);
 	mDiffuseRender.draw(mPlayer);
 

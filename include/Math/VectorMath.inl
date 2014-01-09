@@ -19,7 +19,7 @@ sf::Vector2<T> vec::normalize(sf::Vector2<T> a)
 template <typename T>
 float vec::angle(sf::Vector2<T> a)
 {
-	float angle = math::toDegrees(atan2(a.x, -a.y));
+	float angle = math::toDegrees(atan2f(a.x, -a.y));
 	if (angle < 0 && angle > -180)
 	{
 		angle += 360;

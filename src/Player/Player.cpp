@@ -6,8 +6,10 @@
 
 #include <iostream>
 
-Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr)
+Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr, ProjectileManager* p_projectile_manager, std::vector<std::vector<gen::Tile>>* ptr_tiles)
 	:
+	ptr_tiles(ptr_tiles),
+	p_projectile_manager(p_projectile_manager),
 	p_texture_holder(textures),
 	p_mobs(mobsPtr),
 	m_sprite(),
@@ -33,6 +35,11 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_inventory.slots[0][0].Items.push_back(GearItem(Items::Sword, *textures, -1));
 	m_inventory.slots[1][0].Items.push_back(GearItem(Items::Shield, *textures, -1));
 	m_inventory.slots[2][0].Items.push_back(GearItem(Items::Mace, *textures, -1));
+	m_inventory.slots[3][0].Items.push_back(GearItem(Items::Bow, *textures, -1));
+	for (int i = 0; i < 100; i++)
+	{
+		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Arrow).x][m_inventory.GetFirstAvailableSlot(Items::Arrow).y].Items.push_back(MiscItem(Items::Arrow, *textures, -1));
+	}
 	Player::m_BootsSlot = Items::NOITEM;
 	Player::m_ChestpieceSlot = Items::NOITEM;
 	Player::m_HelmetSlot = Items::NOITEM;
@@ -460,6 +467,51 @@ void Player::drawGUI(sf::RenderWindow* p_window){
 		if (m_deleteItem.show)
 		{
 			p_window->draw(m_deleteItem);
+		}
+	}
+}
+
+bool Player::isInRange(Mob* ptr_mob){
+	if (!m_Gear.slots[4].Items.empty())
+	{
+		switch (m_Gear.slots[4].Items[0].item)
+		{
+		case Bow:
+			return (math::distance(ptr_mob->getPosition(), getPosition()) <= 735 + GetWidth(ptr_mob->type)/2);
+		default:
+			return (math::distance(ptr_mob->getPosition(), getPosition()) <= MELEE_DISTANCE);
+			break;
+		}
+	}else
+	{
+		return false;
+	}
+}
+
+void Player::attack(const sf::RenderWindow & window){
+	if (!m_Gear.slots[4].Items.empty())
+	{
+		switch (m_Gear.slots[4].Items[0].item)
+		{
+		case Items::Sword:
+			break;
+		case Items::Bow:
+			if (m_inventory.contains(Items::Arrow))
+			{
+				m_inventory.RemoveItem(Items::Arrow, 1);
+				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
+				std::cout << angle << "\n";
+				sf::Sprite arrow_sprite;
+				arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
+				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite);
+				arrow.setPosition(getPosition());
+				p_projectile_manager->m_arrows.push_back(arrow);
+			}
+			break;
+		case Items::Mace:
+			break;
+		default:
+			break;
 		}
 	}
 }

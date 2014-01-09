@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Item\ProjectileManager.h"
 #include "State.h"
 #include "Map\Map.h"
 #include "Effects\Light.h"
@@ -31,6 +32,8 @@ private:
 	void					loadNormals();
 
 private:
+	ProjectileManager m_projectile_manager;
+
 	gen::Map				mMap;
 
 	sf::View				mView;

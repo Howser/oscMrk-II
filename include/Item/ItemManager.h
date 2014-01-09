@@ -161,6 +161,23 @@ static int GetDamage(Items item){
 	}
 }
 
+static float GetSpeed(Items item){
+	switch (item)
+	{
+	case Sword:
+		return 0.5f;
+	case Mace:
+		return 1.f;
+		break;
+	case Bow:
+		return 0.7f;
+		break;
+	default:
+		return 0;
+		break;
+	}
+}
+
 static int GetArmor(Items item){
 	switch (item)
 	{
@@ -257,13 +274,14 @@ static std::string GetStats(Items const& item, sf::Vector2i* size){
 		if (GetSlot(item) == eGearSlot::rHand ||GetSlot(item) == eGearSlot::TwoHand)
 		{
 			//weapon
-			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + "TODO: Make weapon speed";
+			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + std::to_string(GetSpeed(item));
+			stats.erase ( stats.find_last_not_of('0') + 1, std::string::npos );
 			size->x = (6 + std::to_string(GetDamage(item)).length())*20;
 			size->y = 4*20;
 		}else
 		{
 			//armor
-			stats += "\nArmor: " + std::to_string(GetArmor(item));// + "\nSpeed: " + "TODO: Make weapon speed";
+			stats += "\nArmor: " + std::to_string(GetArmor(item));
 			size->x = (6 + std::to_string(GetArmor(item)).length())*20;
 			size->y = 4*20;
 		}

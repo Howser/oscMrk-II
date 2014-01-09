@@ -19,6 +19,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 {
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
+	m_projectile_manager = ProjectileManager(&mobManager);
 	if (mMap.rooms.size() > 0)
 	{
 		mView.setCenter(sf::Vector2f(mMap.rooms[0].x*32, mMap.rooms[0].y*32));
@@ -80,8 +81,6 @@ GameState::~GameState()
 
 bool GameState::update(sf::Time dt)
 {
-	std::cout << "X: " << sf::Mouse::getPosition(*getContext().window).x << "     Y: " << sf::Mouse::getPosition(*getContext().window).y << "\n";
-	std::cout << "X: " << mPlayer.getPosition().x - getContext().window->getView().getCenter().x - 1280/2 << "     Y: " << mPlayer.getPosition().y- getContext().window->getView().getCenter().y - 720/2 << "\n";
 	mView.setCenter(mPlayer.getPosition());
 	if (!mPlayer.inventoryState)
 	{

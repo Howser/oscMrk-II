@@ -24,16 +24,12 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 			getPath(targetPtr->getPosition().x/WIDTH, targetPtr->getPosition().y/HEIGHT);
 			mPathEnd = targetPtr->getPosition();
 		}
-		//if (vec::length<float>(targetPtr->getPosition() - playerPtr->getPosition()) < (WIDTH+HEIGHT)/2)
+		if (!targetPtr->dead && playerPtr->isInRange(targetPtr))
 		{
-			if (!targetPtr->dead && playerPtr->isInRange(targetPtr))
-			{
-				//some sort of timer or something
-				targetPtr->takeDamage(10);
-				std::cout << targetPtr->health << "\n";
-				targetPtr->stop();
-				targetPtr = NULL;
-			}
+			//some sort of timer or something
+			playerPtr->attack(window, targetPtr);
+			targetPtr->stop();
+			targetPtr = nullptr;
 		}
 	}
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -43,7 +39,6 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 		mpos.y += playerPtr->getPosition().y - view.getSize().y/2;
 
 		targetPtr = mobManagerPtr->getAtPosition(mpos.x, mpos.y);
-		//std::cout << targetPtr << "\n";
 		mPathEnd = sf::Vector2f(mpos.x, mpos.y);
 
 		mpos.x /= WIDTH;
@@ -61,10 +56,10 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 	{
 		if (leftMouseClicked)
 		{
-			playerPtr->attack(window);
+			playerPtr->attack(window, nullptr);
 		}
 		playerPtr->stop();
-		targetPtr = NULL;
+		targetPtr = nullptr;
 	}
 	if (leftMouseClicked)
 	{

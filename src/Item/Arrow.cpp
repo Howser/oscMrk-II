@@ -1,6 +1,6 @@
 #include "Item\Arrow.h"
 
-projectile::Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite) : p_tiles(ptr_tiles), m_sprite(p_sprite), dead(false){
+projectile::Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage) : p_tiles(ptr_tiles), m_sprite(p_sprite), dead(false), m_damage(p_damage){
 	m_velocity = sf::Vector2f(std::cos(angle)*ARROW_SPEED, std::sin(angle)*ARROW_SPEED);
 	m_sprite.setOrigin(15, 1);
 	m_sprite.setRotation(angle*180/3.14);

@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include "Item\ItemManager.h"
+
 Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr, ProjectileManager* p_projectile_manager, std::vector<std::vector<gen::Tile>>* ptr_tiles)
 	:
 	ptr_tiles(ptr_tiles),
@@ -56,6 +58,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 		m_d_gear.push_back(D_Gear());
 		m_d_gear.back().setPosition(getPosition());
 	}
+	m_attackTimer.restart();
 }
 
 Player::~Player()
@@ -296,6 +299,7 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 											m_Gear.slots[4].Items.clear();
 
 											item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
+											
 											m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
 											m_d_gear[3].setPosition(getPosition().x, getPosition().y);
 										}
@@ -313,7 +317,7 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 										{
 											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).y].Items.push_back(*m_Gear.slots[4].Items.begin());
 											m_Gear.slots[4].Items.clear();
-
+											
 											item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
 											m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
 											m_d_gear[4].setPosition(getPosition().x, getPosition().y);
@@ -488,27 +492,38 @@ bool Player::isInRange(Mob* ptr_mob){
 	}
 }
 
-void Player::attack(const sf::RenderWindow & window){
+// target must not be nullptr for melee weapons
+void Player::attack(const sf::RenderWindow & window, Mob* target){
 	if (!m_Gear.slots[4].Items.empty())
 	{
 		switch (m_Gear.slots[4].Items[0].item)
 		{
 		case Items::Sword:
+			if (target != nullptr && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Sword))
+			{
+				target->takeDamage(GetDamage(Items::Sword));
+				m_attackTimer.restart();
+			}
 			break;
 		case Items::Bow:
-			if (m_inventory.contains(Items::Arrow))
+			if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
 			{
 				m_inventory.RemoveItem(Items::Arrow, 1);
 				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
-				std::cout << angle << "\n";
 				sf::Sprite arrow_sprite;
 				arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
-				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite);
+				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow));
 				arrow.setPosition(getPosition());
 				p_projectile_manager->m_arrows.push_back(arrow);
+				m_attackTimer.restart();
 			}
 			break;
 		case Items::Mace:
+			if (target != nullptr && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Mace))
+			{
+				target->takeDamage(GetDamage(Items::Mace));
+				m_attackTimer.restart();
+			}
 			break;
 		default:
 			break;

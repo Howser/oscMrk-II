@@ -416,7 +416,7 @@ int MobManager::GetIndexOf(Mob const& mob){
 
 Mob* MobManager::getAtPosition(float x, float y)
 {
-	Mob* p_mob = NULL;
+	Mob* p_mob = nullptr;
 	for (int i = 0; i != mobs.size(); ++i)
 	{
 		if (sf::Rect<float>(mobs[i]->getPosition().x - mobs[i]->width/2, mobs[i]->getPosition().y - mobs[i]->height/2, mobs[i]->width, mobs[i]->height).intersects(sf::Rect<float>(x, y, 1, 1)))

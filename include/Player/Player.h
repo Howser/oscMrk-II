@@ -44,7 +44,7 @@ public:
 	void drawGUI(sf::RenderWindow* p_window);
 
 	bool isInRange(Mob* ptr_mob);
-	void attack(const sf::RenderWindow & window);
+	void attack(const sf::RenderWindow & window, Mob* target);
 
 	bool isPathing();
 
@@ -80,8 +80,6 @@ private:
 	std::vector<std::vector<gen::Tile>>* ptr_tiles;
 	std::vector<sf::Vector2f> m_path;
 	unsigned int m_health;
-	unsigned int m_damage;
-	// unsigned int mArmor;
 
 	bool tabClicked;
 	bool leftMouseClicked, rightMouseClicked;
@@ -92,6 +90,8 @@ private:
 	///<summary>[0]Helmet, [1]Chest, [2]Legs, [3]LHand, [4]RHand</summary>
 	std::vector<D_Gear> m_d_gear;
 	ProjectileManager* p_projectile_manager;
+
+	sf::Clock m_attackTimer;
 };
 
 ///<summary>Used to draw the gear on the player.</summary>

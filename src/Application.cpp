@@ -123,7 +123,7 @@ void Application::loadResources()
 #pragma endregion
 
 #pragma region Item Textures
-		mTextures.loadTexture(Textures::Arrow, "resources/graphics/item/inv/test.png");
+		mTextures.loadTexture(Textures::Arrow, "resources/graphics/item/inv/arrow.png");
 		mTextures.loadTexture(Textures::Helmet_Pain, "resources/graphics/item/inv/test.png");
 		mTextures.loadTexture(Textures::Helmet_Doubt, "resources/graphics/item/inv/test.png");
 		mTextures.loadTexture(Textures::Helmet_Torture, "resources/graphics/item/inv/test.png");
@@ -134,9 +134,9 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::Legs_Darkness, "resources/graphics/item/inv/test.png");
 		mTextures.loadTexture(Textures::Legs_Chaos, "resources/graphics/item/inv/test.png");
 		mTextures.loadTexture(Textures::Shield, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Sword, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Bow, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Mace, "resources/graphics/item/inv/test.png");
+		mTextures.loadTexture(Textures::Sword, "resources/graphics/item/inv/sword.png");
+		mTextures.loadTexture(Textures::Bow, "resources/graphics/item/inv/bow.png");
+		mTextures.loadTexture(Textures::Mace, "resources/graphics/item/inv/mace.png");
 
 		mTextures.loadTexture(Textures::d_Arrow, "resources/graphics/item/world/arrow.png");
 		mTextures.loadTexture(Textures::d_Helmet_Pain, "resources/graphics/item/world/test.png");

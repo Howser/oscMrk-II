@@ -6,6 +6,7 @@ namespace Textures
 	enum ID
 	{
 		Tilesheet,
+		Mini_Map_sheet,
 		Titlescreen,
 		Inventory,
 		Button,

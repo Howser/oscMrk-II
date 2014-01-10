@@ -34,12 +34,12 @@ namespace gen{
 		std::vector<HealingWell> wells;
 
 		std::vector<std::vector<Tile>> tiles;
-		std::vector<std::vector<Tile>> m_map;
 
 		bool isPathable(int x, int y) const;
 
 		void SetBounds();
 		void update(sf::Time dt);
+		void draw_mini_map(sf::RenderWindow* ptr_window, int x, int y, const sf::Vector2f & playerPosition);
 
 		///<summary>Map size.</summary>
 		sf::Vector2i size;
@@ -80,6 +80,7 @@ namespace gen{
 
 		sf::Font font;
 		sf::Texture		tileset;
+		sf::Texture m_mini_tileset;
 		sf::View		mView;
 
 		sf::Rect<int> bounds;

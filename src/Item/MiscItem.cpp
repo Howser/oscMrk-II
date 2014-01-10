@@ -3,7 +3,7 @@
 MiscItem::MiscItem(Items item, TextureHolder & textureHolder, int ID){
 	this->item = item;
 	this->ID = ID;
-	sprite.setTexture(*textureHolder.getTexture((Textures::ID)(item + 13)));
+	sprite.setTexture(*textureHolder.getTexture((Textures::ID)(item + 14)));
 	setPosition(3, 3);
 }
 

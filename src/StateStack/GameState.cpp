@@ -155,7 +155,7 @@ void GameState::draw()
 	sf::Sprite sprite(mDiffuseRender.getTexture());
 	window->setView(window->getDefaultView());
 	window->draw(sprite, &mShader);
-
+	mMap.draw_mini_map(window, mView.getCenter().x, mView.getCenter().y, mPlayer.getPosition());
 	mPlayer.drawGUI(window);
 }
 

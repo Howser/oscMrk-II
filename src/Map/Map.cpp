@@ -4,6 +4,7 @@ gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* 
 	:
 	font(*fontHolder->getFont(Fonts::Main)),
 	tileset(*textureHolder->getTexture(Textures::Tilesheet)),
+	m_mini_tileset(*textureHolder->getTexture(Textures::Mini_Map_sheet)),
 	mobManagerPtr(mobManager)
 {
 	rect = sf::RectangleShape(sf::Vector2f(26, 26));
@@ -846,6 +847,28 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 	}
 	target.draw(text);
 	}*/
+}
+
+void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y, const sf::Vector2f & playerPosition){
+	sf::Sprite sprite;
+	sprite.setTexture(m_mini_tileset);
+	sprite.setColor(sf::Color(100, 100, 100, 100));
+	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 0) ? X/WIDTH - 1280/WIDTH:0, y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; x < X/WIDTH + 1280/WIDTH; x++)
+	{
+		for (y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
+		{
+			if (x > 0 && x < tiles.size() && y > 0 && y < tiles[0].size())
+			{
+				if (tiles[x][y].type != 0)
+				{
+					sprite.setTextureRect(sf::Rect<int>((tiles[x][y].type-1)*16, 0, 16, 16));
+					sprite.setScale(0.25f, 0.25f);
+					sprite.setPosition((x*4) - (X/WIDTH - 1280/WIDTH)*4, (y*4) - (Y/WIDTH - 1280/HEIGHT)*4);
+					ptr_window->draw(sprite);
+				}
+			}
+		}
+	}
 }
 
 bool gen::Map::isPathable(int x, int y) const

@@ -39,7 +39,7 @@ namespace gen{
 
 		void SetBounds();
 		void update(sf::Time dt);
-		void draw_mini_map(sf::RenderWindow* ptr_window, int x, int y, const sf::Vector2f & playerPosition);
+		void draw_mini_map(sf::RenderWindow* ptr_window, int x, int y);
 
 		///<summary>Map size.</summary>
 		sf::Vector2i size;

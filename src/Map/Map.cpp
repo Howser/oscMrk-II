@@ -849,7 +849,7 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 	}*/
 }
 
-void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y, const sf::Vector2f & playerPosition){
+void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
 	sf::Sprite sprite;
 	sprite.setTexture(m_mini_tileset);
 	sprite.setColor(sf::Color(100, 100, 100, 100));
@@ -869,6 +869,11 @@ void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y, const s
 			}
 		}
 	}
+	sf::RectangleShape player;
+	player.setPosition(1280/4/2, 1280/4/2);
+	player.setSize(sf::Vector2f(4, 4));
+	player.setFillColor(sf::Color::Magenta);
+	ptr_window->draw(player);
 }
 
 bool gen::Map::isPathable(int x, int y) const

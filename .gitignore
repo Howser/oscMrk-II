@@ -1,7 +1,8 @@
 # .gitignore file for oscMrk II 
 # the only files we want in our repo are source files and build stuff for vs
 
-oscMrk-II
+oscMrk-II/Debug
+oscMrk-II/oscMrk-II.vcxproj.user
 Debug
 
 #CPP SPECIFIC

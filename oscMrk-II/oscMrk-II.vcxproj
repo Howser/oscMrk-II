@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Animation\Animation.h" />
+    <ClInclude Include="..\include\Application.h" />
+    <ClInclude Include="..\include\Effects\Light.h" />
+    <ClInclude Include="..\include\Gui\Button.h" />
+    <ClInclude Include="..\include\Gui\Component.h" />
+    <ClInclude Include="..\include\Gui\Container.h" />
+    <ClInclude Include="..\include\Gui\Label.h" />
+    <ClInclude Include="..\include\Gui\Mouse.h" />
+    <ClInclude Include="..\include\Gui\StatusBar.h" />
+    <ClInclude Include="..\include\Inventory\DeleteItem.h" />
+    <ClInclude Include="..\include\Inventory\GearSlot.h" />
+    <ClInclude Include="..\include\Inventory\GearSlots.h" />
+    <ClInclude Include="..\include\Inventory\Inventory.h" />
+    <ClInclude Include="..\include\Inventory\InventoryManager.h" />
+    <ClInclude Include="..\include\Inventory\LootTable.h" />
+    <ClInclude Include="..\include\Inventory\Slot.h" />
+    <ClInclude Include="..\include\Inventory\StackManager.h" />
+    <ClInclude Include="..\include\Inventory\Tooltip.h" />
+    <ClInclude Include="..\include\Item\Arrow.h" />
+    <ClInclude Include="..\include\Item\BaseItem.h" />
+    <ClInclude Include="..\include\Item\GearItem.h" />
+    <ClInclude Include="..\include\Item\ItemManager.h" />
+    <ClInclude Include="..\include\Item\LootItem.h" />
+    <ClInclude Include="..\include\Item\MiscItem.h" />
+    <ClInclude Include="..\include\Item\ProjectileManager.h" />
+    <ClInclude Include="..\include\Map\Cell.h" />
+    <ClInclude Include="..\include\Map\HealingWell.h" />
+    <ClInclude Include="..\include\Map\Map.h" />
+    <ClInclude Include="..\include\Map\MapManager.h" />
+    <ClInclude Include="..\include\Map\MobSpawner.h" />
+    <ClInclude Include="..\include\Map\Path.h" />
+    <ClInclude Include="..\include\Map\Room.h" />
+    <ClInclude Include="..\include\Map\Tile.h" />
+    <ClInclude Include="..\include\Math\GeneralMath.h" />
+    <ClInclude Include="..\include\Math\VectorMath.h" />
+    <ClInclude Include="..\include\Mob\DeadMob.h" />
+    <ClInclude Include="..\include\Mob\MajorMob.h" />
+    <ClInclude Include="..\include\Mob\MinorMob.h" />
+    <ClInclude Include="..\include\Mob\Mob.h" />
+    <ClInclude Include="..\include\Mob\MobManager.h" />
+    <ClInclude Include="..\include\Mob\MobTypeManager.h" />
+    <ClInclude Include="..\include\Mob\Tree.h" />
+    <ClInclude Include="..\include\PathFinder\Node.h" />
+    <ClInclude Include="..\include\PathFinder\PathFinder.h" />
+    <ClInclude Include="..\include\Player\Player.h" />
+    <ClInclude Include="..\include\Player\PlayerController.h" />
+    <ClInclude Include="..\include\ResourceHolders\FontHolder.h" />
+    <ClInclude Include="..\include\ResourceHolders\ResourceIdentifiers.h" />
+    <ClInclude Include="..\include\ResourceHolders\TextureHolder.h" />
+    <ClInclude Include="..\include\StateStack\GameState.h" />
+    <ClInclude Include="..\include\StateStack\InventoryState.h" />
+    <ClInclude Include="..\include\StateStack\MenuState.h" />
+    <ClInclude Include="..\include\StateStack\State.h" />
+    <ClInclude Include="..\include\StateStack\StateIdentifiers.h" />
+    <ClInclude Include="..\include\StateStack\StateStack.h" />
+    <ClInclude Include="..\include\StateStack\TitleState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\include\Gui\Mouse.inl" />
+    <None Include="..\include\Math\GeneralMath.inl" />
+    <None Include="..\include\Math\VectorMath.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Animation\Animation.cpp" />
+    <ClCompile Include="..\src\Application.cpp" />
+    <ClCompile Include="..\src\Effects\Light.cpp" />
+    <ClCompile Include="..\src\Gui\Button.cpp" />
+    <ClCompile Include="..\src\Gui\Component.cpp" />
+    <ClCompile Include="..\src\Gui\Container.cpp" />
+    <ClCompile Include="..\src\Gui\Label.cpp" />
+    <ClCompile Include="..\src\Gui\Mouse.cpp" />
+    <ClCompile Include="..\src\Gui\StatusBar.cpp" />
+    <ClCompile Include="..\src\Inventory\DeleteItem.cpp" />
+    <ClCompile Include="..\src\Inventory\GearSlot.cpp" />
+    <ClCompile Include="..\src\Inventory\GearSlots.cpp" />
+    <ClCompile Include="..\src\Inventory\Inventory.cpp" />
+    <ClCompile Include="..\src\Inventory\InventoryManager.cpp" />
+    <ClCompile Include="..\src\Inventory\Slot.cpp" />
+    <ClCompile Include="..\src\Inventory\StackManager.cpp" />
+    <ClCompile Include="..\src\Inventory\Tooltip.cpp" />
+    <ClCompile Include="..\src\Item\Arrow.cpp" />
+    <ClCompile Include="..\src\Item\BaseItem.cpp" />
+    <ClCompile Include="..\src\Item\GearItem.cpp" />
+    <ClCompile Include="..\src\Item\LootItem.cpp" />
+    <ClCompile Include="..\src\Item\MiscItem.cpp" />
+    <ClCompile Include="..\src\Item\ProjectileManager.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Map\Cell.cpp" />
+    <ClCompile Include="..\src\Map\HealingWell.cpp" />
+    <ClCompile Include="..\src\Map\Map.cpp" />
+    <ClCompile Include="..\src\Map\MobSpawner.cpp" />
+    <ClCompile Include="..\src\Map\Path.cpp" />
+    <ClCompile Include="..\src\Map\Room.cpp" />
+    <ClCompile Include="..\src\Map\Tile.cpp" />
+    <ClCompile Include="..\src\Math\GeneralMath.cpp" />
+    <ClCompile Include="..\src\Mob\DeadMob.cpp" />
+    <ClCompile Include="..\src\Mob\MajorMob.cpp" />
+    <ClCompile Include="..\src\Mob\MinorMob.cpp" />
+    <ClCompile Include="..\src\Mob\Mob.cpp" />
+    <ClCompile Include="..\src\Mob\MobManager.cpp" />
+    <ClCompile Include="..\src\Mob\Tree.cpp" />
+    <ClCompile Include="..\src\PathFinder\Node.cpp" />
+    <ClCompile Include="..\src\PathFinder\PathFinder.cpp" />
+    <ClCompile Include="..\src\Player\Player.cpp" />
+    <ClCompile Include="..\src\Player\PlayerController.cpp" />
+    <ClCompile Include="..\src\ResourceHolders\FontHolder.cpp" />
+    <ClCompile Include="..\src\ResourceHolders\TextureHolder.cpp" />
+    <ClCompile Include="..\src\StateStack\GameState.cpp" />
+    <ClCompile Include="..\src\StateStack\InventoryState.cpp" />
+    <ClCompile Include="..\src\StateStack\MenuState.cpp" />
+    <ClCompile Include="..\src\StateStack\State.cpp" />
+    <ClCompile Include="..\src\StateStack\StateStack.cpp" />
+    <ClCompile Include="..\src\StateStack\TitleState.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{13444BF6-D816-4E8D-908B-907055EA552D}</ProjectGuid>
+    <RootNamespace>oscMrkII</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\suhg12patrik\Documents\Visual Studio 2012\Projects\oscMrk-II\include;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\suhg12patrik\Documents\Visual Studio 2012\Projects\oscMrk-II\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Libs\SFML-2.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Libs\SFML-2.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

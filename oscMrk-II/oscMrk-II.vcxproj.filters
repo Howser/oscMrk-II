@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Animation">
+      <UniqueIdentifier>{18fed6dd-d995-4227-ab37-eae8fc97657a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Effects">
+      <UniqueIdentifier>{9a8acad3-e845-47de-932e-fe89346cff57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{233f94ad-83f6-4c04-adce-abffe7e0dba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Inventory">
+      <UniqueIdentifier>{37020812-f9af-4f83-9004-fb02cdba60fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Item">
+      <UniqueIdentifier>{076dc231-a877-490b-96c5-d5f91e1c873d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{080d7108-c4ec-4355-8db8-b06ffd4f63ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{1333ff44-3193-497a-aea1-0cecd7f46eaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Mob">
+      <UniqueIdentifier>{261d9e12-5a8b-4b12-99b4-80de24da6879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Player">
+      <UniqueIdentifier>{9f119bcc-caf7-48b0-8df6-eb49c9782d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\StateStack">
+      <UniqueIdentifier>{328d6356-f170-404c-b327-771ca747d52a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ResourceHolders">
+      <UniqueIdentifier>{e1384ec7-6599-4342-b628-4050f6ac3bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pathfinder">
+      <UniqueIdentifier>{f4d33391-b042-47a6-bce4-b3109da156d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Animation">
+      <UniqueIdentifier>{478ed709-fa62-4c17-b049-918d9bf63940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects">
+      <UniqueIdentifier>{871153d4-4288-4ec0-b0d1-b0b9430e8a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{55962031-8dc5-4a6a-9b86-82a0ed85a6f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Inventory">
+      <UniqueIdentifier>{0c31a757-841e-4721-8470-c3563dfaf952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Item">
+      <UniqueIdentifier>{4f3c011c-69c9-458b-92b1-47d3850e4c66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map">
+      <UniqueIdentifier>{4ffc33e6-ea50-4cd7-a609-e168005f939e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Math">
+      <UniqueIdentifier>{4396552a-99a7-4e7f-bd10-2c0bddc390ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mob">
+      <UniqueIdentifier>{0bb9ca8a-3cf9-4eee-9bc4-b0df3a8f6e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StateStack">
+      <UniqueIdentifier>{257f2bec-559e-40f8-b87e-9dc7d9c4d4cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Pathfinder">
+      <UniqueIdentifier>{08c5b8ac-e195-4076-975d-6c728e773bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Player">
+      <UniqueIdentifier>{46c64d03-2cae-47d6-9439-99f2486f7c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ResourceHolders">
+      <UniqueIdentifier>{d238a7a4-b546-44e2-a5bd-9b996aa39133}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Animation\Animation.h">
+      <Filter>Header Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Effects\Light.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Gui\Button.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Gui\Component.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Gui\Container.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Gui\Label.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Gui\Mouse.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Gui\StatusBar.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\DeleteItem.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\GearSlot.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\GearSlots.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\Inventory.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\InventoryManager.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\LootTable.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\Slot.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\StackManager.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Inventory\Tooltip.h">
+      <Filter>Header Files\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\BaseItem.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\GearItem.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\ItemManager.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\LootItem.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\MiscItem.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Cell.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\HealingWell.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Map.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\MapManager.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\MobSpawner.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Path.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Room.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Tile.h">
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Math\GeneralMath.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Math\VectorMath.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Mob\DeadMob.h">
+      <Filter>Header Files\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Mob\MajorMob.h">
+      <Filter>Header Files\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Mob\MinorMob.h">
+      <Filter>Header Files\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Mob\Mob.h">
+      <Filter>Header Files\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Mob\MobManager.h">
+      <Filter>Header Files\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Mob\MobTypeManager.h">
+      <Filter>Header Files\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Mob\Tree.h">
+      <Filter>Header Files\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\PathFinder\Node.h">
+      <Filter>Header Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\PathFinder\PathFinder.h">
+      <Filter>Header Files\Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Player\Player.h">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Player\PlayerController.h">
+      <Filter>Header Files\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ResourceHolders\FontHolder.h">
+      <Filter>Header Files\ResourceHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ResourceHolders\ResourceIdentifiers.h">
+      <Filter>Header Files\ResourceHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ResourceHolders\TextureHolder.h">
+      <Filter>Header Files\ResourceHolders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\StateStack\GameState.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\StateStack\InventoryState.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\StateStack\MenuState.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\StateStack\State.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\StateStack\StateIdentifiers.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\StateStack\StateStack.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\StateStack\TitleState.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\Arrow.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\ProjectileManager.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\include\Gui\Mouse.inl">
+      <Filter>Header Files\GUI</Filter>
+    </None>
+    <None Include="..\include\Math\GeneralMath.inl">
+      <Filter>Header Files\Math</Filter>
+    </None>
+    <None Include="..\include\Math\VectorMath.inl">
+      <Filter>Header Files\Math</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Animation\Animation.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Effects\Light.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\Button.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\Component.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\Container.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\Label.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\Mouse.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\StatusBar.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Inventory\DeleteItem.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Inventory\GearSlot.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Inventory\GearSlots.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Inventory\Inventory.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Inventory\InventoryManager.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Inventory\Slot.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Inventory\StackManager.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Inventory\Tooltip.cpp">
+      <Filter>Source Files\Inventory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\BaseItem.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\GearItem.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\LootItem.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\MiscItem.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Cell.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\HealingWell.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Map.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\MobSpawner.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Path.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Room.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Tile.cpp">
+      <Filter>Source Files\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Math\GeneralMath.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Mob\DeadMob.cpp">
+      <Filter>Source Files\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Mob\MajorMob.cpp">
+      <Filter>Source Files\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Mob\MinorMob.cpp">
+      <Filter>Source Files\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Mob\Mob.cpp">
+      <Filter>Source Files\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Mob\MobManager.cpp">
+      <Filter>Source Files\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Mob\Tree.cpp">
+      <Filter>Source Files\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StateStack\GameState.cpp">
+      <Filter>Source Files\StateStack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StateStack\InventoryState.cpp">
+      <Filter>Source Files\StateStack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StateStack\MenuState.cpp">
+      <Filter>Source Files\StateStack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StateStack\State.cpp">
+      <Filter>Source Files\StateStack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StateStack\StateStack.cpp">
+      <Filter>Source Files\StateStack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StateStack\TitleState.cpp">
+      <Filter>Source Files\StateStack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ResourceHolders\FontHolder.cpp">
+      <Filter>Source Files\ResourceHolders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ResourceHolders\TextureHolder.cpp">
+      <Filter>Source Files\ResourceHolders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Player\Player.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Player\PlayerController.cpp">
+      <Filter>Source Files\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PathFinder\Node.cpp">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\PathFinder\PathFinder.cpp">
+      <Filter>Source Files\Pathfinder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\Arrow.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\ProjectileManager.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -147,11 +147,11 @@ void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f 
 	}
 	for (unsigned int x = (getPosition().x - width)/32 - 1, y = 0; x < (getPosition().x - width/2)/32 + 1; x++)
 	{
-		if (x > 0 && x < map->size())
+		if (x > 0 && x < map->size() - 1)
 		{
 			for (y = (getPosition().y - height)/32 - 1; y < (getPosition().y -height/2)/32 + 1; y++)
 			{
-				if (y > 0 && y < map[x].size())
+				if (y > 0 && y < map[x].size() - 1)
 				{
 					if ((*map)[x][y].type != 1)
 					{

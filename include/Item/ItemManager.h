@@ -18,15 +18,16 @@ enum Items //sort by type
 	Sword,
 	Bow,
 	Mace,
+	TestSpell,
 	NOITEM,
 	end,
 };
 
 ///<summary>Strings that equate to the enum names.</summary>
-static const char* ItemNames[14] = {"Arrow", "Helmet_Pain", "Helmet_Doubt", "Helmet_Torture", "Chest_Suffering", "Chest_Cold", "Chest_Destruction", "Legs_Enslaved", "Legs_Darkness", "Legs_Chaos", "Shield", "Sword", "Bow", "Mace"};
+static const char* ItemNames[15] = {"Arrow", "Helmet_Pain", "Helmet_Doubt", "Helmet_Torture", "Chest_Suffering", "Chest_Cold", "Chest_Destruction", "Legs_Enslaved", "Legs_Darkness", "Legs_Chaos", "Shield", "Sword", "Bow", "Mace", "Test_Spell"};
 
 ///<summary>Strings for item names to display in tooltips, etc.</summary>
-static const char* w_ItemNames[14] = {"Arrow", "Helmet of Pain", "Helmet of Doubt", "Helmet of Torture", "Chest of Suffering", "Chest of Cold", "Chest of Destruction", "Legs of Enslaved", "Legs of Darkness", "Legs of Chaos", "Shield", "Sword", "Bow", "Mace"};
+static const char* w_ItemNames[15] = {"Arrow", "Helmet of Pain", "Helmet of Doubt", "Helmet of Torture", "Chest of Suffering", "Chest of Cold", "Chest of Destruction", "Legs of Enslaved", "Legs of Darkness", "Legs of Chaos", "Shield", "Sword", "Bow", "Mace", "Test Spell"};
 
 enum eGearSlot{
 	lHand,
@@ -265,12 +266,63 @@ static eGearSlot GetSlot(Items item){
 	}
 }
 
-///<summary>FORMAT: TYPE, case gear{GEAR SLOT, case weapon{DAMAGE, SPEED} case armor{ARMOR}} case misc{} case consumable{}</summary>
+static bool IsSpell(const Items & item){
+	switch (item)
+	{
+	case Helmet_Pain:
+		return false;
+		break;
+	case Helmet_Doubt:
+		return false;
+		break;
+	case Helmet_Torture:
+		return false;
+		break;
+	case Chest_Suffering:
+		return false;
+		break;
+	case Chest_Cold:
+		return false;
+		break;
+	case Chest_Destruction:
+		return false;
+		break;
+	case Legs_Enslaved:
+		return false;
+		break;
+	case Legs_Darkness:
+		return false;
+		break;
+	case Legs_Chaos:
+		return false;
+		break;
+	case Shield:
+		return false;
+		break;
+	case Sword:
+		return false;
+		break;
+	case Bow:
+		return false;
+		break;
+	case Mace:
+		return false;
+		break;
+	case TestSpell:
+		return true;
+		break;
+	default:
+		return false;
+		break;
+	}
+}
+
 eGearSlot;
+///<summary>FORMAT: TYPE, case gear{GEAR SLOT, case weapon{DAMAGE, SPEED} case armor{ARMOR}} case misc{} case consumable{}</summary>
 static std::string GetStats(Items const& item, sf::Vector2i* size){
 	if (GetType(item) == itemType::Gear)
 	{
-		std::string stats = (std::string)w_ItemNames[item] + "\nSlot: " + GearSlotNames[GetSlot(item)];
+		std::string stats = (std::string)w_ItemNames[item];
 		if (GetSlot(item) == eGearSlot::rHand ||GetSlot(item) == eGearSlot::TwoHand)
 		{
 			//weapon
@@ -290,4 +342,18 @@ static std::string GetStats(Items const& item, sf::Vector2i* size){
 	{
 		return (std::string)w_ItemNames[item] + "";
 	}
+}
+
+namespace spell{
+	/*static void use(const Items & item, Mob* ptr_mob){
+		if (IsSpell(item))
+		{
+			switch (item)
+			{
+			default:
+
+				break;
+			}
+		}
+	}*/
 }

@@ -34,6 +34,7 @@ namespace gen{
 		std::vector<HealingWell> wells;
 
 		std::vector<std::vector<Tile>> tiles;
+		std::vector<std::vector<Tile>> m_map;
 
 		bool isPathable(int x, int y) const;
 

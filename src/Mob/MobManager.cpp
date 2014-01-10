@@ -58,94 +58,97 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 					(*i)->prevPos = (*i)->getPosition();
 				}
 #pragma region Mob-Mob Collision
-				for (j = m_tree.search(*mobs[(*i)->ID])->mobs.begin(); j != m_tree.search(*mobs[(*i)->ID])->mobs.end(); ++j)
+				if (!(*i)->playerCollision)
 				{
-					if ((*i)->ID != (*j)->ID)
+					for (j = m_tree.search(*mobs[(*i)->ID])->mobs.begin(); j != m_tree.search(*mobs[(*i)->ID])->mobs.end(); ++j)
 					{
-						if (!(*j)->dead && !(*i)->worldCollision && !(*j)->worldCollision && !(*i)->playerCollision && !(*j)->playerCollision)
+						if ((*i)->ID != (*j)->ID)
 						{
-							if (math::distance((*i)->getPosition(), (*j)->getPosition()) <= 32)
+							if (!(*j)->dead && !(*i)->worldCollision && !(*j)->worldCollision && !(*j)->playerCollision)
 							{
-								if (math::distance(sf::Vector2i((*i)->getPosition().x, 0), sf::Vector2i((*j)->getPosition().x, 0)) >= math::distance(sf::Vector2i(0, (*i)->getPosition().y), sf::Vector2i(0, (*j)->getPosition().y)))
+								if (math::distance((*i)->getPosition(), (*j)->getPosition()) <= 32)
 								{
-									//x
-									if (!(*i)->worldCollision && !(*j)->worldCollision)
+									if (math::distance(sf::Vector2i((*i)->getPosition().x, 0), sf::Vector2i((*j)->getPosition().x, 0)) >= math::distance(sf::Vector2i(0, (*i)->getPosition().y), sf::Vector2i(0, (*j)->getPosition().y)))
 									{
-										if ((*i)->getPosition().x < (*j)->getPosition().x)
+										//x
+										if (!(*i)->worldCollision && !(*j)->worldCollision)
 										{
-											if (std::abs((*i)->velocity.x) < std::abs((*j)->velocity.x))
+											if ((*i)->getPosition().x < (*j)->getPosition().x)
 											{
-												//(*i)->stop();
-												if (!(*i)->IntersectsWall(sf::Rect<int>((*i)->getPosition().x - ((*i)->getPosition().x + (*i)->width - (*j)->getPosition().x)/2 - (*i)->width/2, (*i)->getPosition().y - (*i)->height/2, (*i)->width, (*i)->height), *tiles))
+												if (std::abs((*i)->velocity.x) < std::abs((*j)->velocity.x))
 												{
-													(*i)->setPosition((*i)->getPosition().x - ((*i)->getPosition().x + (*i)->width - (*j)->getPosition().x)/2 + math::random(-1, 1, 0), (*i)->getPosition().y);
+													//(*i)->stop();
+													if (!(*i)->IntersectsWall(sf::Rect<int>((*i)->getPosition().x - ((*i)->getPosition().x + (*i)->width - (*j)->getPosition().x)/2 - (*i)->width/2, (*i)->getPosition().y - (*i)->height/2, (*i)->width, (*i)->height), *tiles))
+													{
+														(*i)->setPosition((*i)->getPosition().x - ((*i)->getPosition().x + (*i)->width - (*j)->getPosition().x)/2 + math::random(-1, 1, 0), (*i)->getPosition().y);
+													}
+												}else
+												{
+													//(*j)->stop();
+													if (!(*j)->IntersectsWall(sf::Rect<int>((*j)->getPosition().x + ((*i)->getPosition().x + (*i)->width - (*j)->getPosition().x)/2 - (*j)->width/2, (*j)->getPosition().y - (*j)->height/2, (*j)->width, (*j)->height), *tiles))
+													{
+														(*j)->setPosition((*j)->getPosition().x + ((*i)->getPosition().x + (*i)->width - (*j)->getPosition().x)/2 + math::random(-1, 1, 0), (*j)->getPosition().y);
+													}
 												}
-											}else
-											{
-												//(*j)->stop();
-												if (!(*j)->IntersectsWall(sf::Rect<int>((*j)->getPosition().x + ((*i)->getPosition().x + (*i)->width - (*j)->getPosition().x)/2 - (*j)->width/2, (*j)->getPosition().y - (*j)->height/2, (*j)->width, (*j)->height), *tiles))
+											}else {
+												if (std::abs((*i)->velocity.x) < std::abs((*j)->velocity.x))
 												{
-													(*j)->setPosition((*j)->getPosition().x + ((*i)->getPosition().x + (*i)->width - (*j)->getPosition().x)/2 + math::random(-1, 1, 0), (*j)->getPosition().y);
-												}
-											}
-										}else {
-											if (std::abs((*i)->velocity.x) < std::abs((*j)->velocity.x))
-											{
-												//(*i)->stop();
-												if (!(*i)->IntersectsWall(sf::Rect<int>((*i)->getPosition().x + ((*j)->getPosition().x + (*j)->width - (*i)->getPosition().x)/2 - (*i)->width/2, (*i)->getPosition().y - (*i)->height/2, (*i)->width, (*i)->height), *tiles))
+													//(*i)->stop();
+													if (!(*i)->IntersectsWall(sf::Rect<int>((*i)->getPosition().x + ((*j)->getPosition().x + (*j)->width - (*i)->getPosition().x)/2 - (*i)->width/2, (*i)->getPosition().y - (*i)->height/2, (*i)->width, (*i)->height), *tiles))
+													{
+														(*i)->setPosition((*i)->getPosition().x + ((*j)->getPosition().x + (*j)->width - (*i)->getPosition().x)/2 + math::random(-1, 1, 0), (*i)->getPosition().y);
+													}
+												}else
 												{
-													(*i)->setPosition((*i)->getPosition().x + ((*j)->getPosition().x + (*j)->width - (*i)->getPosition().x)/2 + math::random(-1, 1, 0), (*i)->getPosition().y);
-												}
-											}else
-											{
-												//(*j)->stop();
-												if (!(*j)->IntersectsWall(sf::Rect<int>((*j)->getPosition().x - ((*j)->getPosition().x + (*j)->width - (*i)->getPosition().x)/2 - (*j)->width/2, (*j)->getPosition().y - (*j)->height/2, (*j)->width, (*j)->height), *tiles))
-												{
-													(*j)->setPosition((*j)->getPosition().x - ((*j)->getPosition().x + (*j)->width - (*i)->getPosition().x)/2 + math::random(-1, 1, 0), (*j)->getPosition().y);
-												}
-											}
-										}
-									}else
-									{
-										break;
-									}
-								}else
-								{
-									//y
-									if (!(*i)->worldCollision && !(*j)->worldCollision)
-									{
-										if ((*i)->getPosition().y < (*j)->getPosition().y)
-										{
-											if (std::abs((*i)->velocity.y < std::abs((*j)->velocity.y)))
-											{
-												//(*i)->stop();
-												if (!(*i)->IntersectsWall(sf::Rect<int>((*i)->getPosition().x - (*i)->width/2, (*i)->getPosition().y - ((*i)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 - (*i)->height/2, (*i)->width, (*i)->height), *tiles))
-												{
-													(*i)->setPosition((*i)->getPosition().x, (*i)->getPosition().y - ((*i)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 + math::random(-1, 1, 0));
-												}
-											}else
-											{
-												//(*j)->stop();
-												if (!(*j)->IntersectsWall(sf::Rect<int>((*j)->getPosition().x - (*i)->width/2, (*j)->getPosition().y + ((*i)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 - (*j)->height/2, (*j)->width, (*j)->height), *tiles))
-												{
-													(*j)->setPosition((*j)->getPosition().x, (*j)->getPosition().y + ((*i)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 + math::random(-1, 1, 0));
+													//(*j)->stop();
+													if (!(*j)->IntersectsWall(sf::Rect<int>((*j)->getPosition().x - ((*j)->getPosition().x + (*j)->width - (*i)->getPosition().x)/2 - (*j)->width/2, (*j)->getPosition().y - (*j)->height/2, (*j)->width, (*j)->height), *tiles))
+													{
+														(*j)->setPosition((*j)->getPosition().x - ((*j)->getPosition().x + (*j)->width - (*i)->getPosition().x)/2 + math::random(-1, 1, 0), (*j)->getPosition().y);
+													}
 												}
 											}
 										}else
 										{
-											if (std::abs((*i)->velocity.y < std::abs((*j)->velocity.y)))
+											break;
+										}
+									}else
+									{
+										//y
+										if (!(*i)->worldCollision && !(*j)->worldCollision)
+										{
+											if ((*i)->getPosition().y < (*j)->getPosition().y)
 											{
-												//(*i)->stop();
-												if (!(*i)->IntersectsWall(sf::Rect<int>((*i)->getPosition().x - (*i)->width/2, (*i)->getPosition().y + ((*j)->getPosition().y + (*j)->height - (*i)->getPosition().y)/2 - (*i)->height/2, (*i)->width, (*i)->height), *tiles))
+												if (std::abs((*i)->velocity.y < std::abs((*j)->velocity.y)))
 												{
-													(*i)->setPosition((*i)->getPosition().x, (*i)->getPosition().y + ((*j)->getPosition().y + (*j)->height - (*i)->getPosition().y)/2 + math::random(-1, 1, 0));
+													//(*i)->stop();
+													if (!(*i)->IntersectsWall(sf::Rect<int>((*i)->getPosition().x - (*i)->width/2, (*i)->getPosition().y - ((*i)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 - (*i)->height/2, (*i)->width, (*i)->height), *tiles))
+													{
+														(*i)->setPosition((*i)->getPosition().x, (*i)->getPosition().y - ((*i)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 + math::random(-1, 1, 0));
+													}
+												}else
+												{
+													//(*j)->stop();
+													if (!(*j)->IntersectsWall(sf::Rect<int>((*j)->getPosition().x - (*i)->width/2, (*j)->getPosition().y + ((*i)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 - (*j)->height/2, (*j)->width, (*j)->height), *tiles))
+													{
+														(*j)->setPosition((*j)->getPosition().x, (*j)->getPosition().y + ((*i)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 + math::random(-1, 1, 0));
+													}
 												}
 											}else
 											{
-												//(*j)->stop();
-												if (!(*j)->IntersectsWall(sf::Rect<int>((*j)->getPosition().x - (*j)->width/2, (*j)->getPosition().y - ((*j)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 - (*j)->height/2, (*j)->width, (*j)->height), *tiles))
+												if (std::abs((*i)->velocity.y < std::abs((*j)->velocity.y)))
 												{
-													(*j)->setPosition((*j)->getPosition().x, (*j)->getPosition().y - ((*j)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 + math::random(-1, 1, 0));
+													//(*i)->stop();
+													if (!(*i)->IntersectsWall(sf::Rect<int>((*i)->getPosition().x - (*i)->width/2, (*i)->getPosition().y + ((*j)->getPosition().y + (*j)->height - (*i)->getPosition().y)/2 - (*i)->height/2, (*i)->width, (*i)->height), *tiles))
+													{
+														(*i)->setPosition((*i)->getPosition().x, (*i)->getPosition().y + ((*j)->getPosition().y + (*j)->height - (*i)->getPosition().y)/2 + math::random(-1, 1, 0));
+													}
+												}else
+												{
+													//(*j)->stop();
+													if (!(*j)->IntersectsWall(sf::Rect<int>((*j)->getPosition().x - (*j)->width/2, (*j)->getPosition().y - ((*j)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 - (*j)->height/2, (*j)->width, (*j)->height), *tiles))
+													{
+														(*j)->setPosition((*j)->getPosition().x, (*j)->getPosition().y - ((*j)->getPosition().y + (*i)->height - (*j)->getPosition().y)/2 + math::random(-1, 1, 0));
+													}
 												}
 											}
 										}
@@ -224,7 +227,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 					if (!(*i)->playerCollision)
 					{
 						float dist = math::distance((*i)->getPosition(), playerPosition);
-						if (!(*i)->worldCollision && dist > WIDTH/2 && dist <= 735 && ((*i)->path.size() <= 1 || (*i)->updatePath <= 0))
+						if (dist > WIDTH/2 && dist <= 735 && ((*i)->path.size() <= 1 || (*i)->updatePath <= 0))
 						{
 							std::auto_ptr<Mob> p_mob = (std::auto_ptr<Mob>)m_tree.m_branches[(*i)->m_branch].GetMobWithTarget((sf::Vector2i)playerPosition, *(*i));
 							if (p_mob.get() && p_mob->aggro && math::distance((*i)->getPosition(), playerPosition) > math::distance((*i)->getPosition(), p_mob->getPosition()))
@@ -232,9 +235,9 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i((p_mob->getPosition().x)/WIDTH, (p_mob->getPosition().y)/HEIGHT), false);
 							}else
 							{
-								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i((playerPosition.x + 16)/WIDTH, (playerPosition.y + 16)/HEIGHT), false);
+								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i((playerPosition.x + 10)/WIDTH, (playerPosition.y + 10)/HEIGHT), false);
 							}
-							(*i)->updatePath = 0.5f;
+							(*i)->updatePath = 1.f;
 							p_mob.release();
 						}
 					}

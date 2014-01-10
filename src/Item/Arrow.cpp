@@ -18,6 +18,22 @@ void projectile::Arrow::update(){
 				{
 					if (sf::Rect<int>((int)getPosition().x, (int)getPosition().y, 1, 1).intersects(sf::Rect<int>(x*32, y*32, 32, 32)))
 					{
+						/*sf::Vector2f vel = m_velocity;
+						if (std::abs(m_velocity.x) > std::abs(m_velocity.y))
+						{
+							m_velocity.x/= vel.x;
+							m_velocity.y/= vel.x;
+						}else
+						{
+							m_velocity.x/= vel.y;
+							m_velocity.y/= vel.y;
+						}*/
+						m_velocity.x*=-1;
+						m_velocity.y*=-1;
+						while (sf::Rect<int>((int)getPosition().x, (int)getPosition().y, 1, 1).intersects(sf::Rect<int>(x*32, y*32, 32, 32)))
+						{
+							move(m_velocity);
+						}
 						kill();
 					}
 				}

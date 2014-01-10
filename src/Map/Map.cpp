@@ -191,6 +191,13 @@ void gen::Map::Cave(){
 								p = cells[c].digpos();
 							}
 							tiles[p.x][p.y].type = 1;
+							if (math::random(1, 10) < 5)
+							{
+								tiles[p.x + math::random(-1, 1, 0)][p.y].type = 1;
+							}else
+							{
+								tiles[p.x][p.y + math::random(-1, 1, 0)].type = 1;
+							}
 							cells[c].x = p.x;
 							cells[c].y = p.y;
 							unsigned int s = math::random(1, 1000);
@@ -733,6 +740,7 @@ void gen::Map::ApplyID(){
 			}
 		}
 	}
+
 	for (unsigned int x = 1, y = 1; x < mapWidth - 1; x++)
 	{
 		for (y = 1; y < mapHeight - 1; y++)
@@ -770,7 +778,7 @@ void gen::Map::ApplyID(){
 }
 
 void gen::Map::update(sf::Time dt){
-	
+
 }
 
 void gen::Map::SetBounds(){
@@ -787,7 +795,6 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 	{
 		sprite.setTexture(*states.texture);
 	}
-
 	for (int x = bounds.left/WIDTH, y = bounds.top/HEIGHT; x < bounds.left/WIDTH + bounds.width/WIDTH + 1; x++)
 	{
 		for (y = bounds.top/HEIGHT; y < bounds.top/HEIGHT + bounds.height/HEIGHT + 2; y++)
@@ -796,8 +803,8 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 			{
 				if (tiles[x][y].type != 0)
 				{
-					sprite.setTextureRect(sf::IntRect(tiles[x][y].ID * WIDTH, 0*HEIGHT, WIDTH, HEIGHT));
-					sprite.setPosition((float)x*WIDTH, (float)y*HEIGHT);
+					sprite.setTextureRect(sf::Rect<int>(tiles[x][y].ID*WIDTH, 0*HEIGHT, WIDTH, HEIGHT));
+					sprite.setPosition(x*WIDTH, y*HEIGHT);
 					target.draw(sprite);
 				}
 			}

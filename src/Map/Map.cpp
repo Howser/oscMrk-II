@@ -868,9 +868,9 @@ void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
 	sf::Sprite sprite;
 	sprite.setTexture(m_mini_tileset);
 	sprite.setColor(sf::Color(100, 100, 100, 100));
-	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 0) ? X/WIDTH - 1280/WIDTH:0, y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; x < X/WIDTH + 1280/WIDTH; x++)
+	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 0) ? X/WIDTH - 1280/WIDTH:0; x < X/WIDTH + 1280/WIDTH; x++)
 	{
-		for (y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
+		for (unsigned int y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
 		{
 			if (x > 0 && x < tiles.size() && y > 0 && y < tiles[0].size()) 
 			{

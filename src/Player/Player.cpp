@@ -32,6 +32,9 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_lootInvRect(sf::Rect<int>(m_lootInventory.slots[0][0].getPosition().x, m_lootInventory.slots[0][0].getPosition().y, m_lootInventory.width*SLOTWIDTH + m_lootInventory.width*5, m_lootInventory.height*SLOTHEIGHT + m_lootInventory.width*5))
 {
 	m_sprite.setTexture(*(textures->getTexture(Textures::Player)));
+
+	m_overlay.setTexture(*(textures->getTexture(Textures::PlayerOverlay)));
+
 	m_mouseSlot.fontPtr = fonts->getFont(Fonts::Main);
 	setOrigin(16, 16);
 	m_inventory.slots[0][0].Items.push_back(GearItem(Items::Sword, *textures, -1));
@@ -448,6 +451,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 void Player::drawGUI(sf::RenderWindow* p_window){
+	p_window->draw(m_overlay);
 	if (inventoryState)
 	{
 		p_window->draw(m_inventory);

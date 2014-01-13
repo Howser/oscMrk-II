@@ -81,6 +81,8 @@ private:
 	std::vector<sf::Vector2f> m_path;
 	unsigned int m_health;
 
+	sf::Sprite m_overlay;
+
 	bool tabClicked;
 	bool leftMouseClicked, rightMouseClicked;
 	int mouseWheelDelta;

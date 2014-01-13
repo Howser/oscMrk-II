@@ -4,8 +4,12 @@
 oscMrk-II/Debug
 oscMrk-II/oscMrk-II.vcxproj.user
 oscMrk-II/oscMrk-II.vcxproj
+oscMrk-II.vcxproj
+oscMrk-II.vcxproj.user
 Debug
 bku
+*.user
+*.vcxproj
 
 #CPP SPECIFIC
 # compliled object files

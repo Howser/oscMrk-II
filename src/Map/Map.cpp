@@ -7,6 +7,12 @@ gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* 
 	m_mini_tileset(*textureHolder->getTexture(Textures::Mini_Map_sheet)),
 	mobManagerPtr(mobManager)
 {
+	m_mini_map_sprite.setTexture(m_mini_tileset);
+	m_mini_map_sprite.setColor(sf::Color(255, 255, 255, 100));
+	m_mini_map_sprite.setScale(0.25f, 0.25f);
+	m_mini_map_player.setPosition(1280/4/2, 1280/4/2);
+	m_mini_map_player.setSize(sf::Vector2f(4, 4));
+	m_mini_map_player.setFillColor(sf::Color::Magenta);
 	rect = sf::RectangleShape(sf::Vector2f(26, 26));
 	Gen();
 }
@@ -865,9 +871,6 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 }
 
 void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
-	sf::Sprite sprite;
-	sprite.setTexture(m_mini_tileset);
-	sprite.setColor(sf::Color(100, 100, 100, 100));
 	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 0) ? X/WIDTH - 1280/WIDTH:0; x < X/WIDTH + 1280/WIDTH; x++)
 	{
 		for (unsigned int y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
@@ -876,19 +879,14 @@ void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
 			{
 				if (tiles[x][y].m_explored && tiles[x][y].type != 0)
 				{
-					sprite.setTextureRect(sf::Rect<int>((tiles[x][y].type-1)*16, 0, 16, 16));
-					sprite.setScale(0.25f, 0.25f);
-					sprite.setPosition((x*4) - (X/WIDTH - 1280/WIDTH)*4, (y*4) - (Y/WIDTH - 1280/HEIGHT)*4);
-					ptr_window->draw(sprite);
+					m_mini_map_sprite.setTextureRect(sf::Rect<int>((tiles[x][y].type-1)*16, 0, 16, 16));
+					m_mini_map_sprite.setPosition((x*4) - (X/WIDTH - 1280/WIDTH)*4, (y*4) - (Y/WIDTH - 1280/HEIGHT)*4);
+					ptr_window->draw(m_mini_map_sprite);
 				}
 			}
 		}
 	}
-	sf::RectangleShape player;
-	player.setPosition(1280/4/2, 1280/4/2);
-	player.setSize(sf::Vector2f(4, 4));
-	player.setFillColor(sf::Color::Magenta);
-	ptr_window->draw(player);
+	ptr_window->draw(m_mini_map_player);
 }
 
 bool gen::Map::isPathable(int x, int y) const

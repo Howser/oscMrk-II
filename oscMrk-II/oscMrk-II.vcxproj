@@ -17,6 +17,7 @@
     <ClInclude Include="..\include\Gui\Button.h" />
     <ClInclude Include="..\include\Gui\Component.h" />
     <ClInclude Include="..\include\Gui\Container.h" />
+    <ClInclude Include="..\include\Gui\HealthBar.h" />
     <ClInclude Include="..\include\Gui\Label.h" />
     <ClInclude Include="..\include\Gui\Mouse.h" />
     <ClInclude Include="..\include\Gui\StatusBar.h" />
@@ -80,6 +81,7 @@
     <ClCompile Include="..\src\Gui\Button.cpp" />
     <ClCompile Include="..\src\Gui\Component.cpp" />
     <ClCompile Include="..\src\Gui\Container.cpp" />
+    <ClCompile Include="..\src\Gui\HealthBar.cpp" />
     <ClCompile Include="..\src\Gui\Label.cpp" />
     <ClCompile Include="..\src\Gui\Mouse.cpp" />
     <ClCompile Include="..\src\Gui\StatusBar.cpp" />
@@ -154,8 +156,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\suhg12simon\Documents\oscMrk-II\include;$(IncludePath)</IncludePath>
-    <SourcePath>C:\Users\suhg12simon\Documents\oscMrk-II\src;$(SourcePath)</SourcePath>
+    <IncludePath>C:\Users\h0wser\Documents\oscMrk-II\include;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\h0wser\Documents\oscMrk-II\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

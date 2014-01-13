@@ -20,6 +20,8 @@ namespace Textures
 		Tooltip,
 		DeleteItem,
 		PlayerOverlay,
+		HealthFull,
+		HealthEmpty,
 
 		///<summary>Items: 
 		Arrow,

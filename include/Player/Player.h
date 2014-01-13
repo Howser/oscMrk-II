@@ -20,6 +20,7 @@
 #include "Inventory\StackManager.h"
 #include "Inventory\Tooltip.h"
 #include "Inventory\DeleteItem.h"
+#include "Gui\HealthBar.h"
 
 #define TERMINAL_VELOCITY 250
 #define LOOT_DISTANCE 100
@@ -79,9 +80,10 @@ private:
 	sf::Rect<int> m_invRect, m_lootInvRect;
 	std::vector<std::vector<gen::Tile>>* ptr_tiles;
 	std::vector<sf::Vector2f> m_path;
-	unsigned int m_health;
+	int m_health;
 
 	sf::Sprite m_overlay;
+	gui::HealthBar m_healthbar;
 
 	bool tabClicked;
 	bool leftMouseClicked, rightMouseClicked;

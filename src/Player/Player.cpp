@@ -29,7 +29,8 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_tooltip(*textures),
 	m_deleteItem(*textures),
 	m_invRect(sf::Rect<int>(0, 0, m_inventory.width*SLOTWIDTH + m_inventory.width*5, m_inventory.height*SLOTHEIGHT + m_inventory.height*5)),
-	m_lootInvRect(sf::Rect<int>(m_lootInventory.slots[0][0].getPosition().x, m_lootInventory.slots[0][0].getPosition().y, m_lootInventory.width*SLOTWIDTH + m_lootInventory.width*5, m_lootInventory.height*SLOTHEIGHT + m_lootInventory.width*5))
+	m_lootInvRect(sf::Rect<int>(m_lootInventory.slots[0][0].getPosition().x, m_lootInventory.slots[0][0].getPosition().y, m_lootInventory.width*SLOTWIDTH + m_lootInventory.width*5, m_lootInventory.height*SLOTHEIGHT + m_lootInventory.width*5)),
+	m_healthbar(*(textures->getTexture(Textures::HealthEmpty)), *(textures->getTexture(Textures::HealthFull)))
 {
 	m_sprite.setTexture(*(textures->getTexture(Textures::Player)));
 
@@ -62,6 +63,8 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 		m_d_gear.back().setPosition(getPosition());
 	}
 	m_attackTimer.restart();
+	m_healthbar.setPosition(32, 564); // Exact as fuck
+	m_health = 100;
 }
 
 Player::~Player()
@@ -141,6 +144,12 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 		}
 	}
 	resetInputs();
+	m_healthbar.updateStatus((float)m_health / 100.f);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
+		m_health -= 1;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+		m_health += 1;
 }
 
 void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & textures){
@@ -452,7 +461,11 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 void Player::drawGUI(sf::RenderWindow* p_window){
+	
+	p_window->draw(m_healthbar);
 	p_window->draw(m_overlay);
+
+
 	if (inventoryState)
 	{
 		p_window->draw(m_inventory);

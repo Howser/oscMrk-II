@@ -255,6 +255,9 @@
     <ClInclude Include="..\include\Item\ProjectileManager.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Gui\HealthBar.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">
@@ -417,6 +420,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Item\ProjectileManager.cpp">
       <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Gui\HealthBar.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

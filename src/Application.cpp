@@ -30,17 +30,17 @@ void Application::run()
 	{
 		updateFrameCount(dt.getElapsedTime());
 
-		/*lag += dt.getElapsedTime();
-		dt.restart();*/
+		lag += dt.getElapsedTime();
+		dt.restart();
 
 		handleEvents();
 
-		/*while (lag >= updateTime)
+		while (lag >= updateTime)
 		{
-
+			update(updateTime);
 			lag -= updateTime;
-		}*/
-		update(updateTime);
+		}
+		
 		draw();
 	}
 }

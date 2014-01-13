@@ -40,7 +40,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	loadNormals();
 
 	Light l1(sf::Color(255, 200, 200, 255), sf::Vector3f(.5f, .5f, .1f), sf::Vector3f(.001f, 4.f, 1.f));
-	mLights.push_back(l1);
+	mLights	.push_back(l1);
 
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
 	context.mouse->setState(gui::Mouse::Attack);

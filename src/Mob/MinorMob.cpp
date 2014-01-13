@@ -160,11 +160,11 @@ void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f 
 	}
 	for (unsigned int x = (getPosition().x - width)/32 - 1, y = 0; x < (getPosition().x - width/2)/32 + 1; x++)
 	{
-		if (x > 0 && x < map->size() - 1)
+		if (x > 0 && x < (*map).size() - 1)
 		{
 			for (y = (getPosition().y - height)/32 - 1; y < (getPosition().y -height/2)/32 + 1; y++)
 			{
-				if (y > 0 && y < map[x].size() - 1)
+				if (y > 0 && y < (*map)[x].size() - 1)
 				{
 					if ((*map)[x][y].type != 1)
 					{
@@ -256,6 +256,7 @@ bool Mob::IntersectsWall(sf::Rect<int> const& position, std::vector<std::vector<
 void Mob::StickArrow(const projectile::Arrow & arrow){
 	sf::Sprite s_arrow;
 	s_arrow = arrow.m_sprite;
-	s_arrow.setPosition(getPosition());//(sf::Vector2<float>(std::abs(getPosition().x - arrow.getPosition().x), std::abs(getPosition().y - arrow.getPosition().y)));
+	s_arrow.setRotation(arrow.m_sprite.getRotation());
+	s_arrow.setPosition(sf::Vector2<float>(std::abs(getPosition().x - arrow.getPosition().x), std::abs(getPosition().y - arrow.getPosition().y)));
 	m_arrows.push_back(s_arrow);
 }

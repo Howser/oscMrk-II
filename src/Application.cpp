@@ -13,7 +13,6 @@ Application::Application()
 	mFrameTimer(),
 	mFrameCountText()
 {
-	mWindow.setFramerateLimit(60);
 	mWindow.setMouseCursorVisible(false);
 }
 
@@ -38,10 +37,9 @@ void Application::run()
 		while (lag >= updateTime)
 		{
 			update(updateTime);
+			draw();
 			lag -= updateTime;
 		}
-		
-		draw();
 	}
 }
 
@@ -58,11 +56,8 @@ void Application::update(sf::Time dt)
 void Application::draw()
 {
 	mWindow.clear(sf::Color::Black);
-
 	mStateStack.draw();
-
 	mWindow.setView(mWindow.getDefaultView());
-	mWindow.draw(mFrameCountText);
 	mWindow.draw(mMouse);
 	mWindow.display();
 }

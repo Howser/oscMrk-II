@@ -92,10 +92,6 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 void MinorMob::draw(sf::RenderTarget & target, sf::RenderStates states) const{
 	states.transform *= getTransform();
 	target.draw(sprite, states);
-	if (!m_arrows.empty())
-	{
-		states.transform *= m_arrows.begin()->getTransform();
-	}
 	for (int i = 0; i < m_arrows.size(); i++)
 	{
 		states.transform = m_arrows[i].getTransform();

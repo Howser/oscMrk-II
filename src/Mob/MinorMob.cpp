@@ -80,7 +80,10 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		if (!playerCollision)
 		{
 			followPath(deltaTime);
-			move(velocity);
+			if (!IntersectsWall(sf::Rect<int>(getPosition().x - width/2 + velocity.x, getPosition().y - height/2 + velocity.y, width, height), *map))
+			{
+				move(velocity);
+			}
 			for (int i = 0; i < m_arrows.size(); i++)
 			{
 				m_arrows[i].move(velocity);
@@ -171,8 +174,49 @@ void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f 
 						{
 							worldCollision = false;
 						}
-						if (sf::IntRect(getPosition().x - width/2 + velocity.x, getPosition().y + velocity.y, width, height/2).intersects(sf::IntRect(x*32, y*32, 32, 32)))
+						if (sf::IntRect(getPosition().x - width/2 + 2, getPosition().y - height/2 + 2, width - 4, height - 4).intersects(sf::IntRect(x*32, y*32, 32, 32)))
 						{
+							//int d_up, d_down, d_left, d_right;
+							//d_up = (getPosition().y - height/2) - (y*32);
+							//d_down = (y*32 + 32) - (getPosition().y + height/2);
+							//d_left = (getPosition().x - width/2) - (x*32);
+							//d_right = (x*32 + 32) - (getPosition().x + width/2);
+							//if (d_up > 0)
+							//{
+							//	if (d_up > d_left && d_up > d_right)
+							//	{
+							//		//move down
+							//		setPosition(getPosition().x, getPosition().y + std::abs(d_down));
+							//		return;
+							//	}
+							//}
+							//if (d_down > 0)
+							//{
+							//	if (d_down > d_left && d_down > d_right)
+							//	{
+							//		//move up
+							//		setPosition(getPosition().x, getPosition().y - std::abs(d_up));
+							//		return;
+							//	}
+							//}
+							//if (d_left > 0)
+							//{
+							//	if (d_left > d_up && d_left > d_down)
+							//	{
+							//		//move right
+							//		setPosition(getPosition().x + std::abs(d_right), getPosition().y);
+							//		return;
+							//	}
+							//}
+							//if (d_right > 0)
+							//{
+							//	if (d_right > d_up && d_right > d_down)
+							//	{
+							//		//move left
+							//		setPosition(getPosition().x - std::abs(d_left), getPosition().y);
+							//		return;
+							//	}
+							//}
 							if (getPosition().x - width/2 + velocity.x > (x*32 + 16))
 							{
 								//(32 - std::abs(getPosition().x - width/2 - x*32))
@@ -198,7 +242,6 @@ void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f 
 		}
 	}
 }
-
 void Mob::followPath(sf::Time& dt){
 	if (!path.empty())
 	{

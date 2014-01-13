@@ -85,5 +85,8 @@ namespace gen{
 
 		sf::Rect<int> bounds;
 		void draw(sf::RenderTarget& target, sf::RenderStates states)const;
+
+		sf::Sprite m_mini_map_tiles;
+		sf::RectangleShape m_mini_map_player;
 	};
 }

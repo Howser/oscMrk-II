@@ -37,9 +37,10 @@ void Application::run()
 		while (lag >= updateTime)
 		{
 			update(updateTime);
-			draw();
 			lag -= updateTime;
+			
 		}
+		draw();
 	}
 }
 

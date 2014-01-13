@@ -174,7 +174,7 @@ void gen::Map::Cave(){
 	cells.push_back(Cell(mapWidth/2, mapHeight/2 + 7));
 	cells.push_back(Cell(mapWidth/2 - 7, mapHeight/2));
 	cells.push_back(Cell(mapWidth/2 + 7, mapHeight/2));
-	for (unsigned int a = 0; a < 35; a++)
+	for (unsigned int a = 0; a < 75; a++)
 	{
 		for (unsigned int c = 0; c < cells.size(); c++)
 		{
@@ -192,20 +192,13 @@ void gen::Map::Cave(){
 								p = cells[c].digpos();
 							}
 							tiles[p.x][p.y].type = 1;
-							if (math::random(1, 10) < 5)
-							{
-								tiles[p.x + math::random(-1, 1, 0)][p.y].type = 1;
-							}else
-							{
-								tiles[p.x][p.y + math::random(-1, 1, 0)].type = 1;
-							}
 							cells[c].x = p.x;
 							cells[c].y = p.y;
 							unsigned int s = math::random(1, 1000);
 							if (s <= 130)
 							{
 								sf::Vector2f pos(cells[c].x, cells[c].y);
-								if (s <= 25 && math::distance(pos, rooms[0].getCenter()) > 50)
+								if (mobSpawners.size() < 15 && s <= 25 && math::distance(pos, rooms[0].getCenter()) > 50)
 								{
 									MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::test, math::random(1, 2), TYPE::special);
 									mobSpawners.push_back(spawner);
@@ -685,9 +678,15 @@ void gen::Map::ApplyID(){
 					{
 						for (int xx = x; xx < x + wall; xx++)
 						{
-							if (tiles[xx][y].type != 1)
+							if (xx < 150)
 							{
-								tiles[xx][y].type = 2;
+								if (tiles[xx][y].type != 1)
+								{
+									tiles[xx][y].type = 2;
+								}else
+								{
+									break;
+								}
 							}else
 							{
 								break;
@@ -711,9 +710,15 @@ void gen::Map::ApplyID(){
 					{
 						for (int yy = y; yy < wall + y; yy++)
 						{
-							if (tiles[x][yy].type != 1)
+							if (yy < 150)
 							{
-								tiles[x][yy].type = 2;
+								if (tiles[x][yy].type != 1)
+								{
+									tiles[x][yy].type = 2;
+								}else
+								{
+									break;
+								}
 							}else
 							{
 								break;
@@ -779,7 +784,17 @@ void gen::Map::ApplyID(){
 }
 
 void gen::Map::update(sf::Time dt){
-
+	SetBounds();
+	for (int x = bounds.left/WIDTH, y = bounds.top/HEIGHT; x < bounds.left/WIDTH + bounds.width/WIDTH + 1; x++)
+	{
+		for (y = bounds.top/HEIGHT; y < bounds.top/HEIGHT + bounds.height/HEIGHT + 2; y++)
+		{
+			if (x < size.x && x >= 0 && y < size.y && y >= 0)
+			{
+				tiles[x][y].m_explored = true;
+			}
+		}
+	}
 }
 
 void gen::Map::SetBounds(){
@@ -857,9 +872,9 @@ void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
 	{
 		for (y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
 		{
-			if (x > 0 && x < tiles.size() && y > 0 && y < tiles[0].size())
+			if (x > 0 && x < tiles.size() && y > 0 && y < tiles[0].size()) 
 			{
-				if (tiles[x][y].type != 0)
+				if (tiles[x][y].m_explored && tiles[x][y].type != 0)
 				{
 					sprite.setTextureRect(sf::Rect<int>((tiles[x][y].type-1)*16, 0, 16, 16));
 					sprite.setScale(0.25f, 0.25f);

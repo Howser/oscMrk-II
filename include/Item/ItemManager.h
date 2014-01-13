@@ -171,7 +171,7 @@ static float GetSpeed(Items item){
 		return 1.f;
 		break;
 	case Bow:
-		return 0.7f;
+		return 0.4f;
 		break;
 	default:
 		return 0;

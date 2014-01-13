@@ -1,6 +1,6 @@
 #include "Mob\MinorMob.h"
 MinorMob::MinorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>* p_deadMobs){
-	startPos = getPosition();
+	startPos = (sf::Vector2<int>)getPosition();
 	/*speed = GetSpeed(type);
 	attackSpeed = GetAttackSpeed(type);
 	damage = GetDamage(type);
@@ -32,7 +32,7 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	type = mob.type;
 	ID = mob.ID;
 	setPosition(mob.getPosition());
-	startPos = getPosition();
+	startPos = (sf::Vector2<int>)getPosition();
 	/*speed = GetSpeed(type);
 	attackSpeed = GetAttackSpeed(type);
 	damage = GetDamage(type);
@@ -81,6 +81,10 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		{
 			followPath(deltaTime);
 			move(velocity);
+			for (int i = 0; i < m_arrows.size(); i++)
+			{
+				m_arrows[i].move(velocity);
+			}
 		}
 	}
 }
@@ -88,6 +92,15 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 void MinorMob::draw(sf::RenderTarget & target, sf::RenderStates states) const{
 	states.transform *= getTransform();
 	target.draw(sprite, states);
+	if (!m_arrows.empty())
+	{
+		states.transform *= m_arrows.begin()->getTransform();
+	}
+	for (int i = 0; i < m_arrows.size(); i++)
+	{
+		states.transform = m_arrows[i].getTransform();
+		target.draw(m_arrows[i], states);
+	}
 }
 
 void MinorMob::takeDamage(int damage){
@@ -127,7 +140,7 @@ void MinorMob::die(){
 	p_deadMobs->push_back(DeadMob(&sprite, sf::Vector2<float>(getPosition().x - width/2, getPosition().y - height/2), &type));
 }
 
-bool MinorMob::operator=(MinorMob const& rhs){
+bool MinorMob::operator ==(MinorMob const& rhs){
 	return (ID == rhs.ID);
 }
 
@@ -238,4 +251,11 @@ bool Mob::IntersectsWall(sf::Rect<int> const& position, std::vector<std::vector<
 		}
 	}
 	return false;
+}
+
+void Mob::StickArrow(const projectile::Arrow & arrow){
+	sf::Sprite s_arrow;
+	s_arrow = arrow.m_sprite;
+	s_arrow.setPosition(getPosition());//(sf::Vector2<float>(std::abs(getPosition().x - arrow.getPosition().x), std::abs(getPosition().y - arrow.getPosition().y)));
+	m_arrows.push_back(s_arrow);
 }

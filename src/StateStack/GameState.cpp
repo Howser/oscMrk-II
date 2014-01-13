@@ -39,10 +39,8 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-	Light l1(sf::Color(255, 200, 200, 255), sf::Vector3f(.5f, .5f, 0.1f), sf::Vector3f(.1f, 4.f, 10.f));
-	Light l2(sf::Color(0, 40, 255, 255), sf::Vector3f(.7f, .1f, .05f), sf::Vector3f(.4, 3.f, 30.f));;
+	Light l1(sf::Color(255, 200, 200, 255), sf::Vector3f(.5f, .5f, .1f), sf::Vector3f(.001f, 4.f, 1.f));
 	mLights.push_back(l1);
-	//mLights.push_back(l2);
 
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
 	context.mouse->setState(gui::Mouse::Attack);

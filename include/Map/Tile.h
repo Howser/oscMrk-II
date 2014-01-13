@@ -12,5 +12,6 @@ namespace gen
 		short y;
 		short type;
 		short ID;
+		bool m_explored;
 	};
 }

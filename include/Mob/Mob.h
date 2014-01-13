@@ -16,6 +16,7 @@
 #include "Item\MiscItem.h"
 #include "Mob\MobTypeManager.h"
 #include "Mob\DeadMob.h"
+#include "Item\Arrow.h"
 
 #define TERMINAL_VELOCITY 250
 
@@ -36,19 +37,23 @@ public:
 	TextureHolder* textureHolder;
 	
 	sf::Vector2f velocity;
-	sf::Vector2f startPos;
+	sf::Vector2i startPos;
 
 	///<summary>Used to relocate the mob in the tree.</summary>
 	sf::Vector2f prevPos;
 	
+	std::vector<sf::Sprite> m_arrows;
+
 	std::vector<sf::Vector2i> path;
 	int ID, width, height, health;//, damage, aggroDist, armor, speed, attackSpeed;
 	int m_branch;
 	float timeSincePath;
+
 	///<summary>Get a new path to the player when this is <= 0.</summary>
 	float updatePath;
 	void checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f & playerPosition);
 	virtual void die() = 0;
+	void StickArrow(const projectile::Arrow & arrow);
 protected:
 	void followPath(sf::Time& dt);
 

@@ -13,6 +13,7 @@ Application::Application()
 	mFrameTimer(),
 	mFrameCountText()
 {
+	mWindow.setFramerateLimit(60);
 	mWindow.setMouseCursorVisible(false);
 }
 
@@ -29,16 +30,17 @@ void Application::run()
 	{
 		updateFrameCount(dt.getElapsedTime());
 
-		lag += dt.getElapsedTime();
-		dt.restart();
+		/*lag += dt.getElapsedTime();
+		dt.restart();*/
 
 		handleEvents();
 
-		while (lag >= updateTime)
+		/*while (lag >= updateTime)
 		{
-			update(updateTime);
+
 			lag -= updateTime;
-		}
+		}*/
+		update(updateTime);
 		draw();
 	}
 }
@@ -106,7 +108,7 @@ void Application::loadResources()
 	{
 		// Textures
 		mTextures.loadTexture(Textures::Titlescreen, "resources/graphics/titlescreen.png");
-		mTextures.loadTexture(Textures::Mini_Map_sheet, "resources/graphics/mini.png");
+		mTextures.loadTexture(Textures::Mini_Map_sheet, "resources/graphics/map/mini.png");
 		mTextures.loadTexture(Textures::Inventory, "resources/graphics/inventoryyo.png");
 		mTextures.loadTexture(Textures::Tilesheet, "resources/graphics/map/tileset.png");
 		mTextures.loadTexture(Textures::Button, "resources/graphics/gui/baseButton.png");

@@ -27,6 +27,7 @@ void MobManager::Add(Mob & mob){
 		major_mob.lootTable = LootTables[major_mob.type];
 		majorMobs.push_back(major_mob);
 	}
+	std::cout << "x: " << mob.startPos.x << "     y: " << mob.startPos.y << "\n";
 }
 
 void MobManager::Build_Tree(){
@@ -170,10 +171,13 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 				{
 					if ((*i)->aggro)
 					{
-						if (math::distance((*i)->getPosition(), playerPosition) >= GetUnAggroDist((*i)->type))
+						(*i)->path = pathFinder->GetPath(sf::Vector2<int>((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2<int>((*i)->startPos.x/WIDTH, (*i)->startPos.y/HEIGHT), true);
+						for (int j = 0; j < (*i)->path.size(); j++)
 						{
-							(*i)->aggro = false;
+							(*i)->path[j].x*=WIDTH;
+							(*i)->path[j].y*=HEIGHT;
 						}
+						(*i)->aggro = false;
 					}
 				}
 				if (!(*i)->aggro)
@@ -185,8 +189,8 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 						{
 							if (math::random(1, 100) <= 100)
 							{
-								std::vector<gen::Tile> availableTiles;
-								for (int x = (*i)->startPos.x/WIDTH - GetPathingDistance((*i)->type), y = (*i)->startPos.y/HEIGHT - GetPathingDistance((*i)->type); x < (*i)->startPos.x/WIDTH + GetPathingDistance((*i)->type); x++)
+								std::vector<sf::Vector2<int>> availableTiles;
+								for (int x = (*i)->startPos.x/WIDTH - GetPathingDistance((*i)->type), y = (*i)->startPos.y - GetPathingDistance((*i)->type); x < (*i)->startPos.x/WIDTH + GetPathingDistance((*i)->type); x++)
 								{
 									for (y = (*i)->startPos.y/HEIGHT - GetPathingDistance((*i)->type); y < (*i)->startPos.y/HEIGHT + GetPathingDistance((*i)->type); y++)
 									{
@@ -196,7 +200,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 											{
 												if ((*tiles)[x][y].type == 1)
 												{
-													availableTiles.push_back((*tiles)[x][y]);
+													availableTiles.push_back(sf::Vector2<int>(x, y));
 												}
 											}
 										}
@@ -208,9 +212,8 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 									(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i(availableTiles[index].x, availableTiles[index].y), true);
 									for (int j = 0; j < (*i)->path.size(); j++)
 									{
-										(*i)->path[j]*=WIDTH;
-										(*i)->path[j].x += WIDTH/2;
-										(*i)->path[j].y += HEIGHT/2;
+										(*i)->path[j].x*=WIDTH;
+										(*i)->path[j].y*=HEIGHT;
 									}
 									availableTiles.clear();
 								}

@@ -10,5 +10,5 @@ public:
 	void takeDamage(int damage);
 	void dealDamage(int* health);
 	void die();
-	bool operator=(MinorMob const& rhs);
+	bool operator==(MinorMob const& rhs);
 };

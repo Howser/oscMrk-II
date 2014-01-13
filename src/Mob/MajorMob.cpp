@@ -1,7 +1,7 @@
 #include "Mob\MajorMob.h"
 
 MajorMob::MajorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>* p_deadMobs){
-	startPos = getPosition();
+	startPos = (sf::Vector2<int>)getPosition();
 	//speed = GetSpeed(type);
 	//attackSpeed = GetAttackSpeed(type);
 	//damage = GetDamage(type);
@@ -35,7 +35,7 @@ MajorMob::MajorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	type = mob.type;
 	ID = mob.ID;
 	setPosition(mob.getPosition());
-	startPos = getPosition();
+	startPos = (sf::Vector2<int>)getPosition();
 	/*speed = GetSpeed(type);
 	attackSpeed = GetAttackSpeed(type);
 	damage = GetDamage(type);

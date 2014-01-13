@@ -10,12 +10,13 @@ void ProjectileManager::update(){
 		if (!m_arrows[i].dead)
 		{
 			m_arrows[i].update();
-			// For hitting mobs
 			Mob* mob = m_mobManager->getAtPosition(m_arrows[i].getPosition());
 			if (mob != nullptr && !mob->dead)
 			{
 				mob->takeDamage(m_arrows[i].m_damage);
+				mob->StickArrow(m_arrows[i]);
 				m_arrows[i].kill();
+				m_arrows.erase(m_arrows.begin() + i);
 			}
 		}
 	}

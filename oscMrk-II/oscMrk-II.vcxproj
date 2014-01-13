@@ -154,8 +154,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\suhg12patrik\Documents\Visual Studio 2012\Projects\oscMrk-II\include;$(IncludePath)</IncludePath>
-    <SourcePath>C:\Users\suhg12patrik\Documents\Visual Studio 2012\Projects\oscMrk-II\src;$(SourcePath)</SourcePath>
+    <IncludePath>C:\Users\Mntndew\Documents\Visual Studio 2012\Projects\oscMrk-II\include;$(IncludePath)</IncludePath>
+    <SourcePath>C:\Users\Mntndew\Documents\Visual Studio 2012\Projects\oscMrk-II\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

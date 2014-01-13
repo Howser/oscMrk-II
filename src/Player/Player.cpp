@@ -528,6 +528,7 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 		default:
 			break;
 		}
+		stop();
 	}
 }
 

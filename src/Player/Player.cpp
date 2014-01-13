@@ -117,11 +117,11 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 			float angle = vec::angle(m_velocity);
 
 			// set the animation (offset angle by 23 to make it not start at 0) 
-			int animation = (angle+23)/45;
+			int animation = (angle+45)/90;
 
 			// Constrain the animation
-			if (animation > 7)
-				animation = 7;
+			if (animation > 3)
+				animation = 3;
 			if (animation < 0)
 				animation = 0;
 

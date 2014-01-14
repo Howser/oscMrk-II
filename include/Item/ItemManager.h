@@ -88,6 +88,9 @@ static int StackSize(Items const& item){
 	case Mace:
 		return 1;
 		break;
+	case TestSpell:
+		return 20;
+		break;
 	default:
 		return 20;
 		break;
@@ -139,6 +142,9 @@ static itemType GetType(Items item){
 	case Mace:
 		return Gear;
 		break;
+	case TestSpell:
+		return Gear;
+		break;
 	default:
 		return Normal;
 		break;
@@ -154,6 +160,9 @@ static int GetDamage(Items item){
 		return 5;
 		break;
 	case Bow:
+		return 5;
+		break;
+	case TestSpell:
 		return 5;
 		break;
 	default:
@@ -172,6 +181,9 @@ static float GetSpeed(Items item){
 		break;
 	case Bow:
 		return 0.4f;
+		break;
+	case TestSpell:
+		return 0.2f;
 		break;
 	default:
 		return 0;
@@ -260,6 +272,9 @@ static eGearSlot GetSlot(Items item){
 	case Mace:
 		return TwoHand;
 		break;
+	case TestSpell:
+		return TwoHand;
+		break;
 	default:
 		return NoSlot;
 		break;
@@ -345,15 +360,18 @@ static std::string GetStats(Items const& item, sf::Vector2i* size){
 }
 
 namespace spell{
-	/*static void use(const Items & item, Mob* ptr_mob){
-		if (IsSpell(item))
-		{
-			switch (item)
-			{
-			default:
+	static void update(const Items & p_item, sf::Vector2<float>* ptr_velocity){
 
-				break;
-			}
-		}
+	}
+	/*static void use(const Items & item, Mob* ptr_mob){
+	if (IsSpell(item))
+	{
+	switch (item)
+	{
+	default:
+
+	break;
+	}
+	}
 	}*/
 }

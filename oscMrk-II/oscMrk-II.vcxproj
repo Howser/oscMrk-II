@@ -35,7 +35,9 @@
     <ClInclude Include="..\include\Item\ItemManager.h" />
     <ClInclude Include="..\include\Item\LootItem.h" />
     <ClInclude Include="..\include\Item\MiscItem.h" />
+    <ClInclude Include="..\include\Item\Projectile.h" />
     <ClInclude Include="..\include\Item\ProjectileManager.h" />
+    <ClInclude Include="..\include\Item\Spell.h" />
     <ClInclude Include="..\include\Map\Cell.h" />
     <ClInclude Include="..\include\Map\HealingWell.h" />
     <ClInclude Include="..\include\Map\Map.h" />
@@ -97,6 +99,7 @@
     <ClCompile Include="..\src\Item\LootItem.cpp" />
     <ClCompile Include="..\src\Item\MiscItem.cpp" />
     <ClCompile Include="..\src\Item\ProjectileManager.cpp" />
+    <ClCompile Include="..\src\Item\Spell.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Map\Cell.cpp" />
     <ClCompile Include="..\src\Map\HealingWell.cpp" />

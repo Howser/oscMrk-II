@@ -2,13 +2,14 @@
 
 #include <SFML\Graphics\Sprite.hpp>
 #include <SFML\Graphics\Transformable.hpp>
-#include <SFML\Graphics\Drawable.hpp>
+#include <SFML\Graphics\Drawable.hpp> 
 #include <SFML\System\Time.hpp>
 
 #include <vector>
 
 #include "Item\ProjectileManager.h"
 #include "Item\Arrow.h"
+#include "Item\Spell.h"
 #include "ResourceHolders\TextureHolder.h"
 #include "ResourceHolders\FontHolder.h"
 #include "Animation\Animation.h"
@@ -21,7 +22,7 @@
 #include "Inventory\Tooltip.h"
 #include "Inventory\DeleteItem.h"
 
-#define TERMINAL_VELOCITY 250
+#define SPEED 250
 #define LOOT_DISTANCE 100
 #define MELEE_DISTANCE 30
 

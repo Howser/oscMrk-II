@@ -255,6 +255,12 @@
     <ClInclude Include="..\include\Item\ProjectileManager.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Item\Spell.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\Projectile.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">
@@ -416,6 +422,9 @@
       <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Item\ProjectileManager.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\Spell.cpp">
       <Filter>Source Files\Item</Filter>
     </ClCompile>
   </ItemGroup>

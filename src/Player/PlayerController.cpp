@@ -26,7 +26,6 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 		}
 		if (!targetPtr->dead && playerPtr->isInRange(targetPtr))
 		{
-			//some sort of timer or something
 			playerPtr->attack(window, targetPtr);
 			targetPtr->stop();
 			targetPtr = nullptr;

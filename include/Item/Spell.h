@@ -1,6 +1,7 @@
 #pragma once
 #include "Map\Tile.h"
 #include "Item\Projectile.h"
+#include "ItemManager.h"
 
 #include <vector>
 #include <SFML\System\Vector2.hpp>
@@ -12,10 +13,10 @@
 #define SPEED 10
 
 namespace projectile{
-	class Arrow : public Projectile{
+	class Spell : public Projectile{
 	public:
-		Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage, const Items & p_item);
-		~Arrow();
+		Spell(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage, const Items & p_item);
+		~Spell();
 		void update();
 		void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 		void kill();

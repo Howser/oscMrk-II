@@ -1,13 +1,20 @@
 #include "Item\Arrow.h"
 
-projectile::Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage) : p_tiles(ptr_tiles), m_sprite(p_sprite), dead(false), m_damage(p_damage){
-	m_velocity = sf::Vector2f(std::cos(angle)*ARROW_SPEED, std::sin(angle)*ARROW_SPEED);
+using namespace projectile;
+
+Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage, const Items & p_item){
+	m_velocity = sf::Vector2f(std::cos(angle)*SPEED, std::sin(angle)*SPEED);
+	m_sprite = p_sprite;
 	m_sprite.setOrigin(24, 1);
 	m_sprite.setRotation(angle*180/3.14);
+	p_tiles = ptr_tiles;
+	dead = false;
+	m_damage = p_damage;
+	m_item = p_item;
 }
-projectile::Arrow::~Arrow(){}
+Arrow::~Arrow(){}
 
-void projectile::Arrow::update(){
+void Arrow::update(){
 	for (unsigned int x = getPosition().x/32 - 1, y = getPosition().y/32  - 1; x < getPosition().x/32 + 1; x++)
 	{
 		for (y = getPosition().y/32  - 1; y < getPosition().y/32 + 1; y++)
@@ -30,13 +37,13 @@ void projectile::Arrow::update(){
 	move(m_velocity);
 }
 
-void projectile::Arrow::kill(){
+void Arrow::kill(){
 	dead = true;
 	m_velocity.x = 0;
 	m_velocity.y = 0;
 }
 
-void projectile::Arrow::draw(sf::RenderTarget & target, sf::RenderStates states)const{
+void Arrow::draw(sf::RenderTarget & target, sf::RenderStates states)const{
 	states.transform = getTransform();
 	target.draw(m_sprite, states);
 }

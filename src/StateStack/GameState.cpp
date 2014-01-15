@@ -20,6 +20,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
 	m_projectile_manager = ProjectileManager(&mobManager);
+	m_light_manager = LightManager();
 	if (mMap.rooms.size() > 0)
 	{
 		mView.setCenter(sf::Vector2f(mMap.rooms[0].x*32, mMap.rooms[0].y*32));
@@ -39,8 +40,9 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-	Light l1(sf::Color(255, 200, 200, 255), sf::Vector3f(.5f, .5f, .1f), sf::Vector3f(.001f, 4.f, 1.f));
-	mLights	.push_back(l1);
+	Light l1(sf::Color(255, 200, 200, 255), sf::Vector3f(0.5f, 0.5f, .1f), sf::Vector3f(.001f, 4.f, 1.f), true);
+	Light l2(sf::Color(230, 150, 75, 255), sf::Vector3f(mPlayer.getPosition().x, mPlayer.getPosition().y, .1f), sf::Vector3f(.001f, 3.1f, 0.001f), false);
+	m_light_manager.m_lights.push_back(l2);
 
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
 	context.mouse->setState(gui::Mouse::Attack);
@@ -80,6 +82,8 @@ GameState::~GameState()
 bool GameState::update(sf::Time dt)
 {
 	mView.setCenter(mPlayer.getPosition());
+	std::cout << std::to_string(mView.getCenter().x) << "\n";
+	m_light_manager.update(&mView);
 	if (!mPlayer.inventoryState)
 	{
 		mPlayerController.update(dt, *getContext().window, mView);
@@ -148,7 +152,7 @@ void GameState::draw()
 	mShader.setParameter("Resolution", window->getSize().x,  window->getSize().y);
 	mShader.setParameter("AmbientColor", .1, .1, .1, .5);
 
-	passLightsToShader(&mShader, mLights);
+	passLightsToShader(&mShader, m_light_manager.m_lights, &mView);
 
 	sf::Sprite sprite(mDiffuseRender.getTexture());
 	window->setView(window->getDefaultView());

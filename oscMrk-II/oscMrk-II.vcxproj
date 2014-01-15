@@ -13,7 +13,8 @@
   <ItemGroup>
     <ClInclude Include="..\include\Animation\Animation.h" />
     <ClInclude Include="..\include\Application.h" />
-    <ClInclude Include="..\include\Effects\Light.h" />
+    <ClInclude Include="..\include\Effects\Lights\Light.h" />
+    <ClInclude Include="..\include\Effects\Lights\LightManager.h" />
     <ClInclude Include="..\include\Gui\Button.h" />
     <ClInclude Include="..\include\Gui\Component.h" />
     <ClInclude Include="..\include\Gui\Container.h" />
@@ -36,13 +37,15 @@
     <ClInclude Include="..\include\Item\LootItem.h" />
     <ClInclude Include="..\include\Item\MiscItem.h" />
     <ClInclude Include="..\include\Item\ProjectileManager.h" />
-    <ClInclude Include="..\include\Map\Cell.h" />
-    <ClInclude Include="..\include\Map\HealingWell.h" />
+    <ClInclude Include="..\include\Item\Spell.h" />
     <ClInclude Include="..\include\Map\Map.h" />
-    <ClInclude Include="..\include\Map\MapManager.h" />
-    <ClInclude Include="..\include\Map\MobSpawner.h" />
-    <ClInclude Include="..\include\Map\Path.h" />
-    <ClInclude Include="..\include\Map\Room.h" />
+    <ClInclude Include="..\include\Map\Properties\Cell.h" />
+    <ClInclude Include="..\include\Map\Properties\HealingWell.h" />
+    <ClInclude Include="..\include\Map\Properties\MapManager.h" />
+    <ClInclude Include="..\include\Map\Properties\MobSpawner.h" />
+    <ClInclude Include="..\include\Map\Properties\Path.h" />
+    <ClInclude Include="..\include\Map\Properties\Room.h" />
+    <ClInclude Include="..\include\Map\Properties\Torch.h" />
     <ClInclude Include="..\include\Map\Tile.h" />
     <ClInclude Include="..\include\Math\GeneralMath.h" />
     <ClInclude Include="..\include\Math\VectorMath.h" />
@@ -76,7 +79,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\Animation\Animation.cpp" />
     <ClCompile Include="..\src\Application.cpp" />
-    <ClCompile Include="..\src\Effects\Light.cpp" />
+    <ClCompile Include="..\src\Effects\Lights\Light.cpp" />
+    <ClCompile Include="..\src\Effects\Lights\LightManager.cpp" />
     <ClCompile Include="..\src\Gui\Button.cpp" />
     <ClCompile Include="..\src\Gui\Component.cpp" />
     <ClCompile Include="..\src\Gui\Container.cpp" />
@@ -97,13 +101,15 @@
     <ClCompile Include="..\src\Item\LootItem.cpp" />
     <ClCompile Include="..\src\Item\MiscItem.cpp" />
     <ClCompile Include="..\src\Item\ProjectileManager.cpp" />
+    <ClCompile Include="..\src\Item\Spell.cpp" />
     <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\Map\Cell.cpp" />
-    <ClCompile Include="..\src\Map\HealingWell.cpp" />
     <ClCompile Include="..\src\Map\Map.cpp" />
-    <ClCompile Include="..\src\Map\MobSpawner.cpp" />
-    <ClCompile Include="..\src\Map\Path.cpp" />
-    <ClCompile Include="..\src\Map\Room.cpp" />
+    <ClCompile Include="..\src\Map\Properties\Cell.cpp" />
+    <ClCompile Include="..\src\Map\Properties\HealingWell.cpp" />
+    <ClCompile Include="..\src\Map\Properties\MobSpawner.cpp" />
+    <ClCompile Include="..\src\Map\Properties\Path.cpp" />
+    <ClCompile Include="..\src\Map\Properties\Room.cpp" />
+    <ClCompile Include="..\src\Map\Properties\Torch.cpp" />
     <ClCompile Include="..\src\Map\Tile.cpp" />
     <ClCompile Include="..\src\Math\GeneralMath.cpp" />
     <ClCompile Include="..\src\Mob\DeadMob.cpp" />

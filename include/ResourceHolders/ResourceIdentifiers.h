@@ -19,6 +19,7 @@ namespace Textures
 		StackManager,
 		Tooltip,
 		DeleteItem,
+		PlayerOverlay,
 
 		///<summary>Items: 
 		Arrow,

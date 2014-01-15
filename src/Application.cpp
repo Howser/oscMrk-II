@@ -115,6 +115,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::StackManager, "resources/graphics/gui/stackManager.png");
 		mTextures.loadTexture(Textures::Tooltip, "resources/graphics/gui/tooltip.png");
 		mTextures.loadTexture(Textures::DeleteItem, "resources/graphics/gui/deleteItem.png");
+		mTextures.loadTexture(Textures::PlayerOverlay, "resources/graphics/player/overlay.png");
 
 #pragma region Mob Textures
 		mTextures.loadTexture(Textures::TestMob, "resources/graphics/Mob/test.png");

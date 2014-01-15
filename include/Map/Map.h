@@ -10,11 +10,11 @@
 #include "ResourceHolders\ResourceIdentifiers.h"
 #include "Math\GeneralMath.h"
 #include "Tile.h"
-#include "Room.h"
-#include "MapManager.h"
-#include "HealingWell.h"
-#include "MobSpawner.h"
-#include "Cell.h"
+#include "Properties\Room.h"
+#include "Properties\MapManager.h"
+#include "Properties\HealingWell.h"
+#include "Properties\MobSpawner.h"
+#include "Properties\Cell.h"
 
 namespace gen{
 	class Map : public sf::Drawable
@@ -86,7 +86,7 @@ namespace gen{
 		sf::Rect<int> bounds;
 		void draw(sf::RenderTarget& target, sf::RenderStates states)const;
 
-		sf::Sprite m_mini_map_tiles;
+		sf::Sprite m_mini_map_sprite;
 		sf::RectangleShape m_mini_map_player;
 	};
 }

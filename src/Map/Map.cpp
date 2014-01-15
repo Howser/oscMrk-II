@@ -7,14 +7,13 @@ gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* 
 	m_mini_tileset(*textureHolder->getTexture(Textures::Mini_Map_sheet)),
 	mobManagerPtr(mobManager)
 {
-	rect = sf::RectangleShape(sf::Vector2f(26, 26));
+	m_mini_map_sprite.setTexture(m_mini_tileset);
+	m_mini_map_sprite.setColor(sf::Color(255, 255, 255, 100));
+	m_mini_map_sprite.setScale(0.25f, 0.25f);
 	m_mini_map_player.setPosition(1280/4/2, 1280/4/2);
 	m_mini_map_player.setSize(sf::Vector2f(4, 4));
 	m_mini_map_player.setFillColor(sf::Color::Magenta);
-	m_mini_map_tiles.setTexture(m_mini_tileset);
-	m_mini_map_tiles.setTexture(m_mini_tileset);
-	m_mini_map_tiles.setColor(sf::Color(100, 100, 100, 100));
-	m_mini_map_tiles.setScale(0.25f, 0.25f);
+	rect = sf::RectangleShape(sf::Vector2f(26, 26));
 	Gen();
 }
 
@@ -205,7 +204,7 @@ void gen::Map::Cave(){
 							if (s <= 130)
 							{
 								sf::Vector2f pos(cells[c].x, cells[c].y);
-								if (s <= 10 && math::distance(pos, rooms[0].getCenter()) > 50)
+								if (mobSpawners.size() < 15 && s <= 25 && math::distance(pos, rooms[0].getCenter()) > 50)
 								{
 									MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::test, math::random(1, 2), TYPE::special);
 									mobSpawners.push_back(spawner);
@@ -880,9 +879,9 @@ void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
 			{
 				if (tiles[x][y].m_explored && tiles[x][y].type != 0)
 				{
-					m_mini_map_tiles.setTextureRect(sf::Rect<int>((tiles[x][y].type-1)*16, 0, 16, 16));
-					m_mini_map_tiles.setPosition((x*4) - (X/WIDTH - 1280/WIDTH)*4, (y*4) - (Y/WIDTH - 1280/HEIGHT)*4);
-					ptr_window->draw(m_mini_map_tiles);
+					m_mini_map_sprite.setTextureRect(sf::Rect<int>((tiles[x][y].type-1)*16, 0, 16, 16));
+					m_mini_map_sprite.setPosition((x*4) - (X/WIDTH - 1280/WIDTH)*4, (y*4) - (Y/WIDTH - 1280/HEIGHT)*4);
+					ptr_window->draw(m_mini_map_sprite);
 				}
 			}
 		}

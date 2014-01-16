@@ -42,6 +42,10 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_inventory.slots[1][0].Items.push_back(GearItem(Items::Shield, *textures, -1));
 	m_inventory.slots[2][0].Items.push_back(GearItem(Items::Mace, *textures, -1));
 	m_inventory.slots[3][0].Items.push_back(GearItem(Items::Bow, *textures, -1));
+	for (int i = 0; i < 10; i++)
+	{
+		m_inventory.slots[4][0].Items.push_back(GearItem(Items::TestSpell, *textures, -1));
+	}
 	for (int i = 0; i < 100; i++)
 	{
 		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Arrow).x][m_inventory.GetFirstAvailableSlot(Items::Arrow).y].Items.push_back(MiscItem(Items::Arrow, *textures, -1));
@@ -122,9 +126,8 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 			// Get the angle of the movement
 			float angle = vec::angle(m_velocity);
 
-			// set the animation (offset angle by 45 to make it not start at 0) 
-			int animation = (angle+45)/90; 
-			std::cout << animation << std::endl;
+			// set the animation (offset angle by 45 to make it not start at 0)
+			int animation = (angle+45)/90;
 
 			// Constrain the animation
 			if (animation > 3)
@@ -312,7 +315,7 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 											m_Gear.slots[4].Items.clear();
 
 											item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
-											
+
 											m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
 											m_d_gear[3].setPosition(getPosition().x, getPosition().y);
 										}
@@ -330,7 +333,7 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 										{
 											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).y].Items.push_back(*m_Gear.slots[4].Items.begin());
 											m_Gear.slots[4].Items.clear();
-											
+
 											item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
 											m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
 											m_d_gear[4].setPosition(getPosition().x, getPosition().y);
@@ -465,7 +468,6 @@ void Player::drawGUI(sf::RenderWindow* p_window){
 	p_window->draw(m_healthbar);
 	p_window->draw(m_overlay);
 
-
 	if (inventoryState)
 	{
 		p_window->draw(m_inventory);
@@ -530,9 +532,37 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
 				sf::Sprite arrow_sprite;
 				arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
-				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow));
+				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow);
 				arrow.setPosition(getPosition());
 				p_projectile_manager->m_arrows.push_back(arrow);
+				p_projectile_manager->m_projectiles.push_back(&p_projectile_manager->m_arrows.back());
+				m_attackTimer.restart();
+			}
+			break;
+		case Items::TestSpell:
+			if (m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::TestSpell))
+			{
+				if (m_inventory.contains(Items::TestSpell))
+				{
+					m_inventory.RemoveItem(Items::TestSpell, 1);
+				}else
+				{
+					if (!m_Gear.slots[4].Items.empty() && m_Gear.slots[4].Items[0].item == Items::TestSpell)
+					{
+						m_Gear.slots[4].Items.pop_back();
+					}else
+					{
+						break;
+					}
+				}
+				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
+				sf::Sprite spell_sprite;
+				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Chest_Cold));
+				projectile::Spell spell = projectile::Spell(ptr_tiles, angle, spell_sprite, GetDamage(Items::TestSpell), Items::TestSpell);
+				spell.setPosition(getPosition());
+				p_projectile_manager->m_spells.push_back(spell);
+				p_projectile_manager->m_projectiles.push_back(&p_projectile_manager->m_spells[p_projectile_manager->m_spells.size() - 1]);
+				std::cout << p_projectile_manager->m_spells.back().m_item << "\n";
 				m_attackTimer.restart();
 			}
 			break;

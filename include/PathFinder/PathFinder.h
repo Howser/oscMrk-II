@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "Node.h"
 #include "Map\Tile.h"
-#include "Map\MapManager.h"
+#include "Map\Properties\MapManager.h"
 
 class PathFinder{
 public:

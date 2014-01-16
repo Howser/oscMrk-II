@@ -6,7 +6,7 @@ GearItem::GearItem(Items item, TextureHolder & textureHolder, int ID) : eGearSlo
 	this->item = item;
 	this->ID = ID;
 	armor = (GetArmor(item));
-	sprite.setTexture(*textureHolder.getTexture((Textures::ID)(item + 14)));
+	sprite.setTexture(*textureHolder.getTexture((Textures::ID)(item + Textures::Arrow)));
 	setPosition(3, 3);
 }
 
@@ -21,7 +21,7 @@ void GearItem::Equip(GearSlot* gearSlot, Slot* slot, Inventory* inventory){
 	}
 	gearSlot->Items.clear();
 	gearSlot->Items.push_back(GearItem(*this));
-	slot->Items.clear();
+	slot->Items.pop_back();
 }
 
 void GearItem::draw(sf::RenderTarget& target, sf::RenderStates states)const{

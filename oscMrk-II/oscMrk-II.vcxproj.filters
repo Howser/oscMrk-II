@@ -85,13 +85,22 @@
     <Filter Include="Source Files\ResourceHolders">
       <UniqueIdentifier>{d238a7a4-b546-44e2-a5bd-9b996aa39133}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Effects\Lights">
+      <UniqueIdentifier>{3b4cb456-d1f4-49d9-aaaf-7b607097e9b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Map\Properties">
+      <UniqueIdentifier>{0bc564a7-d5b5-4633-827c-36a19d2fc654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects\Lights">
+      <UniqueIdentifier>{88a16aaa-b0ac-4f38-a337-bb3450b18cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map\Properties">
+      <UniqueIdentifier>{fabc4454-624a-4903-b623-d2d3e7e4eafe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Animation\Animation.h">
       <Filter>Header Files\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Effects\Light.h">
-      <Filter>Header Files\Effects</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gui\Button.h">
       <Filter>Header Files\GUI</Filter>
@@ -153,25 +162,7 @@
     <ClInclude Include="..\include\Item\MiscItem.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Map\Cell.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Map\HealingWell.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Map\Map.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Map\MapManager.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Map\MobSpawner.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Map\Path.h">
-      <Filter>Header Files\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Map\Room.h">
       <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Map\Tile.h">
@@ -258,6 +249,36 @@
     <ClInclude Include="..\include\Gui\HealthBar.h">
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Item\Spell.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Effects\Lights\Light.h">
+      <Filter>Header Files\Effects\Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Properties\Cell.h">
+      <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Properties\HealingWell.h">
+      <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Properties\MapManager.h">
+      <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Properties\MobSpawner.h">
+      <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Properties\Path.h">
+      <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Properties\Room.h">
+      <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Map\Properties\Torch.h">
+      <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Effects\Lights\LightManager.h">
+      <Filter>Header Files\Effects\Lights</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">
@@ -273,9 +294,6 @@
   <ItemGroup>
     <ClCompile Include="..\src\Animation\Animation.cpp">
       <Filter>Source Files\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Effects\Light.cpp">
-      <Filter>Source Files\Effects</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Gui\Button.cpp">
       <Filter>Source Files\GUI</Filter>
@@ -331,22 +349,7 @@
     <ClCompile Include="..\src\Item\MiscItem.cpp">
       <Filter>Source Files\Item</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Map\Cell.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Map\HealingWell.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Map\Map.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Map\MobSpawner.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Map\Path.cpp">
-      <Filter>Source Files\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Map\Room.cpp">
       <Filter>Source Files\Map</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Map\Tile.cpp">
@@ -423,6 +426,33 @@
     </ClCompile>
     <ClCompile Include="..\src\Gui\HealthBar.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\Spell.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Effects\Lights\Light.cpp">
+      <Filter>Source Files\Effects\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Effects\Lights\LightManager.cpp">
+      <Filter>Source Files\Effects\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Properties\Cell.cpp">
+      <Filter>Source Files\Map\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Properties\HealingWell.cpp">
+      <Filter>Source Files\Map\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Properties\MobSpawner.cpp">
+      <Filter>Source Files\Map\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Properties\Path.cpp">
+      <Filter>Source Files\Map\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Properties\Room.cpp">
+      <Filter>Source Files\Map\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Map\Properties\Torch.cpp">
+      <Filter>Source Files\Map\Properties</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

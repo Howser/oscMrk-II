@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Effects\Lights\LightManager.h"
 #include "Item\ProjectileManager.h"
 #include "State.h"
 #include "Map\Map.h"
-#include "Effects\Light.h"
 #include "PathFinder\PathFinder.h"
 #include "Player\Player.h"
 #include "Player\PlayerController.h"
@@ -32,6 +32,7 @@ private:
 	void					loadNormals();
 
 private:
+	LightManager m_light_manager;
 	ProjectileManager m_projectile_manager;
 
 	gen::Map				mMap;

@@ -10,11 +10,11 @@
 #include "ResourceHolders\ResourceIdentifiers.h"
 #include "Math\GeneralMath.h"
 #include "Tile.h"
-#include "Room.h"
-#include "MapManager.h"
-#include "HealingWell.h"
-#include "MobSpawner.h"
-#include "Cell.h"
+#include "Properties\Room.h"
+#include "Properties\MapManager.h"
+#include "Properties\HealingWell.h"
+#include "Properties\MobSpawner.h"
+#include "Properties\Cell.h"
 
 namespace gen{
 	class Map : public sf::Drawable

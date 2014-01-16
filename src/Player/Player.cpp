@@ -532,7 +532,7 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
 				sf::Sprite arrow_sprite;
 				arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
-				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow);
+				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
 				arrow.setPosition(getPosition());
 				p_projectile_manager->m_arrows.push_back(arrow);
 				p_projectile_manager->m_projectiles.push_back(&p_projectile_manager->m_arrows.back());

@@ -15,11 +15,12 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader(),
 	mobManager(),
 	mPlayer(context.textures, context.fonts, &mobManager.mobs, &m_projectile_manager, &mMap.tiles),
-	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager)
+	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager),
+	mParticleSystem()
 {
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
-	m_projectile_manager = ProjectileManager(&mobManager);
+	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
 	m_light_manager = LightManager();
 	if (mMap.rooms.size() > 0)
 	{
@@ -98,6 +99,7 @@ bool GameState::update(sf::Time dt)
 	{
 		mPlayer.updateInventory(*getContext().window, *getContext().textures);
 	}
+	mParticleSystem.update(dt);
 	return false;
 }
 
@@ -126,7 +128,7 @@ void GameState::draw()
 	// Render everything to the diffuse map
 	mDiffuseRender.clear();
 	mDiffuseRender.setView(mView);
-
+	
 	// Map
 	mMap.SetBounds();
 	mDiffuseRender.draw(mMap);
@@ -135,6 +137,7 @@ void GameState::draw()
 	mDiffuseRender.draw(m_projectile_manager);
 	mDiffuseRender.draw(mobManager);
 	mDiffuseRender.draw(mPlayer);
+	mDiffuseRender.draw(mParticleSystem);
 
 	mDiffuseRender.display();
 

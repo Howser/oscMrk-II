@@ -2,7 +2,7 @@
 
 using namespace projectile;
 
-Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage, const Items & p_item){
+Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage, const Items & p_item, ParticleSystem* p_ps){
 	m_velocity = sf::Vector2f(std::cos(angle)*SPEED, std::sin(angle)*SPEED);
 	m_sprite = p_sprite;
 	m_sprite.setOrigin(24, 1);
@@ -11,6 +11,7 @@ Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sp
 	dead = false;
 	m_damage = p_damage;
 	m_item = p_item;
+	ps = p_ps;
 }
 Arrow::~Arrow(){}
 
@@ -41,6 +42,12 @@ void Arrow::kill(){
 	dead = true;
 	m_velocity.x = 0;
 	m_velocity.y = 0;
+
+	// Add emitter to particle system for effect
+	Emitter e(30, 1111111, 3000, true);
+	e.setparticle(3, 500, sf::Color::Red);
+	e.setPosition(getPosition());
+	ps->add(e);
 }
 
 void Arrow::draw(sf::RenderTarget & target, sf::RenderStates states)const{

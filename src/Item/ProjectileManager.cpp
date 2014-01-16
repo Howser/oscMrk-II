@@ -1,7 +1,10 @@
 #include "Item\ProjectileManager.h"
 
 ProjectileManager::ProjectileManager(){}
-ProjectileManager::ProjectileManager(MobManager* const& p_mobManager) : m_mobManager(p_mobManager){}
+ProjectileManager::ProjectileManager(MobManager* const& p_mobManager, ParticleSystem* const& p_particleSystem) : 
+	m_mobManager(p_mobManager),
+	m_particleSystem(p_particleSystem)
+{}
 ProjectileManager::~ProjectileManager(){}
 
 void ProjectileManager::update(){
@@ -71,6 +74,7 @@ void ProjectileManager::update(){
 				{
 					mob->takeDamage(m_arrows[i].m_damage);
 					m_arrows[i].kill();
+
 				}
 			}
 			break;

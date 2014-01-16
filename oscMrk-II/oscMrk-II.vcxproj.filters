@@ -97,6 +97,12 @@
     <Filter Include="Source Files\Map\Properties">
       <UniqueIdentifier>{fabc4454-624a-4903-b623-d2d3e7e4eafe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Effects\Particles">
+      <UniqueIdentifier>{0b694724-a82d-479b-acb0-44b734ff91db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects\Particles">
+      <UniqueIdentifier>{99171db0-6580-4c9a-b4bb-dec42673be4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Animation\Animation.h">
@@ -279,6 +285,15 @@
     <ClInclude Include="..\include\Effects\Lights\LightManager.h">
       <Filter>Header Files\Effects\Lights</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Effects\Particles\Particle.h">
+      <Filter>Header Files\Effects\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Effects\Particles\Emitter.h">
+      <Filter>Header Files\Effects\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Effects\Particles\ParticleSystem.h">
+      <Filter>Header Files\Effects\Particles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">
@@ -323,9 +338,6 @@
       <Filter>Source Files\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Inventory\Inventory.cpp">
-      <Filter>Source Files\Inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Inventory\InventoryManager.cpp">
       <Filter>Source Files\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Inventory\Slot.cpp">
@@ -453,6 +465,12 @@
     </ClCompile>
     <ClCompile Include="..\src\Map\Properties\Torch.cpp">
       <Filter>Source Files\Map\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Effects\Particles\Emitter.cpp">
+      <Filter>Source Files\Effects\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Effects\Particles\ParticleSystem.cpp">
+      <Filter>Source Files\Effects\Particles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

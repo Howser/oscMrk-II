@@ -9,6 +9,7 @@
 #include "Player\PlayerController.h"
 #include "Mob\MobManager.h"
 #include "PathFinder\PathFinder.h"
+#include "Effects\Particles\ParticleSystem.h"
 
 #include <SFML\Graphics\RenderTexture.hpp>
 #include <SFML\Graphics\Shader.hpp>
@@ -38,6 +39,8 @@ private:
 	gen::Map				mMap;
 
 	sf::View				mView;
+
+	ParticleSystem			mParticleSystem;
 
 	sf::RenderTexture		mNormalRender;
 	sf::RenderTexture		mDiffuseRender;

@@ -11,15 +11,15 @@ namespace gui
 							StatusBar(sf::Texture const& base, sf::Texture const& loaded);
 			virtual			~StatusBar();
 
-			void			updateStatus(float x);
-			void			updateStatus(float current, float max);
+			virtual void	updateStatus(float x);
+			virtual void	updateStatus(float current, float max);
 
 			virtual bool	isSelectable() const;
 		
 			virtual void	handleEvent(sf::Event const& event);
 			virtual void	draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-		private:
+		protected:
 			sf::Sprite		mBase;			// This is the base of the bar
 			sf::Sprite		mLoaded;		// This is what fills it up, it should be the whole bar loaded
 			float			mStatus;		// Between 0.0 and 1.0 shows how much the bar is filled

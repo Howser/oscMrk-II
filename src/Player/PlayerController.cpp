@@ -60,6 +60,10 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 		playerPtr->stop();
 		targetPtr = nullptr;
 	}
+	if (rightMouseClicked)
+	{
+		playerPtr->attack(window, nullptr);
+	}
 	if (leftMouseClicked)
 	{
 		if (targetPtr != NULL)

@@ -2,16 +2,22 @@
 #include <SFML\Graphics\Color.hpp>
 #include <SFML\System\Vector3.hpp>
 #include <SFML\Graphics\View.hpp>
+#include <SFML\Graphics\Drawable.hpp>
+#include <SFML\Graphics\Transformable.hpp>
+#include <SFML\Graphics\Sprite.hpp>
+#include <SFML\Graphics\RenderTarget.hpp>
+#include "ResourceHolders\TextureHolder.h"
 #include "Effects\Lights\Light.h"
+#include "Effects\Lights\LightManager.h"
 
-struct Torch{
-	Torch(sf::Vector3f & p_position, sf::Color & p_color, float p_radius);
+struct Torch : public sf::Transformable, public sf::Drawable{
+	Torch(Light & p_light, LightManager* ptr_light_manager, TextureHolder* ptr_texture_holder);
+	Torch();
 	~Torch();
-	void update(sf::View* ptr_view);
-	void draw();
 
-	Light m_light;
-	sf::Vector3<float> m_position;
-	float m_radius;
-	bool m_draw;
+	sf::Sprite m_sprite;
+	Light* ptr_light;
+
+	void update();
+	void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 };

@@ -1,11 +1,13 @@
 #include "Map\Map.h"
 
-gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager)
+gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager, LightManager* ptr_light_manager)
 	:
 	font(*fontHolder->getFont(Fonts::Main)),
 	tileset(*textureHolder->getTexture(Textures::Tilesheet)),
 	m_mini_tileset(*textureHolder->getTexture(Textures::Mini_Map_sheet)),
-	mobManagerPtr(mobManager)
+	mobManagerPtr(mobManager),
+	ptr_texture_holder(textureHolder),
+	ptr_light_manager(ptr_light_manager)
 {
 	m_mini_map_sprite.setTexture(m_mini_tileset);
 	m_mini_map_sprite.setColor(sf::Color(255, 255, 255, 100));
@@ -13,7 +15,6 @@ gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* 
 	m_mini_map_player.setPosition(1280/4/2, 1280/4/2);
 	m_mini_map_player.setSize(sf::Vector2f(4, 4));
 	m_mini_map_player.setFillColor(sf::Color::Magenta);
-	rect = sf::RectangleShape(sf::Vector2f(26, 26));
 	Gen();
 }
 
@@ -208,6 +209,7 @@ void gen::Map::Cave(){
 								{
 									MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::test, math::random(1, 2), TYPE::special);
 									mobSpawners.push_back(spawner);
+									m_torches.push_back(Torch(Light(sf::Color(100, 100, 50, 255), sf::Vector3<float>(p.x*32-100, p.y*32-100, 0.075f), sf::Vector3<float>(0, 5.f, 0), false), ptr_light_manager, ptr_texture_holder)); 
 								}
 							}
 							if (s <= 65)

@@ -166,8 +166,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\h0wser\Documents\oscMrk-II\include;$(IncludePath)</IncludePath>
-    <SourcePath>C:\Users\h0wser\Documents\oscMrk-II\src;$(SourcePath)</SourcePath>
+    <IncludePath>$(ProjectDir)..\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)..\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

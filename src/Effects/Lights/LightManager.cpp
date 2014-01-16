@@ -12,13 +12,11 @@ void LightManager::update(sf::View* ptr_view){
 			{
 				m_lights[i].m_draw = false;
 			}
-		}else
-		{
-			m_lights[i].m_draw = true;
 		}
 	}
 }
 
 Light* LightManager::add(Light & p_light){
-	return NULL;
+	m_lights.push_back(p_light);
+	return &m_lights.back();
 }

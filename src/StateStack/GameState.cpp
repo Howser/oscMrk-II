@@ -6,7 +6,7 @@
 GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	:
 	State(stateStack, context, id),
-	mMap(context.textures, context.fonts, &mobManager),
+	mMap(context.textures, context.fonts, &mobManager, &m_light_manager),
 	mapSize(mMap.size.x, mMap.size.y),
 	mView(sf::Rect<float>(0, 0, context.window->getSize().x, context.window->getSize().y)),
 	mNormalRender(),
@@ -22,6 +22,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
 	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
 	m_light_manager = LightManager();
+
 	if (mMap.rooms.size() > 0)
 	{
 		mView.setCenter(sf::Vector2f(mMap.rooms[0].x*32, mMap.rooms[0].y*32));
@@ -41,9 +42,8 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-	Light l1(sf::Color(255, 200, 200, 255), sf::Vector3f(0.5f, 0.5f, .1f), sf::Vector3f(.001f, 4.f, 1.f), true);
-	Light l2(sf::Color(230, 150, 75, 255), sf::Vector3f(mPlayer.getPosition().x, mPlayer.getPosition().y, .1f), sf::Vector3f(.001f, 3.1f, 0.001f), false);
-	m_light_manager.m_lights.push_back(l2);
+	Light l1(sf::Color(175, 75, 70, 255), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 10.f, 0.f), true);
+	m_light_manager.m_lights.push_back(l1);
 
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
 	context.mouse->setState(gui::Mouse::Attack);
@@ -153,7 +153,7 @@ void GameState::draw()
 	mShader.setParameter("texture", sf::Shader::CurrentTexture);
 	mShader.setParameter("normal", mNormalRender.getTexture());
 	mShader.setParameter("Resolution", window->getSize().x,  window->getSize().y);
-	mShader.setParameter("AmbientColor", .1, .1, .1, .5);
+	mShader.setParameter("AmbientColor", .1, .1, .1, .05);
 
 	passLightsToShader(&mShader, m_light_manager.m_lights, &mView);
 

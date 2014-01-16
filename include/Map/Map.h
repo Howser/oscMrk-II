@@ -4,7 +4,6 @@
 #include <iostream>
 #include <math.h>
 
-
 #include "ResourceHolders\TextureHolder.h"
 #include "ResourceHolders\FontHolder.h"
 #include "ResourceHolders\ResourceIdentifiers.h"
@@ -15,17 +14,20 @@
 #include "Properties\HealingWell.h"
 #include "Properties\MobSpawner.h"
 #include "Properties\Cell.h"
+#include "Properties\Torch.h"
 
 namespace gen{
 	class Map : public sf::Drawable
 	{
 	public:
-		Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager);
+		Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager, LightManager* ptr_light_manager);
 		~Map(void);
 
 		void Gen();
 
 		void setView(sf::View const& view);
+
+		std::vector<Torch> m_torches;
 
 		std::vector<Room> rooms;
 
@@ -45,9 +47,6 @@ namespace gen{
 		sf::Vector2i size;
 
 	private:
-		//temp for drawing items
-		sf::RectangleShape rect;
-
 		Type type;
 
 		void Path(Room* from, Room* to);
@@ -59,6 +58,8 @@ namespace gen{
 		bool surroundingIsFloor(Tile const& tile);
 
 		MobManager* mobManagerPtr;
+		LightManager* ptr_light_manager;
+		TextureHolder* ptr_texture_holder;
 
 		void PickWallTile(Room* room);
 		bool CanRoom(Room* room);
@@ -79,9 +80,9 @@ namespace gen{
 		void ApplyID();
 
 		sf::Font font;
-		sf::Texture		tileset;
+		sf::Texture tileset;
 		sf::Texture m_mini_tileset;
-		sf::View		mView;
+		sf::View mView;
 
 		sf::Rect<int> bounds;
 		void draw(sf::RenderTarget& target, sf::RenderStates states)const;

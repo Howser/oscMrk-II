@@ -5,7 +5,7 @@ Light::Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool 
 	color(color),
 	position(position),
 	falloff(falloff),
-	m_draw(false),
+	m_draw(true),
 	m_screen(p_screen)
 {
 }

@@ -10,12 +10,32 @@ Light::Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool 
 	m_add(false),
 	m_alpha((color.a > 0) ? color.a:255.f),
 	m_elapsed(0.f),
-	m_screen(p_screen)
+	m_screen(p_screen),
+	ptr_follow(NULL)
+{
+}
+
+Light::Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool p_screen, sf::Vector2<float>* ptr_follow)
+	:
+	color(color),
+	position(position),
+	falloff(falloff),
+	m_draw(true),
+	m_add(false),
+	m_alpha((color.a > 0) ? color.a:255.f),
+	m_elapsed(0.f),
+	m_screen(p_screen),
+	ptr_follow(ptr_follow)
 {
 }
 
 void Light::update(sf::Time & p_dt){
 	flicker(p_dt);
+	if (ptr_follow != NULL)
+	{
+		position.x = ptr_follow->x;
+		position.y = ptr_follow->y;
+	}
 }
 
 void Light::flicker(sf::Time & p_dt){

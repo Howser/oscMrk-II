@@ -18,6 +18,7 @@
     <ClInclude Include="..\include\Effects\Particles\Emitter.h" />
     <ClInclude Include="..\include\Effects\Particles\Particle.h" />
     <ClInclude Include="..\include\Effects\Particles\ParticleSystem.h" />
+    <ClInclude Include="..\include\Effects\Spells\SpellEffect.h" />
     <ClInclude Include="..\include\Gui\Button.h" />
     <ClInclude Include="..\include\Gui\Component.h" />
     <ClInclude Include="..\include\Gui\Container.h" />
@@ -40,6 +41,7 @@
     <ClInclude Include="..\include\Item\ItemManager.h" />
     <ClInclude Include="..\include\Item\LootItem.h" />
     <ClInclude Include="..\include\Item\MiscItem.h" />
+    <ClInclude Include="..\include\Item\Projectile.h" />
     <ClInclude Include="..\include\Item\ProjectileManager.h" />
     <ClInclude Include="..\include\Item\Spell.h" />
     <ClInclude Include="..\include\Map\Map.h" />
@@ -87,6 +89,7 @@
     <ClCompile Include="..\src\Effects\Lights\LightManager.cpp" />
     <ClCompile Include="..\src\Effects\Particles\Emitter.cpp" />
     <ClCompile Include="..\src\Effects\Particles\ParticleSystem.cpp" />
+    <ClCompile Include="..\src\Effects\Spells\SpellEffect.cpp" />
     <ClCompile Include="..\src\Gui\Button.cpp" />
     <ClCompile Include="..\src\Gui\Component.cpp" />
     <ClCompile Include="..\src\Gui\Container.cpp" />
@@ -180,6 +183,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Libs\SFML-2.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

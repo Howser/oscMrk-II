@@ -14,7 +14,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mNormalTextures(),
 	mShader(),
 	mobManager(),
-	mPlayer(context.textures, context.fonts, &mobManager.mobs, &m_projectile_manager, &mMap.tiles),
+	mPlayer(context.textures, context.fonts, &mobManager.mobs, &m_projectile_manager, &mMap.tiles, &m_light_manager),
 	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager),
 	mParticleSystem()
 {
@@ -91,7 +91,7 @@ bool GameState::update(sf::Time dt)
 			mobManager.Update(dt, mPlayer.getPosition());
 		}
 		mMap.update(dt);
-		m_projectile_manager.update();
+		m_projectile_manager.update(dt);
 	}else
 	{
 		mPlayer.updateInventory(*getContext().window, *getContext().textures);

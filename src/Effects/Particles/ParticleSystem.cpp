@@ -36,7 +36,7 @@ void ParticleSystem::update(sf::Time & dt){
 	std::vector<int> rm_emitters;
 	for (auto i = m_emitters.begin(); i != m_emitters.end(); ++i){
 		i->update(dt);
-		if (i->m_elifetime < 0){
+		if (i->m_elifetime < 0 && i->m_elifetime != -1){
 			rm_emitters.push_back(i->id);
 		}
 	}

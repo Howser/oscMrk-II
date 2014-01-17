@@ -103,6 +103,12 @@
     <Filter Include="Source Files\Effects\Particles">
       <UniqueIdentifier>{99171db0-6580-4c9a-b4bb-dec42673be4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Effects\Spells">
+      <UniqueIdentifier>{74c6c1a0-11f7-44b0-9e7d-c0ca04e50aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Effects\Spells">
+      <UniqueIdentifier>{fb414086-07ca-4dc8-9370-7439fc100197}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Animation\Animation.h">
@@ -294,6 +300,12 @@
     <ClInclude Include="..\include\Effects\Particles\ParticleSystem.h">
       <Filter>Header Files\Effects\Particles</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Effects\Spells\SpellEffect.h">
+      <Filter>Header Files\Effects\Spells</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\Projectile.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">
@@ -471,6 +483,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Effects\Particles\ParticleSystem.cpp">
       <Filter>Source Files\Effects\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Effects\Spells\SpellEffect.cpp">
+      <Filter>Source Files\Effects\Spells</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 #include "SFML\Graphics\Drawable.hpp"
 #include "SFML\Graphics\Transformable.hpp"
 #include "SFML\System\Time.hpp"
+#include <SFML\Graphics\Sprite.hpp>
 #include "SFML\System\Clock.hpp"
 
 #include <vector>
@@ -12,7 +13,8 @@
 class Emitter : public sf::Drawable, public sf::Transformable {
 
 	public:
-		Emitter(int max_particles, float spawnrate, float emitter_lifetime, bool burst=false);
+		Emitter(int max_particles, float spawnrate, float emitter_lifetime, sf::Sprite & p_sprite, bool burst=false);
+		Emitter();
 		~Emitter();
 
 		void setparticle(float max_speed, float lifetime, sf::Color color);
@@ -30,7 +32,7 @@ class Emitter : public sf::Drawable, public sf::Transformable {
 		float m_pmax_speed;
 		float m_plifetime;
 		sf::Color m_pcolor;
-		sf::Texture* m_ptexture;
+		sf::Sprite m_sprite;
 
 		bool burst;
 		

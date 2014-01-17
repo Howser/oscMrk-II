@@ -7,10 +7,10 @@ uniform sampler2D texture; // diffuse map
 uniform sampler2D normal;  // normal map
 
 uniform vec2 Resolution;
-uniform vec3 LightPos[30];
-uniform vec4 LightColor[30];
+uniform vec3 LightPos[131];
+uniform vec4 LightColor[131];
 uniform vec4 AmbientColor;
-uniform vec3 Falloff[30];
+uniform vec3 Falloff[131];
 uniform float LightCount;
 
 void main()

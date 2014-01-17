@@ -8,7 +8,7 @@
 
 #include "Item\ItemManager.h"
 
-Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr, ProjectileManager* p_projectile_manager, std::vector<std::vector<gen::Tile>>* ptr_tiles)
+Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr, ProjectileManager* p_projectile_manager, std::vector<std::vector<gen::Tile>>* ptr_tiles, LightManager* ptr_light_manager)
 	:
 	ptr_tiles(ptr_tiles),
 	p_projectile_manager(p_projectile_manager),
@@ -30,7 +30,8 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_deleteItem(*textures),
 	m_invRect(sf::Rect<int>(0, 0, m_inventory.width*SLOTWIDTH + m_inventory.width*5, m_inventory.height*SLOTHEIGHT + m_inventory.height*5)),
 	m_lootInvRect(sf::Rect<int>(m_lootInventory.slots[0][0].getPosition().x, m_lootInventory.slots[0][0].getPosition().y, m_lootInventory.width*SLOTWIDTH + m_lootInventory.width*5, m_lootInventory.height*SLOTHEIGHT + m_lootInventory.width*5)),
-	m_healthbar(*(textures->getTexture(Textures::HealthEmpty)), *(textures->getTexture(Textures::HealthFull)))
+	m_healthbar(*(textures->getTexture(Textures::HealthEmpty)), *(textures->getTexture(Textures::HealthFull))),
+	ptr_light_manager(ptr_light_manager)
 {
 	m_sprite.setTexture(*(textures->getTexture(Textures::Player)));
 
@@ -572,7 +573,7 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
 				sf::Sprite spell_sprite;
 				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Chest_Cold));
-				projectile::Spell spell = projectile::Spell(ptr_tiles, angle, spell_sprite, GetDamage(Items::TestSpell), Items::TestSpell);
+				projectile::Spell spell = projectile::Spell(ptr_tiles, angle, spell_sprite, GetDamage(Items::TestSpell), Items::TestSpell, ptr_light_manager);
 				spell.setPosition(getPosition());
 				p_projectile_manager->m_spells.push_back(spell);
 				p_projectile_manager->m_projectiles.push_back(&p_projectile_manager->m_spells[p_projectile_manager->m_spells.size() - 1]);

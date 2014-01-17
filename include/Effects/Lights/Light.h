@@ -11,6 +11,7 @@ struct Light
 {
 	///<summary>if(screen){Don't update, m_draw = true, position = screen coords}
 	Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool p_screen);
+	Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool p_screen, sf::Vector2<float>* ptr_follow);
 
 	sf::Color color;
 	sf::Vector3f position;
@@ -24,6 +25,7 @@ private:
 	float m_alpha;
 	bool m_add, m_elapsed;
 	void flicker(sf::Time & p_dt);
+	sf::Vector2<float>* ptr_follow;
 };
 
 void passLightsToShader(sf::Shader* shader, std::vector<Light> const& lights, sf::View* ptr_light);

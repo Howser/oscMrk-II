@@ -7,7 +7,7 @@ ProjectileManager::ProjectileManager(MobManager* const& p_mobManager, ParticleSy
 {}
 ProjectileManager::~ProjectileManager(){}
 
-void ProjectileManager::update(){
+void ProjectileManager::update(sf::Time & p_dt){
 	/*for (Projectiles::const_iterator i = m_projectiles.begin(); i != m_projectiles.end(); ++i)
 	{
 	switch ((*i)->m_item)
@@ -47,7 +47,7 @@ void ProjectileManager::update(){
 		case TestSpell:
 			if (!m_spells[i].dead)
 			{
-				m_spells[i].update();
+				m_spells[i].update(p_dt);
 				Mob* mob = m_mobManager->getAtPosition(m_spells[i].getPosition());
 				if (mob != nullptr && !mob->dead)
 				{

@@ -805,8 +805,8 @@ void gen::Map::update(sf::Time dt){
 	}
 	for (int i = 0; i < m_torches.size(); i++)
 	{
-		m_torches[i].update(dt);
-	}
+		//m_torches[i].update(dt);
+	}	
 }
 
 void gen::Map::SetBounds(){

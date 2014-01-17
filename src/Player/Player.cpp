@@ -67,7 +67,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 		m_d_gear.back().setPosition(getPosition());
 	}
 	m_attackTimer.restart();
-	m_healthbar.setPosition(32, 564); // Exact as fuck
+	m_healthbar.setPosition(0, 583); // Exact as fuck
 	m_health = 100;
 }
 
@@ -148,11 +148,13 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 	}
 	resetInputs();
 	m_healthbar.updateStatus((float)m_health / 100.f);
-
+	m_healthbar.update();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
 		m_health -= 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		m_health += 1;
+
+
 }
 
 void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & textures){

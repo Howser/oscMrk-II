@@ -12,11 +12,11 @@ class ParticleSystem : public sf::Drawable{
 		ParticleSystem();
 		~ParticleSystem();
 
-		int add(Emitter e);
+		int add(Emitter & e);
 		void remove(int id);
 		Emitter* getEmitter(int id);
 
-		void update(sf::Time dt);
+		void update(sf::Time & dt);
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	
 	private:

@@ -9,7 +9,7 @@ ParticleSystem::ParticleSystem(){
 }
 ParticleSystem::~ParticleSystem(){}
 
-int ParticleSystem::add(Emitter e){
+int ParticleSystem::add(Emitter & e){
 	e.id = m_cid;
 	m_emitters.push_back(e);
 	return m_cid++;
@@ -32,7 +32,7 @@ Emitter* ParticleSystem::getEmitter(int id){
 	}
 }
 
-void ParticleSystem::update(sf::Time dt){
+void ParticleSystem::update(sf::Time & dt){
 	std::vector<int> rm_emitters;
 	for (auto i = m_emitters.begin(); i != m_emitters.end(); ++i){
 		i->update(dt);

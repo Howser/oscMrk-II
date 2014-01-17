@@ -373,6 +373,17 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 								m_inventory.Command(&m_inventory.slots[x][y], &m_mouseSlot, inv::Use, &m_stackManager);
 							}
 						}
+					}else if(sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(sf::Rect<int>(m_lootInventory.slots[x][y].getPosition().x, m_lootInventory.slots[x][y].getPosition().y, SLOTWIDTH, SLOTHEIGHT)))
+					{
+						if (!m_lootInventory.slots[x][y].Items.empty())
+						{
+							for (int i = 0; i < m_lootInventory.slots[x][y].Items.size(); i++)
+							{
+								m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_lootInventory.slots[x][y].Items[0].item).x][m_inventory.GetFirstAvailableSlot(m_lootInventory.slots[x][y].Items[0].item).y].Items.push_back(m_lootInventory.slots[x][y].Items[0]);
+								(*p_mobs)[m_lootInventory.slots[x][y].Items[0].ID]->inventory.RemoveItem(m_lootInventory.slots[x][y].Items[0].item, 1);
+							}
+							m_lootInventory.slots[x][y].Items.clear();
+						}
 					}
 				}
 			}
@@ -467,7 +478,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 void Player::drawGUI(sf::RenderWindow* p_window){
-	
+
 	p_window->draw(m_healthbar);
 	p_window->draw(m_overlay);
 

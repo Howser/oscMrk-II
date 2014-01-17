@@ -9,8 +9,8 @@ Torch::Torch(){}
 
 Torch::~Torch(){}
 
-void Torch::update(){
-
+void Torch::update(sf::Time & p_dt){
+	ptr_light->update(p_dt);
 }
 
 void Torch::draw(sf::RenderTarget & target, sf::RenderStates states)const{

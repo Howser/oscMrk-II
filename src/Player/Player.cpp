@@ -158,6 +158,7 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & textures){
 	if (tabClicked)
 	{
+		rightMouseClicked = false;
 		m_stackManager.Hide();
 		m_deleteItem.Toggle(false, NULL);
 		m_tooltip.Hide();

@@ -3,6 +3,7 @@
 void LightManager::update(sf::View* ptr_view){
 	for (int i = 0; i < m_lights.size(); i++)
 	{
+		m_lights[i].m_draw = true;
 		if (!m_lights[i].m_screen)
 		{
 			if (sf::Rect<float>(m_lights[i].position.x, m_lights[i].position.y, 1, 1).intersects(sf::Rect<float>(ptr_view->getCenter().x - ptr_view->getSize().x/2, ptr_view->getCenter().y - ptr_view->getSize().y/2, ptr_view->getSize().x, ptr_view->getSize().x)))

@@ -21,7 +21,6 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
 	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
-	m_light_manager = LightManager();
 
 	if (mMap.rooms.size() > 0)
 	{
@@ -153,7 +152,7 @@ void GameState::draw()
 	mShader.setParameter("texture", sf::Shader::CurrentTexture);
 	mShader.setParameter("normal", mNormalRender.getTexture());
 	mShader.setParameter("Resolution", window->getSize().x,  window->getSize().y);
-	mShader.setParameter("AmbientColor", .1, .1, .1, .05);
+	mShader.setParameter("AmbientColor", .1, .1, .1, .5);
 
 	passLightsToShader(&mShader, m_light_manager.m_lights, &mView);
 

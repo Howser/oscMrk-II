@@ -18,6 +18,6 @@ struct Torch : public sf::Transformable, public sf::Drawable{
 	sf::Sprite m_sprite;
 	Light* ptr_light;
 
-	void update();
+	void update(sf::Time & p_dt);
 	void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 };

@@ -16,11 +16,13 @@
 #include "Properties\Cell.h"
 #include "Properties\Torch.h"
 
+#include <SFML\System\Mutex.hpp>
+
 namespace gen{
 	class Map : public sf::Drawable
 	{
 	public:
-		Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager, LightManager* ptr_light_manager);
+		Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager, LightManager* ptr_light_manager, sf::Mutex& mutex);
 		~Map(void);
 
 		void Gen();
@@ -46,9 +48,11 @@ namespace gen{
 		///<summary>Map size.</summary>
 		sf::Vector2i size;
 
-	private:
-		Type type;
+		bool loaded;    // If false the map will be regenerated
+		bool generating;
+		gen::Type type; // This needs to be set to the right map before Gen() get's called
 
+	private:
 		void Path(Room* from, Room* to);
 
 		void Prison();
@@ -60,6 +64,8 @@ namespace gen{
 		MobManager* mobManagerPtr;
 		LightManager* ptr_light_manager;
 		TextureHolder* ptr_texture_holder;
+
+		sf::Mutex& m_mutex;
 
 		void PickWallTile(Room* room);
 		bool CanRoom(Room* room);
@@ -89,5 +95,7 @@ namespace gen{
 
 		sf::Sprite m_mini_map_sprite;
 		sf::RectangleShape m_mini_map_player;
+
+		
 	};
 }

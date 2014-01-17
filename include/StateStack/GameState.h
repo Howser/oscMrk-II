@@ -13,6 +13,7 @@
 
 #include <SFML\Graphics\RenderTexture.hpp>
 #include <SFML\Graphics\Shader.hpp>
+#include <SFML\System\Thread.hpp>
 
 class GameState : public State
 {
@@ -54,4 +55,9 @@ private:
 	Player					mPlayer;
 	
 	float					mSpawnRadius;
+	bool					mLoading;
+	sf::Sprite				mLoadingSprite;
+	sf::Thread				mLoadingThread;
+	gen::Type				mCurrentType;
+	sf::Mutex				mMutex;
 };

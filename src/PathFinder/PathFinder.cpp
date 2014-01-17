@@ -14,6 +14,7 @@ PathFinder::~PathFinder(){
 }
 
 void PathFinder::GetMap(std::vector<std::vector<gen::Tile>>* map){
+	nodes.clear();
 	Node node;
 	for (int y = 0; y < mapSize.y; y++)
 	{
@@ -86,6 +87,13 @@ int PathFinder::GetIndexOf(std::vector<int> & list, Node* node){
 		}
 	}
 	return -1;
+}
+
+void PathFinder::Clear()
+{
+	nodes.clear();
+	open.clear();
+	closed.clear();
 }
 
 std::vector<sf::Vector2i> PathFinder::GetPath(sf::Vector2i start, sf::Vector2i destination, bool tiles){

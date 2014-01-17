@@ -41,7 +41,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-	Light l1(sf::Color(175, 75, 70, 255), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 10.f, 0.f), true);
+	Light l1(sf::Color(175, 175, 175, 255), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
 	m_light_manager.m_lights.push_back(l1);
 
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
@@ -72,7 +72,6 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 		mobManager.mobs.push_back(&mobManager.majorMobs[i]);
 	}
 	mobManager.Build_Tree();
-	std::cout << "mobs: " << mobManager.mobs.size() << "\n";
 }
 
 GameState::~GameState()
@@ -82,8 +81,7 @@ GameState::~GameState()
 bool GameState::update(sf::Time dt)
 {
 	mView.setCenter(mPlayer.getPosition());
-	std::cout << std::to_string(mView.getCenter().x) << "\n";
-	m_light_manager.update(&mView);
+	m_light_manager.update(&mView, dt);
 	if (!mPlayer.inventoryState)
 	{
 		mPlayerController.update(dt, *getContext().window, mView);
@@ -152,7 +150,7 @@ void GameState::draw()
 	mShader.setParameter("texture", sf::Shader::CurrentTexture);
 	mShader.setParameter("normal", mNormalRender.getTexture());
 	mShader.setParameter("Resolution", window->getSize().x,  window->getSize().y);
-	mShader.setParameter("AmbientColor", .1, .1, .1, .5);
+	mShader.setParameter("AmbientColor", .1f, .1f, .1f, 0.f);
 
 	passLightsToShader(&mShader, m_light_manager.m_lights, &mView);
 

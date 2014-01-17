@@ -1,4 +1,5 @@
 #include "Effects\Lights\Light.h"
+#include <iostream>
 
 Light::Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool p_screen)
 	:
@@ -6,7 +7,7 @@ Light::Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool 
 	position(position),
 	falloff(falloff),
 	m_draw(true),
-	m_add(true),
+	m_add(false),
 	m_alpha((color.a > 0) ? color.a:255.f),
 	m_elapsed(0.f),
 	m_screen(p_screen)
@@ -19,22 +20,34 @@ void Light::update(sf::Time & p_dt){
 
 void Light::flicker(sf::Time & p_dt){
 	m_elapsed += p_dt.asSeconds()/10;
-	if (m_elapsed >= math::random(1, 8)/10)
+	if (m_elapsed >= math::random(1, 8)/5)
 	{
 		if (m_add)
 		{
-			int i = math::random(10, 50);
-			if (color.a + i < m_alpha + color.a / 3 && color.a + i <= 255)
+			int i = math::random(10, 100);
+			if (color.a + i < m_alpha + color.a / 3)
 			{
-				color.a += i;
+				if (color.a + i <= 255)
+				{
+					color.a += i;
+				}else
+				{
+					color.a = 255;
+				}
 			}
 			m_add = false;
 		}else
 		{
-			int i = math::random(10, 50);
-			if (color.a - i > m_alpha - color.a / 3 && color.a - i >= 0)
+			int i = math::random(10, 100);
+			if (color.a - i > m_alpha - color.a / 3)
 			{
-				color.a -= i;
+				if (color.a - i >= 0)
+				{
+					color.a -= i/2;
+				}else
+				{
+					color.a = 0;
+				}
 			}
 			m_add = true;
 		}

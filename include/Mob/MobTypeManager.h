@@ -144,8 +144,11 @@ static int GetTimeBetweenPathing(TYPE const& type){
 static int GetPathingDistance(TYPE const& type){
 	switch (type)
 	{
-	default:
+	case TYPE::special:
 		return 2;
+		break;
+	default:
+		return 10;
 		break;
 	}
 	return 0;

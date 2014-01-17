@@ -41,7 +41,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-	Light l1(sf::Color(175, 175, 175, 255), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
+	Light l1(sf::Color(175, 175, 175, 150), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
 	m_light_manager.m_lights.push_back(l1);
 
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
@@ -110,8 +110,8 @@ bool GameState::handleEvents(const sf::Event& event)
 
 		}
 	}
-	mPlayer.handleEvents(event);
 	mPlayerController.handleEvents(event);
+	mPlayer.handleEvents(event);
 	return false;
 }
 

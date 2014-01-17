@@ -19,12 +19,12 @@ void Light::update(sf::Time & p_dt){
 }
 
 void Light::flicker(sf::Time & p_dt){
-	m_elapsed += p_dt.asSeconds()/10;
-	if (m_elapsed >= math::random(1, 8)/5)
+	m_elapsed += p_dt.asSeconds();
+	if (m_elapsed >= math::random(1, 8)/10)
 	{
 		if (m_add)
 		{
-			int i = math::random(10, 100);
+			int i = math::random(50, 100);
 			if (color.a + i < m_alpha + color.a / 3)
 			{
 				if (color.a + i <= 255)
@@ -38,7 +38,7 @@ void Light::flicker(sf::Time & p_dt){
 			m_add = false;
 		}else
 		{
-			int i = math::random(10, 100);
+			int i = math::random(50, 100);
 			if (color.a - i > m_alpha - color.a / 3)
 			{
 				if (color.a - i >= 0)

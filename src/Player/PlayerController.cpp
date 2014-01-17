@@ -60,7 +60,7 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 		playerPtr->stop();
 		targetPtr = nullptr;
 	}
-	if (rightMouseClicked)
+	if (rightMouseClicked && sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
 		playerPtr->attack(window, nullptr);
 	}

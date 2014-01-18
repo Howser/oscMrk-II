@@ -16,16 +16,17 @@ struct Light
 	sf::Color color;
 	sf::Vector3f position;
 	sf::Vector3f falloff;
+	sf::Vector2f* ptr_follow;
 
 	bool m_draw, m_screen;
-
+	bool erase;//remove it from m_lights in the manager
+	
 	void update(sf::Time & p_dt);
 
 private:
 	float m_alpha;
 	bool m_add, m_elapsed;
 	void flicker(sf::Time & p_dt);
-	sf::Vector2<float>* ptr_follow;
 };
 
 void passLightsToShader(sf::Shader* shader, std::vector<Light> const& lights, sf::View* ptr_light);

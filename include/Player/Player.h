@@ -69,6 +69,7 @@ public:
 	std::vector<int> m_lootMobs;
 
 	bool inventoryState, lootState;
+	std::vector<sf::Vector2f> m_path;
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -80,7 +81,7 @@ private:
 	sf::Vector2f m_velocity;
 	sf::Rect<int> m_invRect, m_lootInvRect;
 	std::vector<std::vector<gen::Tile>>* ptr_tiles;
-	std::vector<sf::Vector2f> m_path;
+	
 	int m_health;
 
 	sf::Sprite m_overlay;

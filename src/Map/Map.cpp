@@ -1,13 +1,17 @@
 #include "Map\Map.h"
+#include <stdexcept>
 
-gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager, LightManager* ptr_light_manager)
+gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager, LightManager* ptr_light_manager, sf::Mutex& mutex)
 	:
 	font(*fontHolder->getFont(Fonts::Main)),
 	tileset(*textureHolder->getTexture(Textures::Tilesheet)),
 	m_mini_tileset(*textureHolder->getTexture(Textures::Mini_Map_sheet)),
 	mobManagerPtr(mobManager),
 	ptr_texture_holder(textureHolder),
-	ptr_light_manager(ptr_light_manager)
+	ptr_light_manager(ptr_light_manager),
+	loaded(false),
+	generating(false),
+	m_mutex(mutex)
 {
 	m_mini_map_sprite.setTexture(m_mini_tileset);
 	m_mini_map_sprite.setColor(sf::Color(255, 255, 255, 100));
@@ -15,7 +19,6 @@ gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* 
 	m_mini_map_player.setPosition(1280/4/2, 1280/4/2);
 	m_mini_map_player.setSize(sf::Vector2f(4, 4));
 	m_mini_map_player.setFillColor(sf::Color::Magenta);
-	Gen();
 }
 
 gen::Map::~Map(void)
@@ -23,6 +26,10 @@ gen::Map::~Map(void)
 }
 
 void gen::Map::Gen(){
+
+	srand(static_cast<int>(time(NULL)));
+
+	generating = true;
 	tiles.clear();
 	rooms.clear();
 	tiles.resize(mapWidth, std::vector<Tile>(mapHeight, Tile()));
@@ -36,22 +43,23 @@ void gen::Map::Gen(){
 			tiles[x][y].type = 0;
 		}
 	}
-	type = Type::Cave;
 	mobSpawners.clear();
 	switch (type)
 	{
-	case gen::Prison:
-		Prison();
-		break;
-	case gen::Cave:
-		Cave();
-		break;
-	case gen::Hell:
-		Hell();
-		break;
+		case gen::Prison:
+			Prison();
+			break;
+		case gen::Cave:
+			Cave();
+			break;
+		case gen::Hell:
+			Hell();
+			break;
 	}
-
+	
 	ApplyID();
+	loaded = true;
+	generating = false;
 }
 
 bool gen::Map::surroundingIsFloor(Tile const& tile){
@@ -209,9 +217,9 @@ void gen::Map::Cave(){
 								{
 									MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::test, math::random(1, 2), TYPE::special);
 									mobSpawners.push_back(spawner);
-									/*Torch torch = Torch(Light(sf::Color(200, 100, 100, 255), sf::Vector3<float>(p.x*32-100, p.y*32-100, 0.075f), sf::Vector3<float>(0, 10.f, 0), false), ptr_light_manager, ptr_texture_holder);
+									Torch torch = Torch(Light(sf::Color(200, 100, 100, 255), sf::Vector3<float>(p.x*32-100, p.y*32-100, 0.075f), sf::Vector3<float>(0, 10.f, 0), false), ptr_light_manager, ptr_texture_holder);
 									m_torches.push_back(torch); 
-									m_torches.back().ptr_light = &ptr_light_manager->m_lights.back();*/
+									m_torches.back().ptr_light = &ptr_light_manager->m_lights.back();
 								}
 							}
 							if (s <= 65)
@@ -637,7 +645,12 @@ void gen::Map::Resize(){
 	size.x = highX - lowX;
 	size.y = highY - lowY;
 	std::vector<std::vector<Tile>> temp;
-	temp.resize(size.x, std::vector<Tile>(size.y, Tile()));
+	try {
+		temp.resize(size.x, std::vector<Tile>(size.y, Tile()));
+	}
+	catch (std::length_error e){
+		std::cout << e.what() << std::endl;
+	}
 	for (unsigned int x = lowX, y = lowY; x < highX; x++)
 	{
 		for (y = lowY; y < highY; y++)
@@ -658,7 +671,7 @@ void gen::Map::Resize(){
 	if (mobSpawners.size() > 0)
 	{
 		for (unsigned int i = 0; i < mobSpawners.size(); i++)
-		{
+		{ 
 			mobSpawners[i].x -= lowX;
 			mobSpawners[i].y -= lowY;
 		}

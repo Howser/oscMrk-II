@@ -300,9 +300,6 @@
     <ClInclude Include="..\include\Effects\Particles\ParticleSystem.h">
       <Filter>Header Files\Effects\Particles</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Effects\Spells\SpellEffect.h">
-      <Filter>Header Files\Effects\Spells</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Item\Projectile.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
@@ -483,9 +480,6 @@
     </ClCompile>
     <ClCompile Include="..\src\Effects\Particles\ParticleSystem.cpp">
       <Filter>Source Files\Effects\Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Effects\Spells\SpellEffect.cpp">
-      <Filter>Source Files\Effects\Spells</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

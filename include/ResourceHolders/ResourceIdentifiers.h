@@ -22,6 +22,7 @@ namespace Textures
 		PlayerOverlay,
 		HealthFull,
 		HealthEmpty,
+		LoadingScreen,
 
 		///<summary>Items: 
 		Arrow,

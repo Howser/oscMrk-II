@@ -8,4 +8,5 @@ public:
 	std::vector<Light> m_lights;
 	void update(sf::View* ptr_view, sf::Time & p_dt);
 	Light* add(Light & p_light);
+	void remove(Light* ptr_light);
 };

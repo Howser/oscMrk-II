@@ -56,6 +56,7 @@ void ProjectileManager::update(sf::Time & p_dt){
 				}
 			}else
 			{
+				m_spells[i].kill();
 				m_spells.erase(m_spells.begin() + i);
 			}
 			break;
@@ -74,7 +75,6 @@ void ProjectileManager::update(sf::Time & p_dt){
 				{
 					mob->takeDamage(m_arrows[i].m_damage);
 					m_arrows[i].kill();
-
 				}
 			}
 			break;

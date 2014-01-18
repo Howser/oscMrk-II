@@ -19,7 +19,7 @@ class PlayerController
 						PlayerController(Player* player, PathFinder* pathfinder, gen::Map* map, MobManager* mobManager);
 		virtual			~PlayerController();
 		
-		void			update(sf::Time dt, sf::RenderWindow const& window, sf::View const& view);
+		void			update(sf::Time dt, sf::RenderWindow const& window, sf::View const& view, LightManager* ptr_light_manager);
 		void			handleEvents(sf::Event const& event);
 
 	private:

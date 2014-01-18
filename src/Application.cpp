@@ -14,6 +14,7 @@ Application::Application()
 	mFrameCountText()
 {
 	mWindow.setMouseCursorVisible(false);
+	mWindow.setVerticalSyncEnabled(true);
 }
 
 void Application::run()
@@ -118,6 +119,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::PlayerOverlay, "resources/graphics/player/overlay.png");
 		mTextures.loadTexture(Textures::HealthFull, "resources/graphics/player/healthFull.png");
 		mTextures.loadTexture(Textures::HealthEmpty, "resources/graphics/player/healthEmpty.png");
+		mTextures.loadTexture(Textures::LoadingScreen, "resources/graphics/loadingscreen.png");
 
 #pragma region Mob Textures
 		mTextures.loadTexture(Textures::TestMob, "resources/graphics/Mob/test.png");

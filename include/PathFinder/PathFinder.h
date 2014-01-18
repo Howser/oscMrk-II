@@ -17,6 +17,8 @@ public:
 
 		void GetMap(std::vector<std::vector<gen::Tile>>* p_tile);
 
+		void Clear();
+
         std::vector<sf::Vector2i> path;
 
 		sf::Vector2i mapSize;

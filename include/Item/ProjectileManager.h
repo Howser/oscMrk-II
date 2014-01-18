@@ -18,7 +18,7 @@ public:
 
 	ParticleSystem* m_particleSystem;
 
-	void update();
+	void update(sf::Time & p_dt);
 	void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 private:
 	MobManager* m_mobManager;

@@ -7,14 +7,23 @@
 
 #include <iostream>
 
-Emitter::Emitter(int max_particles, float spawnrate, float emitter_lifetime, bool burst)
+Emitter::Emitter(int max_particles, float spawnrate, float emitter_lifetime, sf::Sprite & p_sprite, bool burst)
 	:
 	m_max_particles(max_particles),
 	m_spawnrate(spawnrate),
 	m_particles(max_particles),
 	m_elifetime(emitter_lifetime),
+	m_sprite(p_sprite),
 	burst(burst)
 {
+}
+
+Emitter::Emitter(){
+	m_max_particles = 0;
+	m_spawnrate = 0;
+	m_particles.clear();
+	m_elifetime = 0;
+	burst = false;
 }
 
 Emitter::~Emitter(){}
@@ -32,8 +41,17 @@ void Emitter::update(sf::Time dt){
 		m_spawn_timer.restart();
 	}
 
-	m_elifetime -= dt.asMilliseconds();
-
+	if (m_elifetime > 0)
+	{
+		if (m_elifetime - dt.asMilliseconds() != -1)
+		{
+			m_elifetime -= dt.asMilliseconds();
+		}else
+		{
+			m_elifetime -= dt.asMilliseconds() + 1;
+		}
+	}
+	m_sprite.setRotation(m_sprite.getRotation() + 1.f);
 	if (burst){
 		// find 20 dead particles and spawn them 
 		int count = 0;
@@ -74,12 +92,11 @@ void Emitter::update(sf::Time dt){
 }
 
 void Emitter::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	sf::CircleShape p(2);
 	for (auto i = m_particles.begin(); i != m_particles.end(); ++i){
 		if (!i->dead){
-			p.setPosition(i->getPosition());
-			p.setFillColor(i->color);
-			target.draw(p);
+			sf::Sprite sprite = m_sprite;
+			sprite.setPosition(i->getPosition());
+			target.draw(sprite);
 		}
 	}
 }

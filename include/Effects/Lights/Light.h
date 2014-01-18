@@ -11,13 +11,16 @@ struct Light
 {
 	///<summary>if(screen){Don't update, m_draw = true, position = screen coords}
 	Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool p_screen);
+	Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool p_screen, sf::Vector2<float>* ptr_follow);
 
 	sf::Color color;
 	sf::Vector3f position;
 	sf::Vector3f falloff;
+	sf::Vector2f* ptr_follow;
 
 	bool m_draw, m_screen;
-
+	bool erase;//remove it from m_lights in the manager
+	
 	void update(sf::Time & p_dt);
 
 private:

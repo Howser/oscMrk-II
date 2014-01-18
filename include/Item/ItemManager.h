@@ -183,7 +183,7 @@ static float GetSpeed(Items item){
 		return 0.4f;
 		break;
 	case TestSpell:
-		return 0.2f;
+		return 0.01f;
 		break;
 	default:
 		return 0;

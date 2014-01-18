@@ -44,7 +44,7 @@ void Arrow::kill(){
 	m_velocity.y = 0;
 
 	// Add emitter to particle system for effect
-	Emitter e(30, 1111111, 3000, true);
+	Emitter e(30, 1111111, 3000, m_sprite, true);
 	e.setparticle(3, 500, sf::Color::Red);
 	e.setPosition(getPosition());
 	ps->add(e);

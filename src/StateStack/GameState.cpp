@@ -14,7 +14,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mNormalTextures(),
 	mShader(),
 	mobManager(),
-	mPlayer(context.textures, context.fonts, &mobManager.mobs, &m_projectile_manager, &mMap.tiles),
+	mPlayer(context.textures, context.fonts, &mobManager.mobs, &m_projectile_manager, &mMap.tiles, &m_light_manager),
 	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager),
 	mParticleSystem(),
 	mLoadingThread(&gen::Map::Gen, &mMap)
@@ -36,8 +36,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-	Light l1(sf::Color(175, 175, 175, 150), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
-	m_light_manager.m_lights.push_back(l1);
+
 
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
 	context.mouse->setState(gui::Mouse::Attack);
@@ -58,24 +57,24 @@ bool GameState::update(sf::Time dt)
 	if (!mLoading)
 	{
 		mView.setCenter(mPlayer.getPosition());
-		m_light_manager.update(&mView, dt);
+		
 		if (!mPlayer.inventoryState)
 		{
-			mPlayerController.update(dt, *getContext().window, mView);
+			mPlayerController.update(dt, *getContext().window, mView, &m_light_manager);
 			mPlayer.update(dt, *getContext().window);
 			if (!mobManager.mobs.empty())
 			{
 				mobManager.Update(dt, mPlayer.getPosition());
 			}
 			mMap.update(dt);
-			m_projectile_manager.update();
+			m_projectile_manager.update(dt);
+			mParticleSystem.update(dt);
+			m_light_manager.update(&mView, dt);
 		}else
 		{
 			mPlayer.updateInventory(*getContext().window, *getContext().textures);
 		}
-		mParticleSystem.update(dt);
-	}
-	else 
+	} else 
 	{
 		mMutex.lock();
 		// Update loading bar
@@ -135,6 +134,9 @@ bool GameState::update(sf::Time dt)
 
 			pathFinder.mapSize = mMap.size;
 			pathFinder.GetMap(&mMap.tiles);
+
+			Light l1(sf::Color(175, 175, 175, 150), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
+			m_light_manager.m_lights.push_back(l1);
 		}
 		mMutex.unlock();
 	}

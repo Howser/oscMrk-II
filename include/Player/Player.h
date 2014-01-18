@@ -34,7 +34,7 @@ class Player :
 	public sf::Drawable
 {
 public:
-	Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr, ProjectileManager* p_projectile_manager, std::vector<std::vector<gen::Tile>>* ptr_tiles);
+	Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr, ProjectileManager* p_projectile_manager, std::vector<std::vector<gen::Tile>>* ptr_tiles, LightManager* ptr_light_manager);
 	virtual ~Player();
 
 	void stop();
@@ -96,6 +96,7 @@ private:
 	///<summary>[0]Helmet, [1]Chest, [2]Legs, [3]LHand, [4]RHand</summary>
 	std::vector<D_Gear> m_d_gear;
 	ProjectileManager* p_projectile_manager;
+	LightManager* ptr_light_manager;
 
 	sf::Clock m_attackTimer;
 };

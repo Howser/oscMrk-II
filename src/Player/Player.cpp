@@ -569,7 +569,7 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
 				sf::Sprite spell_sprite;
 				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Chest_Cold));
-				p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(200, 100, 150, 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
+				p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
 				//ptr_light_manager->m_lights.push_back(p_projectile_manager->m_spells.back().m_light);
 				m_attackTimer.restart();
 			}

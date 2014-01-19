@@ -55,7 +55,6 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 	{
 		if (leftMouseClicked)
 		{
-			ptr_light_manager->add(Light(sf::Color(100, 100, 100, 255), sf::Vector3<float>(playerPtr->getPosition().x, playerPtr->getPosition().y, 0.075f), sf::Vector3<float>(0, 5.f, 0), false));
 			playerPtr->attack(window, nullptr);
 		}
 		playerPtr->stop();

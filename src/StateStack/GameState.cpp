@@ -36,12 +36,8 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-
-
 	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
 	context.mouse->setState(gui::Mouse::Attack);
-
-
 }
 
 GameState::~GameState()
@@ -99,12 +95,12 @@ bool GameState::update(sf::Time dt)
 			std::cout << "Finished gening map" << std::endl;
 			if (mMap.rooms.size() > 0)
 			{
-				mView.setCenter(sf::Vector2f(mMap.rooms[0].x*32, mMap.rooms[0].y*32));
-				mPlayer.setPosition((mMap.rooms[0].x + mMap.rooms[0].width/2) * 32, (mMap.rooms[0].y + mMap.rooms[0].height/2) *32);
+				mView.setCenter(sf::Vector2f(mMap.rooms[0].x*WIDTH, mMap.rooms[0].y*HEIGHT));
+				mPlayer.setPosition((mMap.rooms[0].x + mMap.rooms[0].width/2) * WIDTH, (mMap.rooms[0].y + mMap.rooms[0].height/2) *HEIGHT);
 			}else
 			{
-				mView.setCenter(mMap.size.x/2*32, mMap.size.y/2*32);
-				mPlayer.setPosition(mMap.size.x/2*32, mMap.size.y/2*32);
+				mView.setCenter(mMap.size.x/2*WIDTH, mMap.size.y/2*WIDTH);
+				mPlayer.setPosition(mMap.size.x/2*WIDTH, mMap.size.y/2*HEIGHT);
 			}
 			for (unsigned int i = 0; i < mMap. mobSpawners.size(); i++)
 			{
@@ -171,6 +167,7 @@ void GameState::draw()
 		mobManager.SetView(mView);
 
 		// Render everything to the diffuse map
+
 		mDiffuseRender.clear();
 		mDiffuseRender.setView(mView);
 
@@ -200,8 +197,15 @@ void GameState::draw()
 		mShader.setParameter("Resolution", window->getSize().x,  window->getSize().y);
 		mShader.setParameter("AmbientColor", .1f, .1f, .1f, 0.f);
 
-		passLightsToShader(&mShader, m_light_manager.m_lights, &mView);
+		std::vector<Light> all_lights = m_light_manager.m_lights;
 
+		for (int i = 0; i < m_projectile_manager.m_spells.size(); i++)
+		{
+			all_lights.push_back(m_projectile_manager.m_spells[i].m_light);
+		}
+
+		passLightsToShader(&mShader, &all_lights, &mView);
+		
 		sf::Sprite sprite(mDiffuseRender.getTexture());
 		window->setView(window->getDefaultView());
 		window->draw(sprite, &mShader);

@@ -43,13 +43,9 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_inventory.slots[1][0].Items.push_back(GearItem(Items::Shield, *textures, -1));
 	m_inventory.slots[2][0].Items.push_back(GearItem(Items::Mace, *textures, -1));
 	m_inventory.slots[3][0].Items.push_back(GearItem(Items::Bow, *textures, -1));
-	for (int i = 0; i < 10; i++)
-	{
-		m_inventory.slots[4][0].Items.push_back(GearItem(Items::TestSpell, *textures, -1));
-	}
 	for (int i = 0; i < 100; i++)
 	{
-		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Arrow).x][m_inventory.GetFirstAvailableSlot(Items::Arrow).y].Items.push_back(MiscItem(Items::Arrow, *textures, -1));
+		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::TestSpell).x][m_inventory.GetFirstAvailableSlot(Items::TestSpell).y].Items.push_back(MiscItem(Items::TestSpell, *textures, -1));
 	}
 	Player::m_BootsSlot = Items::NOITEM;
 	Player::m_ChestpieceSlot = Items::NOITEM;
@@ -70,6 +66,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_attackTimer.restart();
 	m_healthbar.setPosition(0, 583); // Exact as fuck
 	m_health = 100;
+	setPosition(-1280, -720);
 }
 
 Player::~Player()
@@ -550,7 +547,6 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
 				arrow.setPosition(getPosition());
 				p_projectile_manager->m_arrows.push_back(arrow);
-				p_projectile_manager->m_projectiles.push_back(&p_projectile_manager->m_arrows.back());
 				m_attackTimer.restart();
 			}
 			break;
@@ -573,9 +569,8 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
 				sf::Sprite spell_sprite;
 				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Chest_Cold));
-				projectile::Spell spell = projectile::Spell(ptr_tiles, angle, spell_sprite, GetDamage(Items::TestSpell), Items::TestSpell, ptr_light_manager, getPosition(), p_projectile_manager->m_particleSystem);
-				p_projectile_manager->m_spells.push_back(spell);
-				p_projectile_manager->m_projectiles.push_back(&p_projectile_manager->m_spells[p_projectile_manager->m_spells.size() - 1]);
+				p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(200, 100, 150, 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
+				//ptr_light_manager->m_lights.push_back(p_projectile_manager->m_spells.back().m_light);
 				m_attackTimer.restart();
 			}
 			break;

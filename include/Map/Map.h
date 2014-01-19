@@ -15,6 +15,7 @@
 #include "Properties\MobSpawner.h"
 #include "Properties\Cell.h"
 #include "Properties\Torch.h"
+#include "Properties\Gate.h"
 
 #include <SFML\System\Mutex.hpp>
 
@@ -95,7 +96,5 @@ namespace gen{
 
 		sf::Sprite m_mini_map_sprite;
 		sf::RectangleShape m_mini_map_player;
-
-		
 	};
 }

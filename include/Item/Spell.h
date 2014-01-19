@@ -18,16 +18,12 @@
 namespace projectile{
 	class Spell : public Projectile{
 	public:
-		Spell(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage, const Items & p_item, LightManager* ptr_light_manager, const sf::Vector2f & p_position, ParticleSystem* ptr_particle_system);
+		Spell(const sf::Vector2f & p_position, float angle, const Items & p_item, sf::Sprite & p_sprite, int p_damage, std::vector<std::vector<gen::Tile>>* ptr_tiles, Light & p_light);
 		~Spell();
-		void update();
 		void update(sf::Time & p_dt);
 		void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 		void kill();
-
-		Light* ptr_light;
-		ParticleSystem* ptr_particle_system;
-		LightManager* ptr_light_manager;
-		int m_emitter_ID;
+		Light m_light;
+		sf::Vector2f m_position;
 	};
 };

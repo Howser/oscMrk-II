@@ -215,11 +215,11 @@ void gen::Map::Cave(){
 								sf::Vector2f pos(cells[c].x, cells[c].y);
 								if (mobSpawners.size() < 15 && s <= 25 && math::distance(pos, rooms[0].getCenter()) > 50)
 								{
-									MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::test, math::random(1, 2), TYPE::special);
-									mobSpawners.push_back(spawner);
-									Torch torch = Torch(Light(sf::Color(200, 100, 100, 255), sf::Vector3<float>(p.x*32-100, p.y*32-100, 0.075f), sf::Vector3<float>(0, 10.f, 0), false), ptr_light_manager, ptr_texture_holder);
+									/*MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::test, math::random(1, 2), TYPE::special);
+									mobSpawners.push_back(spawner);*/
+									/*Torch torch = Torch(Light(sf::Color(200, 100, 100, 255), sf::Vector3<float>(p.x*32-100, p.y*32-100, 0.075f), sf::Vector3<float>(0, 10.f, 0), false), ptr_light_manager, ptr_texture_holder);
 									m_torches.push_back(torch); 
-									m_torches.back().ptr_light = &ptr_light_manager->m_lights.back();
+									m_torches.back().ptr_light = &ptr_light_manager->m_lights.back();*/
 								}
 							}
 							if (s <= 65)
@@ -683,7 +683,6 @@ void gen::Map::Resize(){
 			wells[i].setPosition(wells[i].getPosition().x - lowX, wells[i].getPosition().y - lowY);
 		}
 	}
-	tiles.clear();
 	tiles = temp;
 }
 
@@ -696,7 +695,7 @@ void gen::Map::ApplyID(){
 			{
 				if (tiles[x][y].type == 0)
 				{
-					int wall = math::random(5, 7);
+					int wall = math::random(1, 4);
 					if (tiles[x - 1][y].type == 1)
 					{
 						for (int xx = x; xx < x + wall; xx++)

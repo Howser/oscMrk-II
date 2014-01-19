@@ -7,6 +7,10 @@
 
 #include <iostream>
 
+Particle::~Particle(){
+	
+}
+
 Emitter::Emitter(int max_particles, float spawnrate, float emitter_lifetime, sf::Sprite & p_sprite, bool burst)
 	:
 	m_max_particles(max_particles),

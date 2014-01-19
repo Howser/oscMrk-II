@@ -22,14 +22,16 @@ void LightManager::update(sf::View* ptr_view, sf::Time & p_dt){
 			}
 		}else
 		{
-			m_lights.erase(m_lights.begin() + i);
+			remove(&m_lights[i]);
 		}
 	}
 }
 
 void LightManager::remove(Light* ptr_light){
-	//m_lights.erase(m_lights.begin() + (ptr_light - &m_lights[0]));
-	ptr_light->erase = true;
+	if (ptr_light != nullptr)
+	{
+		m_lights.erase(m_lights.begin() + (ptr_light - &m_lights[0]));
+	}
 }
 
 Light* LightManager::add(Light & p_light){

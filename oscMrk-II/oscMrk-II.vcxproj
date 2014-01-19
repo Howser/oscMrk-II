@@ -45,6 +45,7 @@
     <ClInclude Include="..\include\Item\Spell.h" />
     <ClInclude Include="..\include\Map\Map.h" />
     <ClInclude Include="..\include\Map\Properties\Cell.h" />
+    <ClInclude Include="..\include\Map\Properties\Gate.h" />
     <ClInclude Include="..\include\Map\Properties\HealingWell.h" />
     <ClInclude Include="..\include\Map\Properties\MapManager.h" />
     <ClInclude Include="..\include\Map\Properties\MobSpawner.h" />

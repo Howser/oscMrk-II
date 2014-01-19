@@ -10,9 +10,6 @@ public:
 	ProjectileManager::ProjectileManager();
 	ProjectileManager(MobManager* const& p_mobManager, ParticleSystem* const& p_particleSystem);
 	~ProjectileManager();
-
-	typedef std::vector<projectile::Projectile*> Projectiles;
-	Projectiles m_projectiles;
 	std::vector<projectile::Arrow> m_arrows;
 	std::vector<projectile::Spell> m_spells;
 

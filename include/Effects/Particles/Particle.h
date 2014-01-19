@@ -5,6 +5,7 @@
 #include "SFML\Graphics\Color.hpp"
 
 struct Particle : public sf::Transformable {
+	~Particle();
 	sf::Vector2f velocity;
 	float lifetime;
 	sf::Color color;

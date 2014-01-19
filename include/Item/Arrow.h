@@ -17,7 +17,7 @@ namespace projectile{
 	public:
 		Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage, const Items & p_item, ParticleSystem* p_ps);
 		~Arrow();
-		void update();
+		void update(sf::Time & p_dt);
 		void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 		void kill();
 

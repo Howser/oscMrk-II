@@ -303,6 +303,9 @@
     <ClInclude Include="..\include\Item\Projectile.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Map\Properties\Gate.h">
+      <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">

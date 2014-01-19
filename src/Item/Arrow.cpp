@@ -15,7 +15,7 @@ Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sp
 }
 Arrow::~Arrow(){}
 
-void Arrow::update(){
+void Arrow::update(sf::Time & p_dt){
 	for (unsigned int x = getPosition().x/32 - 1, y = getPosition().y/32  - 1; x < getPosition().x/32 + 1; x++)
 	{
 		for (y = getPosition().y/32  - 1; y < getPosition().y/32 + 1; y++)

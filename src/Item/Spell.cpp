@@ -60,7 +60,7 @@ void Spell::kill(){
 	dead = true;
 	m_velocity.x = 0;
 	m_velocity.y = 0;
-	m_light.erase = true;
+	//m_light.erase = true;
 }
 
 void Spell::draw(sf::RenderTarget & target, sf::RenderStates states)const{

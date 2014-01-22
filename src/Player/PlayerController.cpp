@@ -39,8 +39,6 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 		}
 	}
 
-	check_collision();
-
 	if (targetPtr != NULL)
 	{
 		if (vec::length(mPathEnd - targetPtr->getPosition()) < (WIDTH+HEIGHT)/2)
@@ -193,22 +191,51 @@ void PlayerController::getPath(float x, float y)
 const sf::Vector2f speed(5, 5);
 
 void PlayerController::move_up(){
-	playerPtr->m_velocity.y = -speed.y;
+	sf::Rect<int> rect = sf::Rect<int>(playerPtr->getPosition().x - 16 + 5, playerPtr->getPosition().y - speed.y + 1, 20, 15);
+	if (!intersects_wall(rect))
+	{
+		playerPtr->m_velocity.y = -speed.y;
+	}else
+	{
+		playerPtr->m_velocity.y = 0;
+	}
 }
 
 void PlayerController::move_down(){
-	playerPtr->m_velocity.y = speed.y;
+	sf::Rect<int> rect = sf::Rect<int>(playerPtr->getPosition().x - 16 + 5, playerPtr->getPosition().y + speed.y + 1, 20, 15);
+	if (!intersects_wall(rect))
+	{
+		playerPtr->m_velocity.y = speed.y;
+	}else
+	{
+		playerPtr->m_velocity.y = 0;
+	}
 }
 
 void PlayerController::move_left(){
-	playerPtr->m_velocity.x = -speed.x;
+	sf::Rect<int> rect = sf::Rect<int>(playerPtr->getPosition().x - 16 - speed.x + 5, playerPtr->getPosition().y + 1, 20, 15);
+	if (!intersects_wall(rect))
+	{
+		playerPtr->m_velocity.x = -speed.x;
+	}else
+	{
+		playerPtr->m_velocity.x = 0;
+	}
 }
 
 void PlayerController::move_right(){
-	playerPtr->m_velocity.x = speed.x;
+	sf::Rect<int> rect = sf::Rect<int>(playerPtr->getPosition().x - 16 + speed.x + 5, playerPtr->getPosition().y + 1, 20, 15);
+	if (!intersects_wall(rect))
+	{
+		playerPtr->m_velocity.x = speed.x;
+	}else
+	{
+		playerPtr->m_velocity.x = 0;
+	}
 }
 
 void PlayerController::check_collision(){
+	int w = 0, h = 0;
 	for (int x = playerPtr->getPosition().x/WIDTH - 1, y = playerPtr->getPosition().y/HEIGHT - 1; x < playerPtr->getPosition().x/WIDTH + 1; x++)
 	{
 		for (y = playerPtr->getPosition().y/HEIGHT - 1; y < playerPtr->getPosition().y/HEIGHT + 1; y++)
@@ -217,8 +244,8 @@ void PlayerController::check_collision(){
 			{
 				if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 32, 32).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
 				{
-					int w = (playerPtr->getPosition().x - 16 > x*WIDTH) ? x*WIDTH + WIDTH - playerPtr->getPosition().x - 16:playerPtr->getPosition().x + 16 - x*WIDTH;
-					int h = (playerPtr->getPosition().y - 16 > y*HEIGHT) ? y*HEIGHT + HEIGHT - playerPtr->getPosition().y - 16 : playerPtr->getPosition().y + 16 - y*HEIGHT;
+					w += (playerPtr->getPosition().x - 16 > x*WIDTH) ? x*WIDTH + WIDTH - playerPtr->getPosition().x - 16:playerPtr->getPosition().x + 16 - x*WIDTH;
+					h += (playerPtr->getPosition().y - 16 > y*HEIGHT) ? y*HEIGHT + HEIGHT - playerPtr->getPosition().y - 16 : playerPtr->getPosition().y + 16 - y*HEIGHT;
 					if (h < w)
 					{
 						playerPtr->m_velocity.y = 0;
@@ -229,15 +256,6 @@ void PlayerController::check_collision(){
 						{
 							playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT + HEIGHT + 16);
 						}
-						/*if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 32, 5).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
-						{
-							playerPtr->m_velocity.y = 0;
-							playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT + HEIGHT + 16);
-						}else if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y + 11, 32, 5).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
-						{
-							playerPtr->m_velocity.y = 0;
-							playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT - 16);
-						}*/
 						break;
 					}else
 					{
@@ -249,19 +267,27 @@ void PlayerController::check_collision(){
 						{
 							playerPtr->setPosition(x*WIDTH + WIDTH + 16, playerPtr->getPosition().y);
 						}
-						/*if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 5, 32).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
-						{
-							playerPtr->m_velocity.x = 0;
-							playerPtr->setPosition(x*WIDTH + WIDTH + 16, playerPtr->getPosition().y);
-						}else if (sf::Rect<int>(playerPtr->getPosition().x + 11, playerPtr->getPosition().y - 16, 5, 32).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
-						{
-							playerPtr->m_velocity.x = 0;
-							playerPtr->setPosition(x*WIDTH - 16, playerPtr->getPosition().y);
-						}*/
 						break;
 					}
 				}
 			}
 		}
 	}
+}
+
+bool PlayerController::intersects_wall(const sf::Rect<int> & p_rect){
+	for (int x = (p_rect.left)/WIDTH - 1, y = (p_rect.top)/HEIGHT - 1; x < (p_rect.left + p_rect.width)/WIDTH + 1; x++)
+	{
+		for (int y = (p_rect.top)/HEIGHT - 1; y < (p_rect.top + p_rect.height)/HEIGHT + 1; y++)
+		{
+			if (mapPtr->tiles[x][y].type != 1)
+			{
+				if (p_rect.intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }

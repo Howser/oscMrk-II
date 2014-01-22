@@ -39,5 +39,5 @@ private:
 
 	bool leftMouseClicked, rightMouseClicked;
 
-	bool intersects_wall(const sf::Rect<int> rect);
+	bool intersects_wall(const sf::Rect<int> & p_rect);
 };

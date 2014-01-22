@@ -130,9 +130,10 @@ bool GameState::update(sf::Time dt)
 
 			pathFinder.mapSize = mMap.size;
 			pathFinder.GetMap(&mMap.tiles);
-
+				
 			Light l1(sf::Color(175, 175, 175, 150), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
 			m_light_manager.m_lights.push_back(l1);
+		
 		}
 		mMutex.unlock();
 	}
@@ -201,7 +202,13 @@ void GameState::draw()
 
 		for (int i = 0; i < m_projectile_manager.m_spells.size(); i++)
 		{
-			all_lights.push_back(m_projectile_manager.m_spells[i].m_light);
+			if (all_lights.size() < 131)
+			{
+				all_lights.push_back(m_projectile_manager.m_spells[i].m_light);
+			}else
+			{
+				break;
+			}
 		}
 
 		passLightsToShader(&mShader, &all_lights, &mView);

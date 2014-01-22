@@ -25,7 +25,12 @@ void ProjectileManager::update(sf::Time & p_dt){
 			}else
 			{
 				m_spells[i].kill();
-				m_spells.erase(m_spells.begin() + i);
+				m_spells[i].m_light.color.a *= 0.9f;
+				m_spells[i].m_light.color.r *= 0.9f;
+				m_spells[i].m_light.color.g *= 0.9f;
+				m_spells[i].m_light.color.b *= 0.9f;
+				if (m_spells[i].m_light.color.a <= 1)
+					m_spells.erase(m_spells.begin() + i);
 			}
 			break;
 		}

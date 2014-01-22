@@ -38,4 +38,6 @@ private:
 	Mob*			targetPtr;
 
 	bool leftMouseClicked, rightMouseClicked;
+
+	bool intersects_wall(const sf::Rect<int> rect);
 };

@@ -32,10 +32,6 @@ void Tree::build(std::vector<std::vector<gen::Tile*>> tiles, std::vector<Mob*> m
 			m_branches.push_back(branch);
 		}
 	}
-	for (int i = 0; i < mobs.size(); i++)
-	{
-		m_branches[search(*mobs[i])->key].AddMob(mobs[i]);
-	}
 }
 
 Branch* Tree::search(Mob const& mob){
@@ -44,7 +40,7 @@ Branch* Tree::search(Mob const& mob){
 		return &m_branches[mob.m_branch];
 	}else
 	{
-		search(mob.getPosition());
+		return search(mob.getPosition());
 	}
 }
 

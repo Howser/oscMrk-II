@@ -26,7 +26,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
 
 	mCurrentType = gen::Cave;
-	mMap.type = mCurrentType;
+	mMap.type = gen::Cave;
 	mView.zoom(1.f);
 
 	sf::Vector2u size = context.window->getSize();

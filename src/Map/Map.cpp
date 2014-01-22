@@ -46,17 +46,17 @@ void gen::Map::Gen(){
 	mobSpawners.clear();
 	switch (type)
 	{
-		case gen::Prison:
-			Prison();
-			break;
-		case gen::Cave:
-			Cave();
-			break;
-		case gen::Hell:
-			Hell();
-			break;
+	case gen::Prison:
+		Prison();
+		break;
+	case gen::Cave:
+		Cave();
+		break;
+	case gen::Hell:
+		Hell();
+		break;
 	}
-	
+
 	ApplyID();
 	loaded = true;
 	generating = false;

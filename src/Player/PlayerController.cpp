@@ -194,22 +194,18 @@ const sf::Vector2f speed(5, 5);
 
 void PlayerController::move_up(){
 	playerPtr->m_velocity.y = -speed.y;
-	check_collision();
 }
 
 void PlayerController::move_down(){
 	playerPtr->m_velocity.y = speed.y;
-	check_collision();
 }
 
 void PlayerController::move_left(){
 	playerPtr->m_velocity.x = -speed.x;
-	check_collision();
 }
 
 void PlayerController::move_right(){
 	playerPtr->m_velocity.x = speed.x;
-	check_collision();
 }
 
 void PlayerController::check_collision(){
@@ -221,24 +217,48 @@ void PlayerController::check_collision(){
 			{
 				if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 32, 32).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
 				{
-					sf::Rect<int> intersecting_rect = math::intersection(sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 32, 32), sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT));
-					if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 32, 5).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
+					int w = (playerPtr->getPosition().x - 16 > x*WIDTH) ? x*WIDTH + WIDTH - playerPtr->getPosition().x - 16:playerPtr->getPosition().x + 16 - x*WIDTH;
+					int h = (playerPtr->getPosition().y - 16 > y*HEIGHT) ? y*HEIGHT + HEIGHT - playerPtr->getPosition().y - 16 : playerPtr->getPosition().y + 16 - y*HEIGHT;
+					if (h < w)
 					{
 						playerPtr->m_velocity.y = 0;
-						playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT + HEIGHT + 16);
-					}else if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y + 11, 32, 5).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
-					{
-						playerPtr->m_velocity.y = 0;
-						playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT - 16);
-					}
-					if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 5, 32).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
+						if (playerPtr->getPosition().y < y*HEIGHT + HEIGHT/2)
+						{
+							playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT - 16);
+						}else
+						{
+							playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT + HEIGHT + 16);
+						}
+						/*if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 32, 5).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
+						{
+							playerPtr->m_velocity.y = 0;
+							playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT + HEIGHT + 16);
+						}else if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y + 11, 32, 5).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
+						{
+							playerPtr->m_velocity.y = 0;
+							playerPtr->setPosition(playerPtr->getPosition().x, y*HEIGHT - 16);
+						}*/
+						break;
+					}else
 					{
 						playerPtr->m_velocity.x = 0;
-						playerPtr->setPosition(x*WIDTH + WIDTH + 16, playerPtr->getPosition().y);
-					}else if (sf::Rect<int>(playerPtr->getPosition().x + 11, playerPtr->getPosition().y - 16, 5, 32).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
-					{
-						playerPtr->m_velocity.x = 0;
-						playerPtr->setPosition(x*WIDTH - 16, playerPtr->getPosition().y);
+						if (playerPtr->getPosition().x < x*WIDTH + WIDTH/2)
+						{
+							playerPtr->setPosition(x*WIDTH - 16, playerPtr->getPosition().y);
+						}else
+						{
+							playerPtr->setPosition(x*WIDTH + WIDTH + 16, playerPtr->getPosition().y);
+						}
+						/*if (sf::Rect<int>(playerPtr->getPosition().x - 16, playerPtr->getPosition().y - 16, 5, 32).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
+						{
+							playerPtr->m_velocity.x = 0;
+							playerPtr->setPosition(x*WIDTH + WIDTH + 16, playerPtr->getPosition().y);
+						}else if (sf::Rect<int>(playerPtr->getPosition().x + 11, playerPtr->getPosition().y - 16, 5, 32).intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
+						{
+							playerPtr->m_velocity.x = 0;
+							playerPtr->setPosition(x*WIDTH - 16, playerPtr->getPosition().y);
+						}*/
+						break;
 					}
 				}
 			}

@@ -18,8 +18,6 @@
 #include "Mob\DeadMob.h"
 #include "Item\Arrow.h"
 
-#define TERMINAL_VELOCITY 250
-
 class Mob : public sf::Transformable, public sf::Drawable{
 public:
 	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition) = 0;

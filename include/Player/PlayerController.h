@@ -15,25 +15,27 @@ class PlayerController
 	:
 	private sf::NonCopyable
 {
-	public:
-						PlayerController(Player* player, PathFinder* pathfinder, gen::Map* map, MobManager* mobManager);
-		virtual			~PlayerController();
-		
-		void			update(sf::Time dt, sf::RenderWindow const& window, sf::View const& view, LightManager* ptr_light_manager);
-		void			handleEvents(sf::Event const& event);
+public:
+	PlayerController(Player* player, PathFinder* pathfinder, gen::Map* map, MobManager* mobManager);
+	virtual			~PlayerController();
 
-	private:
-		PathFinder*		pathFinderPtr;
-		Player*			playerPtr;
-		gen::Map*		mapPtr;
-		MobManager*		mobManagerPtr;
+	void			update(sf::Time dt, sf::RenderWindow const& window, sf::View const& view, LightManager* ptr_light_manager);
+	void			handleEvents(sf::Event const& event);
 
-		void			getPath(float x, float y);
+private:
+	PathFinder*		pathFinderPtr;
+	Player*			playerPtr;
+	gen::Map*		mapPtr;
+	MobManager*		mobManagerPtr;
 
-		sf::Vector2f	mPathStart;
-		sf::Vector2f    mPathEnd;
+	void			getPath(float x, float y);
 
-		Mob*			targetPtr;
+	void move_up(), move_down(), move_left(), move_right(), check_collision();
 
-		bool leftMouseClicked, rightMouseClicked;
+	sf::Vector2f	mPathStart;
+	sf::Vector2f    mPathEnd;
+
+	Mob*			targetPtr;
+
+	bool leftMouseClicked, rightMouseClicked;
 };

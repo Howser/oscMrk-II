@@ -86,6 +86,8 @@ void Player::path(std::vector<sf::Vector2f>& path)
 	m_path = path;
 }
 
+const sf::Vector2f speed = sf::Vector2f(5, 5);
+
 void Player::update(sf::Time dt, sf::RenderWindow const& window)
 {
 	if (tabClicked)
@@ -94,6 +96,7 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 	}
 	if (!inventoryState)
 	{
+		setPosition(getPosition().x + m_velocity.x, getPosition().y + m_velocity.y);
 		if (!m_path.empty())
 		{
 			// Check the distance to the next node 
@@ -109,8 +112,8 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 				// Move towards the next node
 				sf::Vector2f target = m_path.back() - getPosition();
 				target = vec::normalize(target);
-				m_velocity.x = target.x * TERMINAL_VELOCITY * dt.asSeconds();
-				m_velocity.y = target.y * TERMINAL_VELOCITY * dt.asSeconds();
+				m_velocity.x = target.x * speed.x;
+				m_velocity.y = target.y * speed.y;
 			}
 		}
 		else
@@ -138,7 +141,7 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 
 		m_animation.update();
 		m_sprite.setTextureRect(m_animation.getFrame());
-		move(m_velocity);
+
 		for (int i = 0; i < 5; i++)
 		{
 			m_d_gear[i].setPosition(getPosition());

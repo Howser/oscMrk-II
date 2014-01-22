@@ -23,7 +23,6 @@
 #include "Inventory\DeleteItem.h"
 #include "Gui\HealthBar.h"
 
-#define SPEED 250
 #define LOOT_DISTANCE 100
 #define MELEE_DISTANCE 30
 
@@ -70,6 +69,7 @@ public:
 
 	bool inventoryState, lootState;
 	std::vector<sf::Vector2f> m_path;
+	sf::Vector2f m_velocity;
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -78,7 +78,6 @@ private:
 	sf::Sprite m_sprite;
 
 	Animation m_animation;
-	sf::Vector2f m_velocity;
 	sf::Rect<int> m_invRect, m_lootInvRect;
 	std::vector<std::vector<gen::Tile>>* ptr_tiles;
 	

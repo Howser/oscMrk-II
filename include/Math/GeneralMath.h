@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML\System\Vector2.hpp>
+#include <SFML\Graphics\Rect.hpp>
+
 #include <math.h>
 #include <random>
 
@@ -15,6 +17,10 @@ namespace math{
 
 	///<summary> Converts an angle in radians to degrees </summary>
 	float toDegrees(float x);
+
+	template <typename T>
+	///<summary>Returns a rectangle from the intersection of two rectangles.</summary>
+	sf::Rect<T> intersection(const sf::Rect<T> & p_a, const sf::Rect<T> p_b);
 }
 
 #include "GeneralMath.inl"

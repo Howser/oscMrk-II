@@ -238,7 +238,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i((p_mob->getPosition().x)/WIDTH, (p_mob->getPosition().y)/HEIGHT), false);
 							}else
 							{
-								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i((playerPosition.x + 10)/WIDTH, (playerPosition.y + 10)/HEIGHT), false);
+								(*i)->path = pathFinder->GetPath(sf::Vector2i((*i)->getPosition().x/WIDTH, (*i)->getPosition().y/HEIGHT), sf::Vector2i((playerPosition.x)/WIDTH, (playerPosition.y + 10)/HEIGHT), false);
 							}
 							(*i)->updatePath = 1.f;
 							p_mob.release();

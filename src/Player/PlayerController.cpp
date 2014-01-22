@@ -200,7 +200,7 @@ void PlayerController::move_up(){
 		playerPtr->m_velocity.y = 0;
 	}
 }
-
+	
 void PlayerController::move_down(){
 	sf::Rect<int> rect = sf::Rect<int>(playerPtr->getPosition().x - 16 + 5, playerPtr->getPosition().y + speed.y + 1, 20, 15);
 	if (!intersects_wall(rect))

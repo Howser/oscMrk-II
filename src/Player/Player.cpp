@@ -528,18 +528,11 @@ bool Player::isInRange(Mob* ptr_mob){
 }
 
 // target must not be nullptr for melee weapons
-void Player::attack(const sf::RenderWindow & window, Mob* target){
+void Player::attack(const sf::RenderWindow & window){
 	if (!m_Gear.slots[4].Items.empty())
 	{
 		switch (m_Gear.slots[4].Items[0].item)
 		{
-		case Items::Sword:
-			if (target != nullptr && !target->dead && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Sword))
-			{
-				target->takeDamage(GetDamage(Items::Sword));
-				m_attackTimer.restart();
-			}
-			break;
 		case Items::Bow:
 			if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
 			{
@@ -574,13 +567,6 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Chest_Cold));
 				p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
 				//ptr_light_manager->m_lights.push_back(p_projectile_manager->m_spells.back().m_light);
-				m_attackTimer.restart();
-			}
-			break;
-		case Items::Mace:
-			if (target != nullptr && !target->dead && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Mace))
-			{
-				target->takeDamage(GetDamage(Items::Mace));
 				m_attackTimer.restart();
 			}
 			break;

@@ -45,7 +45,7 @@ public:
 	void drawGUI(sf::RenderWindow* p_window);
 
 	bool isInRange(Mob* ptr_mob);
-	void attack(const sf::RenderWindow & window, Mob* target);
+	void attack(const sf::RenderWindow & window);
 
 	bool isPathing();
 

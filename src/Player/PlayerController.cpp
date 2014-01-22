@@ -38,56 +38,27 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 			move_right();
 		}
 	}
-
-	if (targetPtr != NULL)
-	{
-		if (vec::length(mPathEnd - targetPtr->getPosition()) < (WIDTH+HEIGHT)/2)
-		{
-			getPath(targetPtr->getPosition().x/WIDTH, targetPtr->getPosition().y/HEIGHT);
-			mPathEnd = targetPtr->getPosition();
-		}
-		if (!targetPtr->dead && playerPtr->isInRange(targetPtr))
-		{
-			playerPtr->attack(window, targetPtr);
-			targetPtr->stop();
-			targetPtr = nullptr;
-		}
-	}
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		sf::Vector2i mpos = sf::Mouse::getPosition(window);
-		mpos.x += playerPtr->getPosition().x - view.getSize().x/2;
-		mpos.y += playerPtr->getPosition().y - view.getSize().y/2;
-
-		targetPtr = mobManagerPtr->getAtPosition(mpos.x, mpos.y);
-		mPathEnd = sf::Vector2f(mpos.x, mpos.y);
-
-		mpos.x /= WIDTH;
-		mpos.y /= HEIGHT;
-
-		sf::Vector2f diff = mPathStart - playerPtr->getPosition();
-		diff.x = std::abs(diff.x);
-		diff.y = std::abs(diff.y);
-		if (((diff.x > WIDTH || diff.y > HEIGHT) || !playerPtr->isPathing()) && targetPtr == NULL)
-		{
-			getPath(mpos.x, mpos.y);
-		}
-	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt))
 	{
 		if (leftMouseClicked)
 		{
-			playerPtr->attack(window, nullptr);
+			playerPtr->attack(window);
 		}
 		playerPtr->stop();
 		targetPtr = nullptr;
 	}
 	if (rightMouseClicked && sf::Mouse::isButtonPressed(sf::Mouse::Right))
 	{
-		playerPtr->attack(window, nullptr);
+		playerPtr->attack(window);
 	}
+
 	if (leftMouseClicked)
 	{
+		sf::Vector2i mpos = sf::Mouse::getPosition(window);
+		mpos.x += playerPtr->getPosition().x - view.getSize().x/2;
+		mpos.y += playerPtr->getPosition().y - view.getSize().y/2;
+
+		targetPtr = mobManagerPtr->getAtPosition(mpos.x, mpos.y);
 		if (targetPtr != NULL)
 		{
 			if (targetPtr->dead && math::distance(targetPtr->getPosition(), playerPtr->getPosition()) < WIDTH)

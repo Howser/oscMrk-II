@@ -50,8 +50,7 @@ public:
 	bool isPathing();
 
 	Items m_HelmetSlot;
-	Items m_ChestpieceSlot;
-	Items m_BootsSlot;
+	Items m_ArmorSlot;
 	Items m_lHandSlot;
 	Items m_rHandSlot;
 

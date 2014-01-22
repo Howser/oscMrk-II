@@ -128,30 +128,24 @@ void Application::loadResources()
 
 #pragma region Item Textures
 		mTextures.loadTexture(Textures::Arrow, "resources/graphics/item/inv/arrow.png");
-		mTextures.loadTexture(Textures::Helmet_Pain, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Helmet_Doubt, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Helmet_Torture, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Chest_Suffering, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Chest_Cold, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Chest_Destruction, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Legs_Enslaved, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Legs_Darkness, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Legs_Chaos, "resources/graphics/item/inv/test.png");
+		mTextures.loadTexture(Textures::Helmet_Destruction, "resources/graphics/item/inv/helmet_destruction.png");
+		mTextures.loadTexture(Textures::Helmet_Darkness, "resources/graphics/item/inv/helmet_darkness.png");
+		mTextures.loadTexture(Textures::Helmet_Chaos, "resources/graphics/item/inv/helmet_chaos.png");
+		mTextures.loadTexture(Textures::Armor_Destruction, "resources/graphics/item/inv/armor_destruction.png");
+		mTextures.loadTexture(Textures::Armor_Darkness, "resources/graphics/item/inv/armor_darkness.png");
+		mTextures.loadTexture(Textures::Armor_Chaos, "resources/graphics/item/inv/armor_chaos.png");
 		mTextures.loadTexture(Textures::Shield, "resources/graphics/item/inv/test.png");
 		mTextures.loadTexture(Textures::Sword, "resources/graphics/item/inv/sword.png");
 		mTextures.loadTexture(Textures::Bow, "resources/graphics/item/inv/bow.png");
 		mTextures.loadTexture(Textures::Mace, "resources/graphics/item/inv/mace.png");
 
 		mTextures.loadTexture(Textures::d_Arrow, "resources/graphics/item/world/arrow.png");
-		mTextures.loadTexture(Textures::d_Helmet_Pain, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Helmet_Doubt, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Helmet_Torture, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Chest_Suffering, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Chest_Cold, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Chest_Destruction, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Legs_Enslaved, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Legs_Darkness, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Legs_Chaos, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Helmet_Destruction, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Helmet_Darkness, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Helmet_Chaos, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Armor_Destruction, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Armor_Darkness, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Armor_Chaos, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Shield, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Sword, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Bow, "resources/graphics/item/world/test.png");

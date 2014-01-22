@@ -5,15 +5,12 @@
 enum Items //sort by type
 {
 	Arrow,
-	Helmet_Pain,
-	Helmet_Doubt,
-	Helmet_Torture,
-	Chest_Suffering,
-	Chest_Cold,
-	Chest_Destruction,
-	Legs_Enslaved,
-	Legs_Darkness,
-	Legs_Chaos,
+	Helmet_Destruction,
+	Helmet_Darkness,
+	Helmet_Chaos,
+	Armor_Destruction,
+	Armor_Darkness,
+	Armor_Chaos,
 	Shield,
 	Sword,
 	Bow,
@@ -24,22 +21,21 @@ enum Items //sort by type
 };
 
 ///<summary>Strings that equate to the enum names.</summary>
-static const char* ItemNames[15] = {"Arrow", "Helmet_Pain", "Helmet_Doubt", "Helmet_Torture", "Chest_Suffering", "Chest_Cold", "Chest_Destruction", "Legs_Enslaved", "Legs_Darkness", "Legs_Chaos", "Shield", "Sword", "Bow", "Mace", "Test_Spell"};
+static const char* ItemNames[12] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Shield", "Sword", "Bow", "Mace", "Test_Spell"};
 
 ///<summary>Strings for item names to display in tooltips, etc.</summary>
-static const char* w_ItemNames[15] = {"Arrow", "Helmet of Pain", "Helmet of Doubt", "Helmet of Torture", "Chest of Suffering", "Chest of Cold", "Chest of Destruction", "Legs of Enslaved", "Legs of Darkness", "Legs of Chaos", "Shield", "Sword", "Bow", "Mace", "Test Spell"};
+static const char* w_ItemNames[12] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Shield", "Sword", "Bow", "Mace", "Test Spell"};
 
 enum eGearSlot{
 	lHand,
 	rHand,
 	TwoHand,
 	Helmet,
-	Chestpiece,
-	Leggings,
+	Armor,
 	NoSlot,
 };
 
-static const char* GearSlotNames[6] = {"Left Hand", "Right Hand", "Two Hander", "Helmet", "Chest", "Legs"};
+static const char* GearSlotNames[6] = {"Left Hand", "Right Hand", "Two Hander", "Helmet", "Armor"};
 
 enum itemType{
 	Normal,
@@ -49,31 +45,22 @@ enum itemType{
 static int StackSize(Items const& item){
 	switch (item)
 	{
-	case Helmet_Pain:
+	case Helmet_Destruction:
 		return 1;
 		break;
-	case Helmet_Doubt:
+	case Helmet_Darkness:
 		return 1;
 		break;
-	case Helmet_Torture:
+	case Helmet_Chaos:
 		return 1;
 		break;
-	case Chest_Suffering:
+	case Armor_Chaos:
 		return 1;
 		break;
-	case Chest_Cold:
+	case Armor_Darkness:
 		return 1;
 		break;
-	case Chest_Destruction:
-		return 1;
-		break;
-	case Legs_Enslaved:
-		return 1;
-		break;
-	case Legs_Darkness:
-		return 1;
-		break;
-	case Legs_Chaos:
+	case Armor_Destruction:
 		return 1;
 		break;
 	case Shield:
@@ -103,31 +90,22 @@ static itemType GetType(Items item){
 	case Arrow:
 		return Normal;
 		break;
-	case Helmet_Pain:
+	case Helmet_Destruction:
 		return Gear;
 		break;
-	case Helmet_Doubt:
+	case Helmet_Darkness:
 		return Gear;
 		break;
-	case Helmet_Torture:
+	case Helmet_Chaos:
 		return Gear;
 		break;
-	case Chest_Suffering:
+	case Armor_Chaos:
 		return Gear;
 		break;
-	case Chest_Cold:
+	case Armor_Darkness:
 		return Gear;
 		break;
-	case Chest_Destruction:
-		return Gear;
-		break;
-	case Legs_Enslaved:
-		return Gear;
-		break;
-	case Legs_Darkness:
-		return Gear;
-		break;
-	case Legs_Chaos:
+	case Armor_Destruction:
 		return Gear;
 		break;
 	case Shield:
@@ -194,32 +172,23 @@ static float GetSpeed(Items item){
 static int GetArmor(Items item){
 	switch (item)
 	{
-	case Helmet_Pain:
+	case Helmet_Destruction:
 		return 1;
 		break;
-	case Helmet_Doubt:
-		return 5;
+	case Helmet_Darkness:
+		return 1;
 		break;
-	case Helmet_Torture:
-		return 12;
+	case Helmet_Chaos:
+		return 1;
 		break;
-	case Chest_Suffering:
-		return 3;
+	case Armor_Chaos:
+		return 1;
 		break;
-	case Chest_Cold:
-		return 8;
+	case Armor_Darkness:
+		return 1;
 		break;
-	case Chest_Destruction:
-		return 16;
-		break;
-	case Legs_Enslaved:
-		return 2;
-		break;
-	case Legs_Darkness:
-		return 7;
-		break;
-	case Legs_Chaos:
-		return 14;
+	case Armor_Destruction:
+		return 1;
 		break;
 	case Shield:
 		return 5;
@@ -233,32 +202,23 @@ static int GetArmor(Items item){
 static eGearSlot GetSlot(Items item){
 	switch (item)
 	{
-	case Helmet_Pain:
+	case Helmet_Destruction:
 		return Helmet;
 		break;
-	case Helmet_Doubt:
+	case Helmet_Darkness:
 		return Helmet;
 		break;
-	case Helmet_Torture:
+	case Helmet_Chaos:
 		return Helmet;
 		break;
-	case Chest_Suffering:
-		return Chestpiece;
+	case Armor_Chaos:
+		return Armor;
 		break;
-	case Chest_Cold:
-		return Chestpiece;
+	case Armor_Darkness:
+		return Armor;
 		break;
-	case Chest_Destruction:
-		return Chestpiece;
-		break;
-	case Legs_Enslaved:
-		return Leggings;
-		break;
-	case Legs_Darkness:
-		return Leggings;
-		break;
-	case Legs_Chaos:
-		return Leggings;
+	case Armor_Destruction:
+		return Armor;
 		break;
 	case Shield:
 		return lHand;
@@ -284,31 +244,22 @@ static eGearSlot GetSlot(Items item){
 static bool IsSpell(const Items & item){
 	switch (item)
 	{
-	case Helmet_Pain:
+	case Helmet_Destruction:
 		return false;
 		break;
-	case Helmet_Doubt:
+	case Helmet_Darkness:
 		return false;
 		break;
-	case Helmet_Torture:
+	case Helmet_Chaos:
 		return false;
 		break;
-	case Chest_Suffering:
+	case Armor_Chaos:
 		return false;
 		break;
-	case Chest_Cold:
+	case Armor_Darkness:
 		return false;
 		break;
-	case Chest_Destruction:
-		return false;
-		break;
-	case Legs_Enslaved:
-		return false;
-		break;
-	case Legs_Darkness:
-		return false;
-		break;
-	case Legs_Chaos:
+	case Armor_Destruction:
 		return false;
 		break;
 	case Shield:

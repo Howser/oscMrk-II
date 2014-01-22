@@ -1,0 +1,371 @@
+[33mcommit 98271c5e04abc0449f71e03c7394b79a052b2dd9[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Wed Jan 22 14:21:25 2014 +0100
+
+    Mobs path to the correct position
+    .
+
+[33mcommit 56b97102ef70af0a6d2a9c33340e3c0477aba798[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Wed Jan 22 13:40:38 2014 +0100
+
+    WASD movement and collision.
+
+[33mcommit 4ccfb52029b0f9016dcb7867e2b8f08ef5bfd0d4[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Wed Jan 22 11:40:33 2014 +0100
+
+    Fixed a few retarded things.
+
+[33mcommit e50647c9ba8ab6afe4a25e23045001a6fc777864[m
+Merge: 21ac3be 7d4dcf4
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Wed Jan 22 08:03:15 2014 +0100
+
+    Merge branch 'master' of github.com:Howser/oscMrk-II
+
+[33mcommit 21ac3bef229774496ef4c130b93e4c6015b0bb4a[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Wed Jan 22 08:03:07 2014 +0100
+
+    Started working on WASD movement. Collisions aren't great. Will continue after I get to school.
+
+[33mcommit 7d4dcf43003bc686a1649e10ce5b86de91acfdc3[m
+Author: Howser <evilhowser@gmail.com>
+Date:   Tue Jan 21 11:04:41 2014 +0100
+
+    Made lights fade away when spell hits something
+
+[33mcommit be04e01df76cc1c6a28135a8c16b297e3f19a2e4[m
+Author: Howser <evilhowser@gmail.com>
+Date:   Tue Jan 21 10:21:45 2014 +0100
+
+    added ladder tile
+
+[33mcommit 29ac35c38a0cf35ac949e7e7460e86bf62b583de[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Sun Jan 19 22:07:03 2014 +0100
+
+    Made fun lights =)
+
+[33mcommit aaa3bf2b78b40d30caee1e3bd2adec302359fc6e[m
+Merge: de1cbf4 efcd5c5
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Sun Jan 19 22:04:56 2014 +0100
+
+    Merge branch 'master' of github.com:Howser/oscMrk-II
+
+[33mcommit de1cbf42100835f22433547de532fa7ac542c1e1[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Sun Jan 19 22:03:48 2014 +0100
+
+    Spell Lights completely fixed.
+
+[33mcommit efcd5c56068b42bd2a6dfef9e28b2562e225cd11[m
+Merge: c6a4117 ce273a9
+Author: h0wser <evilhowser@gmail.com>
+Date:   Sat Jan 18 15:44:39 2014 +0100
+
+    Merge branch 'master' of github.com:Howser/oscMrk-II
+
+[33mcommit c6a4117e8deb104f7e9885d5b4bcecd05c85dda7[m
+Author: h0wser <evilhowser@gmail.com>
+Date:   Sat Jan 18 15:44:35 2014 +0100
+
+    added some dudes
+
+[33mcommit ce273a9ed959bd295a13ee4a7db90598593bfbe1[m
+Merge: 65efe30 d2244ac
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Sat Jan 18 06:18:14 2014 +0100
+
+    Spell lights.
+
+[33mcommit 65efe3078c99ee7775e078426428c48390b96975[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Sat Jan 18 00:19:56 2014 +0100
+
+    Spell effects.
+
+[33mcommit d2244ac870beef9039dac051f4b971642357e0dd[m
+Merge: 18b3c8e 1aceffc
+Author: h0wser <evilhowser@gmail.com>
+Date:   Fri Jan 17 23:51:20 2014 +0100
+
+    Merge branch 'master' of github.com:Howser/oscMrk-II
+
+[33mcommit 18b3c8e078d05e4eb2a996cc2a3dbbc47518bc14[m
+Author: h0wser <evilhowser@gmail.com>
+Date:   Fri Jan 17 23:51:13 2014 +0100
+
+    Created loading screen and ingame map gen
+
+[33mcommit 1aceffcbca4266c5bbcb7cd9dd3268fe0a3bfabe[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Fri Jan 17 18:21:11 2014 +0100
+
+    Right-click to pick up an item.
+
+[33mcommit 9bdb829777b7151b0c864521bae52ec8caff4fd1[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Fri Jan 17 13:52:27 2014 +0100
+
+    Fixed attack after equip.
+
+[33mcommit de1308d554ce5a2cd27389c1f4a694ac17441060[m
+Merge: e37558c 17c15d6
+Author: Howser <evilhowser@gmail.com>
+Date:   Fri Jan 17 12:59:37 2014 +0100
+
+    merged map
+
+[33mcommit e37558cf17c86be6172d81fd0bef571a011eb297[m
+Author: Howser <evilhowser@gmail.com>
+Date:   Fri Jan 17 12:55:18 2014 +0100
+
+    Updated the healthbar
+
+[33mcommit 17c15d6afb5bb791239027554e927af58889a8f1[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Fri Jan 17 12:16:11 2014 +0100
+
+    Light flicker.
+
+[33mcommit e352e201402436799b7d7ec60487047c48922e7c[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Fri Jan 17 07:09:51 2014 +0100
+
+    Merge. Started working on light flicker. The light pointers for the torches are weird...
+
+[33mcommit 447275c89c7c90f56ff3718140b30114eda0b24a[m
+Merge: 937fb13 59b515a
+Author: h0wser <evilhowser@gmail.com>
+Date:   Thu Jan 16 19:32:36 2014 +0100
+
+    Merged, fixed vcxproj, added player rightclick to attack
+
+[33mcommit 59b515ad0638b71fc0d3cb39d9d5a224e4185d73[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Thu Jan 16 18:32:10 2014 +0100
+
+    Torch struct. Just need a better way of placing torches, and a torch sprite.
+
+[33mcommit e4987848dc71c699a5f0f0400d5bec2acf511cd2[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Thu Jan 16 16:45:08 2014 +0100
+
+    Fixed a bug where the lights wouldn't show unless all of the lights started with their 'm_draw' being true.
+
+[33mcommit 11e4c2eebaf6044a2174764c80bf62e302c7eb41[m
+Merge: 48cd803 f927827
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Thu Jan 16 16:33:58 2014 +0100
+
+    Merge.
+
+[33mcommit 937fb130a587d12866e88b3a8577da1551ce1083[m
+Author: h0wser <evilhowser@gmail.com>
+Date:   Thu Jan 16 16:14:44 2014 +0100
+
+    Created particle system
+
+[33mcommit f927827e2158037e71f6ec623571389099022008[m
+Merge: 23cf4bc cad33e0
+Author: h0wser <evilhowser@gmail.com>
+Date:   Thu Jan 16 09:14:37 2014 +0100
+
+    Merged in health bars
+
+[33mcommit cad33e00878cb751069e6625c47d8c3e97afb758[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Wed Jan 15 13:37:59 2014 +0100
+
+    'Static' and 'Dynamic' lights.
+
+[33mcommit 48cd8030ec3254882e58cd3f9b5c2f054d047d41[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Tue Jan 14 17:41:32 2014 +0100
+
+    A few things including spells.
+
+[33mcommit 23cf4bc641ccacc8fc1d80bf44a51857a6dfea5b[m
+Merge: 52cf271 89ce738
+Author: h0wser <evilhowser@gmail.com>
+Date:   Mon Jan 13 19:46:25 2014 +0100
+
+    merge
+
+[33mcommit 52cf2719b6526f92cef48a44611b2059070f8940[m
+Author: h0wser <evilhowser@gmail.com>
+Date:   Mon Jan 13 19:41:57 2014 +0100
+
+    Added healthbar to player
+
+[33mcommit 89ce738cef47759134ce62845a718cf763634fe7[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Mon Jan 13 18:17:34 2014 +0100
+
+    Made the mini map render function less retarded.
+
+[33mcommit 677747789d0ae33d9f2458f2739fab20ab0d76f8[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Mon Jan 13 12:21:42 2014 +0100
+
+    Made some things faster.. I think.
+
+[33mcommit c8e340af68d2190f4ce32e60ea853dc91023c264[m
+Author: Howser <evilhowser@gmail.com>
+Date:   Mon Jan 13 12:01:05 2014 +0100
+
+    Added player sprite, fixed player rotation
+
+[33mcommit 1736c765bc2e396ca4c48674522ace1f31bddb1d[m
+Author: Howser <evilhowser@gmail.com>
+Date:   Mon Jan 13 11:35:47 2014 +0100
+
+    Added player overlay
+
+[33mcommit f1ed9fa6051d3bcae496e9b8c46d66b78500d724[m
+Merge: 612575a d3be1b5
+Author: Howser <evilhowser@gmail.com>
+Date:   Mon Jan 13 10:39:14 2014 +0100
+
+    Merge branch 'master' of github.com:Howser/oscMrk-II
+
+[33mcommit 612575a74e8a9b3c0d44f09215ad58fd5032474f[m
+Author: Howser <evilhowser@gmail.com>
+Date:   Mon Jan 13 10:39:10 2014 +0100
+
+    player rotation
+
+[33mcommit d3be1b5105989bbfb90d3bfea5d1710c19ba01ab[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Mon Jan 13 10:38:19 2014 +0100
+
+    Removed FPS cap due to popular demand.
+
+[33mcommit 401dd2bc32f5d80de2bae47a502c1d53bfa294dd[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Mon Jan 13 10:13:18 2014 +0100
+
+    Made the FPS cap less retarded.
+
+[33mcommit 43cf76601b75861842e8f3890557c67157caa509[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Mon Jan 13 09:53:20 2014 +0100
+
+    Fixed some retardedness...
+
+[33mcommit 36d7bf37f10732db584eab106a8ae596a9138203[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Mon Jan 13 05:29:08 2014 +0100
+
+    Mini map exploration. Fixed mob wander. Started working on arrows sticking to mobs. FPS limit at 60 since it looked really weird when it was jumping between like 100 and 300 FPS every other second.
+
+[33mcommit fa8f38cceb18aefda8b0321def2d4123d398a5d8[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Fri Jan 10 20:30:28 2014 +0100
+
+    Player on mini map.
+
+[33mcommit a9431e3bb756ff50dd8597b64ee30eb273e263df[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Fri Jan 10 20:14:29 2014 +0100
+
+    Mini map.
+
+[33mcommit 21ce4264aa3eaea57f7e6352ebb000c6eb53a426[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Fri Jan 10 13:44:35 2014 +0100
+
+    Fixed some stuff.
+
+[33mcommit 5757350e8067eb3f82afca1b63dbe4c0e7a25dfc[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Fri Jan 10 08:42:02 2014 +0100
+
+    Updated '.gitignore'.
+
+[33mcommit b0733e23e4cadb50eb24a988b7cf63d18e55617b[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Fri Jan 10 00:02:18 2014 +0100
+
+    Fixed mobs pathing to unaggroed mobs.
+
+[33mcommit 1013a3fc3753ffe0f3b79139240f5cbcbd0526ee[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Thu Jan 9 22:51:56 2014 +0100
+
+    Fixed the bug for mobs pathing. Fixed some arrow stuff. Did a few other things that I've forgotten.
+
+[33mcommit a0f52831a6ee870bdcdfcfe49e3a2f4eeb0b426a[m
+Author: h0wser <evilhowser@gmail.com>
+Date:   Thu Jan 9 18:42:31 2014 +0100
+
+    Created a few inventory sprites to keep morale high
+
+[33mcommit ff971923d8541e876912f9d6aef115ce27545df7[m
+Author: h0wser <evilhowser@gmail.com>
+Date:   Thu Jan 9 18:25:16 2014 +0100
+
+    Added tooltip panel
+
+[33mcommit 7dfe7cb765fd75aaac057704e3e26e3228efb8f2[m
+Author: h0wser <evilhowser@gmail.com>
+Date:   Thu Jan 9 18:00:39 2014 +0100
+
+    Integreted items in combat, arrows, mace and sword damage mobs according to stats
+
+[33mcommit c989c70c6a743883c69a7413dac028c87f2374a9[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Thu Jan 9 13:45:58 2014 +0100
+
+    Fire arrows and Projectile Manager.
+
+[33mcommit 425db2b27ec03d71c8cf6ddfdf6f1e288cb0a389[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Wed Jan 8 13:55:09 2014 +0100
+
+    Two-handed weapons.
+
+[33mcommit e3023d35090abb708ff98bcc2f880e77f3e0976e[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Wed Jan 8 07:58:44 2014 +0100
+
+    Corrected item sprite assignment.
+
+[33mcommit d14831061ef8dbc394d4a7b13d52d886387e028d[m
+Author: Mntndew <patrik.pihlstrom@gmail.com>
+Date:   Wed Jan 8 00:43:19 2014 +0100
+
+    Implemented the actual items.
+
+[33mcommit ae6c19d868fe148589f25beaa038e2d5d3ec43e6[m
+Author: Howser <evilhowser@gmail.com>
+Date:   Tue Jan 7 13:33:17 2014 +0100
+
+    Fixed crash with player picking up items
+
+[33mcommit 9e67bb72aa35345b9821d6ed652d601d920d61bf[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Tue Jan 7 05:39:23 2014 +0100
+
+    Made gear display on the character.
+
+[33mcommit 5051e0ebdc0aa62652e509a37b8f53cc19f7a928[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Mon Jan 6 01:06:28 2014 +0100
+
+    Fixed mob ID assignment, and other small things.
+
+[33mcommit d74f46b674f9c89d888c294c1cf1222b8e01f233[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Sat Jan 4 22:59:20 2014 +0100
+
+    Is it fixed?
+
+[33mcommit e84729159a78c6b146186cc0f3b6f711af73d6ea[m
+Author: Mntndew <trickepiclyawesome@gmail.com>
+Date:   Sat Jan 4 22:57:59 2014 +0100
+
+    I may have done something bad, or I may have saved it.

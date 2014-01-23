@@ -34,9 +34,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	ptr_light_manager(ptr_light_manager)
 {
 	m_sprite.setTexture(*(textures->getTexture(Textures::Player)));
-
 	m_overlay.setTexture(*(textures->getTexture(Textures::PlayerOverlay)));
-
 	m_mouseSlot.fontPtr = fonts->getFont(Fonts::Main);
 	setOrigin(16, 16);
 	m_inventory.slots[0][0].Items.push_back(GearItem(Items::Sword, *textures, -1));
@@ -68,9 +66,9 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 		m_d_gear.back().setPosition(getPosition());
 	}
 	m_attackTimer.restart();
-	m_healthbar.setPosition(0, 583); // Exact as fuck
+	m_healthbar.setPosition(0, 720 - 129);
+	m_overlay.setPosition(m_healthbar.getPosition());
 	m_health = 100;
-	setPosition(-1280, -720);
 }
 
 Player::~Player()

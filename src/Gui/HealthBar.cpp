@@ -6,7 +6,7 @@
 gui::HealthBar::HealthBar(sf::Texture const& base, sf::Texture const& loaded)
 	:
 	gui::StatusBar(base, loaded),
-	m_animation(sf::Vector2i(156, 128), 6)
+	m_animation(sf::Vector2i(130, 256), 6)
 {
 	m_animation.loop(0);
 }

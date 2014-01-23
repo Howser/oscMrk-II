@@ -276,7 +276,7 @@ void PlayerController::check_collision(){
 }
 
 bool PlayerController::intersects_wall(const sf::Rect<int> & p_rect){
-	for (int x = (p_rect.left)/WIDTH - 1, y = ((p_rect.top)/HEIGHT - 1 >= 0) ? (p_rect.top)/HEIGHT - 1:0; x < (p_rect.left + p_rect.width)/WIDTH + 1; x++)
+	for (int x = ((p_rect.left)/WIDTH - 1 >= 0) ? (p_rect.left)/WIDTH - 1:0, y = ((p_rect.top)/HEIGHT - 1 >= 0) ? (p_rect.top)/HEIGHT - 1:0; x < (p_rect.left + p_rect.width)/WIDTH + 1; x++)
 	{
 		for (int y = ((p_rect.top)/HEIGHT - 1 >= 0) ? (p_rect.top)/HEIGHT - 1:0; y < (p_rect.top + p_rect.height)/HEIGHT + 1; y++)
 		{

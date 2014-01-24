@@ -8,6 +8,7 @@ gui::HealthBar::HealthBar(sf::Texture const& base, sf::Texture const& loaded)
 	gui::StatusBar(base, loaded),
 	m_animation(sf::Vector2i(130, 256), 6)
 {
+	mBase.setColor(sf::Color(255, 255, 255, 200));
 	m_animation.loop(0);
 }
 

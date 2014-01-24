@@ -17,7 +17,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_sprite(),
 	m_velocity(),
 	m_path(),
-	m_animation(sf::Vector2i(32, 32), 1),
+	m_animation(sf::Vector2i(24, 23), 3, .5f),
 	m_inventory(10, 10, 0, *textures),
 	m_lootInventory(10, 10, 10*SLOTWIDTH + 10*5 + 100, *textures),
 	m_Gear(*textures, m_inventory.width*SLOTWIDTH + SLOTWIDTH),
@@ -34,6 +34,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	ptr_light_manager(ptr_light_manager)
 {
 	m_sprite.setTexture(*(textures->getTexture(Textures::Player)));
+	m_sprite.setScale(1 + (float)1/3, 1 + (float)1/3);
 	m_overlay.setTexture(*(textures->getTexture(Textures::PlayerOverlay)));
 	m_mouseSlot.fontPtr = fonts->getFont(Fonts::Main);
 	setOrigin(16, 16);
@@ -60,15 +61,17 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_Gear.slots[2].slot = eGearSlot::lHand;
 	m_Gear.slots[3].slot = eGearSlot::rHand;
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		m_d_gear.push_back(D_Gear());
 		m_d_gear.back().setPosition(getPosition());
+		m_d_gear.back().m_animation = Animation(sf::Vector2i(24, 23), 3, 0.5f);
 	}
 	m_attackTimer.restart();
 	m_healthbar.setPosition(0, 720 - 129);
 	m_overlay.setPosition(m_healthbar.getPosition());
 	m_health = 100;
+	m_dir = Direction::Down;
 }
 
 Player::~Player()
@@ -99,55 +102,80 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 	if (!inventoryState)
 	{
 		setPosition(getPosition().x + m_velocity.x, getPosition().y + m_velocity.y);
-		if (!m_path.empty())
+
+		if (std::abs(m_velocity.x) > std::abs(m_velocity.y))
 		{
-			// Check the distance to the next node 
-			float dist = vec::length(getPosition() - m_path.back());
-			if (dist < 10.f)
+			if (m_velocity.x > 0)
 			{
-				// remove it if the player is close enough
-				m_path.pop_back();
-			}
-
-			if (!m_path.empty())
+				m_dir = Direction::Right;
+			}else if (m_velocity.x < 0)
 			{
-				// Move towards the next node
-				sf::Vector2f target = m_path.back() - getPosition();
-				target = vec::normalize(target);
-				m_velocity.x = target.x * speed.x;
-				m_velocity.y = target.y * speed.y;
+				m_dir = Direction::Left;
+			}
+		}else
+		{
+			if (m_velocity.y > 0)
+			{
+				m_dir = Direction::Down;
+			}else if (m_velocity.y < 0)
+			{
+				m_dir = Direction::Up;
 			}
 		}
-		else
+
+		switch (m_dir)
 		{
-			stop();
+		case Up:
+			m_animation.loop(0);
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.loop(0);
+			}
+			break;
+		case Down:
+			m_animation.loop(2);
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.loop(2);
+			}
+			break;
+		case Left:
+			m_animation.loop(3);
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.loop(3);
+			}
+			break;
+		case Right:
+			m_animation.loop(1);
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.loop(1);
+			}
+			break;
+		default:
+			break;
+		}
+		if (m_velocity.x != 0 || m_velocity.y != 0)
+		{
+			m_animation.update();
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.update();
+			}
 		}
 
-		// If the player is moving his rotation might be changed
-		if (m_velocity.x != 0 && m_velocity.y != 0)
-		{
-			// Get the angle of the movement
-			float angle = vec::angle(m_velocity);
-
-			// set the animation (offset angle by 45 to make it not start at 0)
-			int animation = (angle+45)/90;
-
-			// Constrain the animation
-			if (animation > 3)
-				animation = 3;
-			if (animation < 0)
-				animation = 0;
-
-			m_animation.loop(animation);
-		}
-
-		m_animation.update();
+		stop();
 		m_sprite.setTextureRect(m_animation.getFrame());
+		for (int i = 0; i < m_d_gear.size(); i++)
+		{
+			m_d_gear[i].m_sprite.setTextureRect(m_animation.getFrame());
+		}
 
 		m_d_gear[0].setPosition(getPosition().x - 16, getPosition().y - 16);
-		m_d_gear[1].setPosition(getPosition().x - 16, getPosition().y - 6);
-		m_d_gear[2].setPosition(getPosition().x, getPosition().y);
-		m_d_gear[3].setPosition(getPosition().x, getPosition().y);
+		m_d_gear[1].setPosition(getPosition().x - 16, getPosition().y - 16);
+		m_d_gear[2].setPosition(getPosition().x - 16, getPosition().y - 16);
+		m_d_gear[3].setPosition(getPosition().x - 16, getPosition().y - 16);
 	}
 	resetInputs();
 	m_healthbar.updateStatus((float)m_health / 100.f);
@@ -313,11 +341,12 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 								{
 								case Helmet:
 									item.Equip(&m_Gear.slots[0], &m_inventory.slots[x][y], &m_inventory);
-									m_d_gear[0].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[0].Items[0].item))));
+									m_d_gear[0].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[0].Items[0].item))));
 									break;
 								case Armor:
 									item.Equip(&m_Gear.slots[1], &m_inventory.slots[x][y], &m_inventory);
-									m_d_gear[1].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[1].Items[0].item))));
+									m_d_gear[1].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[1].Items[0].item))));
+									m_d_gear[1].m_sprite.setScale(1 + (float)1/3, 1 + (float)1/3);
 									break;
 								case lHand:
 									if (!m_Gear.slots[2].Items.empty() && GetSlot(m_Gear.slots[2].Items.begin()->item) == eGearSlot::TwoHand)
@@ -329,12 +358,12 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 
 											item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
 
-											m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
+											m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[3].Items[0].item))));
 										}
 									}else
 									{
 										item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
-										m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
+										m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[3].Items[0].item))));
 									}
 									break;
 								case rHand:
@@ -346,13 +375,13 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 											m_Gear.slots[2].Items.clear();
 
 											item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
-											m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[2].Items[0].item))));
+											m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
 											m_d_gear[2].setPosition(getPosition().x, getPosition().y);
 										}
 									}else
 									{
 										item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
-										m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[2].Items[0].item))));
+										m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
 									}
 									break;
 								case TwoHand:
@@ -369,7 +398,7 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 									if (m_Gear.slots[3].Items.empty() && m_Gear.slots[2].Items.empty())
 									{
 										item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
-										m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[2].Items[0].item))));
+										m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
 									}
 									break;
 								}
@@ -578,7 +607,6 @@ void Player::attack(const sf::RenderWindow & window, Mob* target){
 				sf::Sprite spell_sprite;
 				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
 				p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
-				//ptr_light_manager->m_lights.push_back(p_projectile_manager->m_spells.back().m_light);
 				m_attackTimer.restart();
 			}
 			break;

@@ -8,7 +8,8 @@ class Animation
 {
 	public:
 
-						Animation(sf::Vector2i frameSize, int maxFrames, sf::Time frameTime = sf::Time(sf::seconds(0.1f)));
+						Animation(sf::Vector2i frameSize, int maxFrames, float frameTime = (0.1f));
+						Animation();
 		virtual			~Animation();
 
 		sf::Rect<int>	getFrame() const;
@@ -23,7 +24,7 @@ class Animation
 
 	private:
 		sf::Clock		mFrameTimer;
-		sf::Time		mFrameTime;
+		float		mFrameTime;
 		sf::Rect<int>	mFrame;
 
 		int				mMaxFrames;

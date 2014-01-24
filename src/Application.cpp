@@ -145,7 +145,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::d_Helmet_Chaos, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Armor_Destruction, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Armor_Darkness, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Armor_Chaos, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Armor_Chaos, "resources/graphics/item/world/armor_chaos.png");
 		mTextures.loadTexture(Textures::d_Shield, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Sword, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Bow, "resources/graphics/item/world/test.png");

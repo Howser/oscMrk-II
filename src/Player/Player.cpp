@@ -17,7 +17,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_sprite(),
 	m_velocity(),
 	m_path(),
-	m_animation(sf::Vector2i(32, 32), 1),
+	m_animation(sf::Vector2i(24, 23), 3, .5f),
 	m_inventory(10, 10, 0, *textures),
 	m_lootInventory(10, 10, 10*SLOTWIDTH + 10*5 + 100, *textures),
 	m_Gear(*textures, m_inventory.width*SLOTWIDTH + SLOTWIDTH),
@@ -34,9 +34,8 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	ptr_light_manager(ptr_light_manager)
 {
 	m_sprite.setTexture(*(textures->getTexture(Textures::Player)));
-
+	m_sprite.setScale(1 + (float)1/3, 1 + (float)1/3);
 	m_overlay.setTexture(*(textures->getTexture(Textures::PlayerOverlay)));
-
 	m_mouseSlot.fontPtr = fonts->getFont(Fonts::Main);
 	setOrigin(16, 16);
 	m_inventory.slots[0][0].Items.push_back(GearItem(Items::Sword, *textures, -1));
@@ -47,26 +46,32 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	{
 		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::TestSpell).x][m_inventory.GetFirstAvailableSlot(Items::TestSpell).y].Items.push_back(MiscItem(Items::TestSpell, *textures, -1));
 	}
-	Player::m_BootsSlot = Items::NOITEM;
-	Player::m_ChestpieceSlot = Items::NOITEM;
+	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Armor_Chaos).x][m_inventory.GetFirstAvailableSlot(Items::Armor_Chaos).y].Items.push_back(MiscItem(Items::Armor_Chaos, *textures, -1));
+	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Helmet_Chaos).x][m_inventory.GetFirstAvailableSlot(Items::Helmet_Chaos).y].Items.push_back(MiscItem(Items::Helmet_Chaos, *textures, -1));
+	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Armor_Destruction).x][m_inventory.GetFirstAvailableSlot(Items::Armor_Destruction).y].Items.push_back(MiscItem(Items::Armor_Destruction, *textures, -1));
+	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Helmet_Destruction).x][m_inventory.GetFirstAvailableSlot(Items::Helmet_Destruction).y].Items.push_back(MiscItem(Items::Helmet_Destruction, *textures, -1));
+	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Armor_Darkness).x][m_inventory.GetFirstAvailableSlot(Items::Armor_Darkness).y].Items.push_back(MiscItem(Items::Armor_Darkness, *textures, -1));
+	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Helmet_Darkness).x][m_inventory.GetFirstAvailableSlot(Items::Helmet_Darkness).y].Items.push_back(MiscItem(Items::Helmet_Darkness, *textures, -1));
 	Player::m_HelmetSlot = Items::NOITEM;
+	Player::m_ArmorSlot = Items::NOITEM;
 	Player::m_lHandSlot = Items::NOITEM;
 	Player::m_rHandSlot = Items::NOITEM;
 	m_Gear.slots[0].slot = eGearSlot::Helmet;
-	m_Gear.slots[1].slot = eGearSlot::Chestpiece;
-	m_Gear.slots[2].slot = eGearSlot::Leggings;
-	m_Gear.slots[3].slot = eGearSlot::lHand;
-	m_Gear.slots[4].slot = eGearSlot::rHand;
+	m_Gear.slots[1].slot = eGearSlot::Armor;
+	m_Gear.slots[2].slot = eGearSlot::lHand;
+	m_Gear.slots[3].slot = eGearSlot::rHand;
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		m_d_gear.push_back(D_Gear());
 		m_d_gear.back().setPosition(getPosition());
+		m_d_gear.back().m_animation = Animation(sf::Vector2i(24, 23), 3, 0.5f);
 	}
 	m_attackTimer.restart();
-	m_healthbar.setPosition(0, 583); // Exact as fuck
+	m_healthbar.setPosition(0, 720 - 129);
+	m_overlay.setPosition(m_healthbar.getPosition());
 	m_health = 100;
-	setPosition(-1280, -720);
+	m_dir = Direction::Down;
 }
 
 Player::~Player()
@@ -97,55 +102,80 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 	if (!inventoryState)
 	{
 		setPosition(getPosition().x + m_velocity.x, getPosition().y + m_velocity.y);
-		if (!m_path.empty())
+
+		if (std::abs(m_velocity.x) > std::abs(m_velocity.y))
 		{
-			// Check the distance to the next node 
-			float dist = vec::length(getPosition() - m_path.back());
-			if (dist < 10.f)
+			if (m_velocity.x > 0)
 			{
-				// remove it if the player is close enough
-				m_path.pop_back();
-			}
-
-			if (!m_path.empty())
+				m_dir = Direction::Right;
+			}else if (m_velocity.x < 0)
 			{
-				// Move towards the next node
-				sf::Vector2f target = m_path.back() - getPosition();
-				target = vec::normalize(target);
-				m_velocity.x = target.x * speed.x;
-				m_velocity.y = target.y * speed.y;
+				m_dir = Direction::Left;
+			}
+		}else
+		{
+			if (m_velocity.y > 0)
+			{
+				m_dir = Direction::Down;
+			}else if (m_velocity.y < 0)
+			{
+				m_dir = Direction::Up;
 			}
 		}
-		else
+
+		switch (m_dir)
 		{
-			stop();
+		case Up:
+			m_animation.loop(0);
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.loop(0);
+			}
+			break;
+		case Down:
+			m_animation.loop(2);
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.loop(2);
+			}
+			break;
+		case Left:
+			m_animation.loop(3);
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.loop(3);
+			}
+			break;
+		case Right:
+			m_animation.loop(1);
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.loop(1);
+			}
+			break;
+		default:
+			break;
+		}
+		if (m_velocity.x != 0 || m_velocity.y != 0)
+		{
+			m_animation.update();
+			for (int i = 0; i < m_d_gear.size(); i++)
+			{
+				m_d_gear[i].m_animation.update();
+			}
 		}
 
-		// If the player is moving his rotation might be changed
-		if (m_velocity.x != 0 && m_velocity.y != 0)
-		{
-			// Get the angle of the movement
-			float angle = vec::angle(m_velocity);
-
-			// set the animation (offset angle by 45 to make it not start at 0)
-			int animation = (angle+45)/90;
-
-			// Constrain the animation
-			if (animation > 3)
-				animation = 3;
-			if (animation < 0)
-				animation = 0;
-
-			m_animation.loop(animation);
-		}
-
-		m_animation.update();
+		stop();
 		m_sprite.setTextureRect(m_animation.getFrame());
-
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < m_d_gear.size(); i++)
 		{
-			m_d_gear[i].setPosition(getPosition());
+			m_d_gear[i].m_sprite.setTextureRect(m_animation.getFrame());
 		}
+
+		m_d_gear[0].setPosition(getPosition().x - 16, getPosition().y - 16);
+		m_d_gear[1].setPosition(getPosition().x - 16, getPosition().y - 16);
+		m_d_gear[2].setPosition(getPosition().x - 16, getPosition().y - 16);
+		m_d_gear[3].setPosition(getPosition().x - 16, getPosition().y - 16);
 	}
 	resetInputs();
 	m_healthbar.updateStatus((float)m_health / 100.f);
@@ -154,8 +184,6 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 		m_health -= 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
 		m_health += 1;
-
-
 }
 
 void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & textures){
@@ -174,9 +202,25 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 
 	if (!m_stackManager.show && !m_deleteItem.show)
 	{
-		if (sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_invRect) || (lootState && sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_lootInvRect)))
+		if (sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_invRect) || (lootState && sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_lootInvRect)) || sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(sf::Rect<int>(m_inventory.width*SLOTWIDTH + 5*m_inventory.width, 0, SLOTWIDTH*3, SLOTHEIGHT*2)))
 		{
 			bool broken = false;
+			for (unsigned int i = 0; i < m_Gear.slots.size(); i++)
+			{
+				if (sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(sf::Rect<int>(m_Gear.slots[i].getPosition().x, m_Gear.slots[i].getPosition().y, SLOTWIDTH, SLOTHEIGHT)))
+				{
+					if (!m_Gear.slots[i].Items.empty())
+					{
+						if (m_tooltip.slot != &m_Gear.slots[i])
+						{
+							m_tooltip.SetStats(&m_Gear.slots[i]);
+						}
+					}else
+					{
+						m_tooltip.Hide();
+					}
+				}
+			}
 			for (unsigned int x = 0, y = 0; x < m_inventory.width; x++)
 			{
 				for (y = 0; y < m_inventory.height; y++)
@@ -297,56 +341,47 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 								{
 								case Helmet:
 									item.Equip(&m_Gear.slots[0], &m_inventory.slots[x][y], &m_inventory);
-									m_d_gear[0].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[0].Items[0].item))));
-									m_d_gear[0].setPosition(getPosition().x, getPosition().y);
+									m_d_gear[0].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[0].Items[0].item))));
 									break;
-								case Chestpiece:
+								case Armor:
 									item.Equip(&m_Gear.slots[1], &m_inventory.slots[x][y], &m_inventory);
-									m_d_gear[1].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[1].Items[0].item))));
-									m_d_gear[1].setPosition(getPosition().x, getPosition().y);
-									break;
-								case Leggings:
-									item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
-									m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[2].Items[0].item))));
-									m_d_gear[2].setPosition(getPosition().x, getPosition().y);
+									m_d_gear[1].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[1].Items[0].item))));
+									m_d_gear[1].m_sprite.setScale(1 + (float)1/3, 1 + (float)1/3);
 									break;
 								case lHand:
-									if (!m_Gear.slots[4].Items.empty() && GetSlot(m_Gear.slots[4].Items.begin()->item) == eGearSlot::TwoHand)
+									if (!m_Gear.slots[2].Items.empty() && GetSlot(m_Gear.slots[2].Items.begin()->item) == eGearSlot::TwoHand)
 									{
-										if (m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x != -1)
+										if (m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).x != -1)
 										{
-											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).y].Items.push_back(*m_Gear.slots[4].Items.begin());
-											m_Gear.slots[4].Items.clear();
+											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).y].Items.push_back(*m_Gear.slots[2].Items.begin());
+											m_Gear.slots[2].Items.clear();
 
 											item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
 
-											m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
-											m_d_gear[3].setPosition(getPosition().x, getPosition().y);
+											m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[3].Items[0].item))));
 										}
 									}else
 									{
 										item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
-										m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[3].Items[0].item))));
-										m_d_gear[3].setPosition(getPosition().x, getPosition().y);
+										m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[3].Items[0].item))));
 									}
 									break;
 								case rHand:
-									if (!m_Gear.slots[4].Items.empty() && GetSlot(m_Gear.slots[4].Items.begin()->item) == eGearSlot::TwoHand)
+									if (!m_Gear.slots[2].Items.empty() && GetSlot(m_Gear.slots[2].Items.begin()->item) == eGearSlot::TwoHand)
 									{
-										if (m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x != -1)
+										if (m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).x != -1)
 										{
-											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).y].Items.push_back(*m_Gear.slots[4].Items.begin());
-											m_Gear.slots[4].Items.clear();
+											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).y].Items.push_back(*m_Gear.slots[2].Items.begin());
+											m_Gear.slots[2].Items.clear();
 
-											item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
-											m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
-											m_d_gear[4].setPosition(getPosition().x, getPosition().y);
+											item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
+											m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
+											m_d_gear[2].setPosition(getPosition().x, getPosition().y);
 										}
 									}else
 									{
-										item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
-										m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
-										m_d_gear[4].setPosition(getPosition().x, getPosition().y);
+										item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
+										m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
 									}
 									break;
 								case TwoHand:
@@ -355,16 +390,15 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 										m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[3].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[3].Items.begin()->item).y].Items.push_back(*m_Gear.slots[3].Items.begin());
 										m_Gear.slots[3].Items.clear();
 									}
-									if (!m_Gear.slots[4].Items.empty())
+									if (!m_Gear.slots[2].Items.empty())
 									{
-										m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[4].Items.begin()->item).y].Items.push_back(*m_Gear.slots[4].Items.begin());
-										m_Gear.slots[4].Items.clear();
+										m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).y].Items.push_back(*m_Gear.slots[2].Items.begin());
+										m_Gear.slots[2].Items.clear();
 									}
-									if (m_Gear.slots[3].Items.empty() && m_Gear.slots[4].Items.empty())
+									if (m_Gear.slots[3].Items.empty() && m_Gear.slots[2].Items.empty())
 									{
-										item.Equip(&m_Gear.slots[4], &m_inventory.slots[x][y], &m_inventory);
-										m_d_gear[4].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(26 + m_Gear.slots[4].Items[0].item))));
-										m_d_gear[4].setPosition(getPosition().x, getPosition().y);
+										item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
+										m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
 									}
 									break;
 								}
@@ -511,9 +545,9 @@ void Player::drawGUI(sf::RenderWindow* p_window){
 }
 
 bool Player::isInRange(Mob* ptr_mob){
-	if (!m_Gear.slots[4].Items.empty())
+	if (!m_Gear.slots[2].Items.empty())
 	{
-		switch (m_Gear.slots[4].Items[0].item)
+		switch (m_Gear.slots[2].Items[0].item)
 		{
 		case Bow:
 			return (math::distance(ptr_mob->getPosition(), getPosition()) <= 735 + GetWidth(ptr_mob->type)/2);
@@ -527,11 +561,11 @@ bool Player::isInRange(Mob* ptr_mob){
 	}
 }
 
-// target must not be nullptr for melee weapons
 void Player::attack(const sf::RenderWindow & window){
-	if (!m_Gear.slots[4].Items.empty())
+	
+	if (!m_Gear.slots[2].Items.empty())
 	{
-		switch (m_Gear.slots[4].Items[0].item)
+		switch (m_Gear.slots[2].Items[0].item)
 		{
 		case Items::Bow:
 			if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
@@ -554,9 +588,9 @@ void Player::attack(const sf::RenderWindow & window){
 					m_inventory.RemoveItem(Items::TestSpell, 1);
 				}else
 				{
-					if (!m_Gear.slots[4].Items.empty() && m_Gear.slots[4].Items[0].item == Items::TestSpell)
+					if (!m_Gear.slots[2].Items.empty() && m_Gear.slots[2].Items[0].item == Items::TestSpell)
 					{
-						m_Gear.slots[4].Items.pop_back();
+						m_Gear.slots[2].Items.pop_back();
 					}else
 					{
 						break;
@@ -564,9 +598,8 @@ void Player::attack(const sf::RenderWindow & window){
 				}
 				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
 				sf::Sprite spell_sprite;
-				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Chest_Cold));
+				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
 				p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
-				//ptr_light_manager->m_lights.push_back(p_projectile_manager->m_spells.back().m_light);
 				m_attackTimer.restart();
 			}
 			break;

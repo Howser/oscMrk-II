@@ -19,23 +19,30 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 {
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			playerPtr->m_path.clear();
 			move_up();
-		}else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		}
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
 			playerPtr->m_path.clear();
 			move_down();
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			playerPtr->m_path.clear();
 			move_left();
-		}else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		}
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			playerPtr->m_path.clear();
 			move_right();
+		}
+		if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			playerPtr->m_velocity.x = 0;
+			playerPtr->m_velocity.y = 0;
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt))
@@ -247,7 +254,7 @@ void PlayerController::check_collision(){
 }
 
 bool PlayerController::intersects_wall(const sf::Rect<int> & p_rect){
-	for (int x = (p_rect.left)/WIDTH - 1, y = ((p_rect.top)/HEIGHT - 1 >= 0) ? (p_rect.top)/HEIGHT - 1:0; x < (p_rect.left + p_rect.width)/WIDTH + 1; x++)
+	for (int x = ((p_rect.left)/WIDTH - 1 >= 0) ? (p_rect.left)/WIDTH - 1:0, y = ((p_rect.top)/HEIGHT - 1 >= 0) ? (p_rect.top)/HEIGHT - 1:0; x < (p_rect.left + p_rect.width)/WIDTH + 1; x++)
 	{
 		for (int y = ((p_rect.top)/HEIGHT - 1 >= 0) ? (p_rect.top)/HEIGHT - 1:0; y < (p_rect.top + p_rect.height)/HEIGHT + 1; y++)
 		{

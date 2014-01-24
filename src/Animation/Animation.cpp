@@ -1,7 +1,7 @@
 #include "Animation\Animation.h"
 #include <iostream>
 
-Animation::Animation(sf::Vector2i frameSize, int maxFrames, sf::Time frameTime)
+Animation::Animation(sf::Vector2i frameSize, int maxFrames, float frameTime)
 	:
 	mFrame(sf::Vector2i(0, 0), frameSize),
 	mFrameTime(frameTime),	
@@ -13,6 +13,8 @@ Animation::Animation(sf::Vector2i frameSize, int maxFrames, sf::Time frameTime)
 	mCurrentFrame(0)
 {
 }
+
+Animation::Animation(){}
 
 Animation::~Animation()
 {
@@ -51,7 +53,7 @@ void Animation::update()
 {
 	if (mPlaying)
 	{
-		if (mFrameTimer.getElapsedTime() >= mFrameTime)
+		if (mFrameTimer.getElapsedTime().asSeconds() >= mFrameTime)
 		{
 			if (++mCurrentFrame >= mMaxFrames)
 			{

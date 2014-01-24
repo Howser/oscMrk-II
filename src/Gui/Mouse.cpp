@@ -6,7 +6,7 @@ gui::Mouse::Mouse(sf::RenderWindow* window)
 	:
 	mMouseSprite(),
 	mClickSprite(),
-	mClickAnimation(sf::Vector2i(32, 32), 8, sf::seconds(.05)),
+	mClickAnimation(sf::Vector2i(32, 32), 8, .05),
 	mState(Mouse::Neutral),
 	mWindow(window)
 {

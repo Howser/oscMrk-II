@@ -28,6 +28,13 @@
 
 struct D_Gear;
 
+enum Direction{
+	Up,
+	Down,
+	Left,
+	Right
+};
+
 class Player : 
 	public sf::Transformable, 
 	public sf::Drawable
@@ -50,8 +57,7 @@ public:
 	bool isPathing();
 
 	Items m_HelmetSlot;
-	Items m_ChestpieceSlot;
-	Items m_BootsSlot;
+	Items m_ArmorSlot;
 	Items m_lHandSlot;
 	Items m_rHandSlot;
 
@@ -70,6 +76,7 @@ public:
 	bool inventoryState, lootState;
 	std::vector<sf::Vector2f> m_path;
 	sf::Vector2f m_velocity;
+
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -92,16 +99,19 @@ private:
 	
 	TextureHolder* p_texture_holder;
 
-	///<summary>[0]Helmet, [1]Chest, [2]Legs, [3]LHand, [4]RHand</summary>
+	///<summary>[0]Helmet, [1]Armor, [2]LHand, [3]RHand</summary>
 	std::vector<D_Gear> m_d_gear;
 	ProjectileManager* p_projectile_manager;
 	LightManager* ptr_light_manager;
 
 	sf::Clock m_attackTimer;
+
+	Direction m_dir;
 };
 
 ///<summary>Used to draw the gear on the player.</summary>
 struct D_Gear : public sf::Drawable, public sf::Transformable{
 	sf::Sprite m_sprite;
+	Animation m_animation;
 	void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 };

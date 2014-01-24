@@ -14,10 +14,9 @@ InventoryState::InventoryState(StateStack& stateStack, Context context, States::
 	inventory.slots[8][0].Items.push_back(ArmorItem(Items::TestArmorC, *getContext().textures));
 	inventory.slots[1][0].Items.push_back(ArmorItem(Items::TestArmorH, *getContext().textures));*/
 	GearState.slots[0].slot = eGearSlot::Helmet;
-	GearState.slots[1].slot = eGearSlot::Chestpiece;
-	GearState.slots[2].slot = eGearSlot::Leggings;
-	GearState.slots[3].slot = eGearSlot::lHand;
-	GearState.slots[4].slot = eGearSlot::rHand;
+	GearState.slots[1].slot = eGearSlot::Armor;
+	GearState.slots[2].slot = eGearSlot::lHand;
+	GearState.slots[3].slot = eGearSlot::rHand;
 }
 
 InventoryState::~InventoryState()

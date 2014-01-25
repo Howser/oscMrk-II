@@ -29,6 +29,7 @@ void Animation::play(int animation)
 {
 	mPlaying = true;
 	mLoop = false;
+	mCurrentAnimation = animation;
 
 	mFrame.top = animation * mFrame.height;
 	mFrame.left = 0;
@@ -65,7 +66,9 @@ void Animation::update()
 	}
 }
 
-bool Animation::isPlaying() const
+bool Animation::isPlaying(int animation) const
 {
-	return mPlaying;
+	if (animation == -1)
+		return mPlaying;
+	return mPlaying && animation == mCurrentAnimation;
 }

@@ -60,4 +60,6 @@ private:
 	sf::Thread				mLoadingThread;
 	gen::Type				mCurrentType;
 	sf::Mutex				mMutex;
+
+	bool					mFirstLoad;
 };

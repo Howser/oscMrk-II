@@ -17,7 +17,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_sprite(),
 	m_velocity(),
 	m_path(),
-	m_animation(sf::Vector2i(24, 23), 3, .5f),
+	m_animation(sf::Vector2i(24, 23), 3, .2f),
 	m_inventory(10, 10, 0, *textures),
 	m_lootInventory(10, 10, 10*SLOTWIDTH + 10*5 + 100, *textures),
 	m_Gear(*textures, m_inventory.width*SLOTWIDTH + SLOTWIDTH),
@@ -65,7 +65,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	{
 		m_d_gear.push_back(D_Gear());
 		m_d_gear.back().setPosition(getPosition());
-		m_d_gear.back().m_animation = Animation(sf::Vector2i(24, 23), 3, 0.5f);
+		m_d_gear.back().m_animation = Animation(sf::Vector2i(24, 23), 3, 0.1f);
 	}
 	m_attackTimer.restart();
 	m_healthbar.setPosition(0, 720 - 129);
@@ -133,31 +133,43 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 		switch (m_dir)
 		{
 		case Up:
-			m_animation.loop(0);
-			for (int i = 0; i < m_d_gear.size(); i++)
+			if (!m_animation.isPlaying(0))
 			{
-				m_d_gear[i].m_animation.loop(0);
+				m_animation.loop(0);
+				for (int i = 0; i < m_d_gear.size(); i++)
+				{
+					m_d_gear[i].m_animation.loop(0);
+				}
 			}
 			break;
 		case Down:
-			m_animation.loop(2);
-			for (int i = 0; i < m_d_gear.size(); i++)
+			if (!m_animation.isPlaying(2))
 			{
-				m_d_gear[i].m_animation.loop(2);
+				m_animation.loop(2);
+				for (int i = 0; i < m_d_gear.size(); i++)
+				{
+					m_d_gear[i].m_animation.loop(2);
+				}
 			}
 			break;
 		case Left:
-			m_animation.loop(3);
-			for (int i = 0; i < m_d_gear.size(); i++)
+			if (!m_animation.isPlaying(3))
 			{
-				m_d_gear[i].m_animation.loop(3);
+				m_animation.loop(3);
+				for (int i = 0; i < m_d_gear.size(); i++)
+				{
+					m_d_gear[i].m_animation.loop(3);
+				}
 			}
 			break;
 		case Right:
-			m_animation.loop(1);
-			for (int i = 0; i < m_d_gear.size(); i++)
+			if (!m_animation.isPlaying(1))
 			{
-				m_d_gear[i].m_animation.loop(1);
+				m_animation.loop(1);
+				for (int i = 0; i < m_d_gear.size(); i++)
+				{
+					m_d_gear[i].m_animation.loop(1);
+				}
 			}
 			break;
 		default:
@@ -172,7 +184,7 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 			}
 		}
 
-		stop();
+		stop(); // TRIVIA: removing this creates no clip bug
 		m_sprite.setTextureRect(m_animation.getFrame());
 		for (int i = 0; i < m_d_gear.size(); i++)
 		{

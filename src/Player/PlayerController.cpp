@@ -17,6 +17,9 @@ PlayerController::~PlayerController()
 
 void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::View const& view, LightManager* ptr_light_manager)
 {
+	/*	Should this be liek this? the player can't move if you hold down left mouse 
+		Removing stop() from player update creates no clip bug
+	*/
 	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -45,15 +48,7 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 			playerPtr->m_velocity.y = 0;
 		}
 	}
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt))
-	{
-		if (leftMouseClicked)
-		{
-			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
-		}
-		playerPtr->stop();
-		targetPtr = nullptr;
-	}*/
+
 	if ((rightMouseClicked && sf::Mouse::isButtonPressed(sf::Mouse::Right)) || (leftMouseClicked && sf::Mouse::isButtonPressed(sf::Mouse::Left)))
 	{
 		playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
@@ -260,6 +255,10 @@ bool PlayerController::intersects_wall(const sf::Rect<int> & p_rect){
 		{
 			if (mapPtr->tiles[x][y].type != 1)
 			{
+				if (mapPtr->tiles[x][y].type == 3)
+				{
+					mapPtr->loaded = false;
+				}
 				if (p_rect.intersects(sf::Rect<int>(x*WIDTH, y*HEIGHT, WIDTH, HEIGHT)))
 				{
 					return true;

@@ -45,15 +45,6 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 			playerPtr->m_velocity.y = 0;
 		}
 	}
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt))
-	{
-		if (leftMouseClicked)
-		{
-			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
-		}
-		playerPtr->stop();
-		targetPtr = nullptr;
-	}*/
 	if ((rightMouseClicked && sf::Mouse::isButtonPressed(sf::Mouse::Right)) || (leftMouseClicked && sf::Mouse::isButtonPressed(sf::Mouse::Left)))
 	{
 		playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));

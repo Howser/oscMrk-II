@@ -109,6 +109,9 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 	if (!inventoryState)
 	{
 		setPosition(getPosition().x + m_velocity.x, getPosition().y + m_velocity.y);
+		
+		m_velocity.x = 0;
+		m_velocity.y = 0;
 
 		if (std::abs(m_velocity.x) > std::abs(m_velocity.y))
 		{
@@ -172,7 +175,6 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 			}
 		}
 
-		stop();
 		m_sprite.setTextureRect(m_animation.getFrame());
 		for (int i = 0; i < m_d_gear.size(); i++)
 		{

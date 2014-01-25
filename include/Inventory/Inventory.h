@@ -34,6 +34,8 @@ public:
 	bool full();
 	bool contains(const Items & item);
 
+	int amount(const Items & p_item);
+
 	sf::Font font;
 
 	sf::Vector2f GetPosition(Slot const& slot);

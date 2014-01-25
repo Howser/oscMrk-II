@@ -35,6 +35,11 @@ enum Direction{
 	Right
 };
 
+enum Attack{
+	aLeft,
+	aRight,
+};
+
 class Player : 
 	public sf::Transformable, 
 	public sf::Drawable
@@ -49,10 +54,10 @@ public:
 	void update(sf::Time dt, sf::RenderWindow const& window);
 	void updateInventory(sf::RenderWindow const& window, TextureHolder & textures);
 	void handleEvents(sf::Event const& event);
-	void drawGUI(sf::RenderWindow* p_window);
+	void drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder);
 
 	bool isInRange(Mob* ptr_mob);
-	void attack(const sf::RenderWindow & window);
+	void attack(const sf::RenderWindow & window, Attack p_attack);
 
 	bool isPathing();
 
@@ -89,6 +94,12 @@ private:
 	std::vector<std::vector<gen::Tile>>* ptr_tiles;
 	
 	int m_health;
+
+	///<summary>[0] = background, [1] = left hand, [2] = right hand.</summary>
+	sf::Sprite m_ability[3];
+
+	///<summary>Quantity for the left/right hand.</summary>
+	int m_ability_q_1, m_ability_q_2;
 
 	sf::Sprite m_overlay;
 	gui::HealthBar m_healthbar;

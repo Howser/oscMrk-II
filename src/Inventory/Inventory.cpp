@@ -231,3 +231,21 @@ bool Inventory::contains(const Items & item){
 	}
 	return false;
 }
+
+int Inventory::amount(const Items & p_item){
+	unsigned int i = 0;
+	for (unsigned int x = 0, y = 0; x < width; x++)
+	{
+		for (y = 0; y < height; y++)
+		{
+			if (!slots[x][y].Items.empty())
+			{
+				if (slots[x][y].Items[0].item == p_item)
+				{
+					i += slots[x][y].Items.size();
+				}
+			}
+		}
+	}
+	return i;
+}

@@ -42,7 +42,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_inventory.slots[1][0].Items.push_back(GearItem(Items::Shield, *textures, -1));
 	m_inventory.slots[2][0].Items.push_back(GearItem(Items::Mace, *textures, -1));
 	m_inventory.slots[3][0].Items.push_back(GearItem(Items::Bow, *textures, -1));
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 101; i++)
 	{
 		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::TestSpell).x][m_inventory.GetFirstAvailableSlot(Items::TestSpell).y].Items.push_back(MiscItem(Items::TestSpell, *textures, -1));
 	}
@@ -69,8 +69,15 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	}
 	m_attackTimer.restart();
 	m_healthbar.setPosition(0, 720 - 129);
+	m_healthbar.mLoaded.setColor(sf::Color(211, 40, 40, 255));
 	m_overlay.setPosition(m_healthbar.getPosition());
 	m_health = 100;
+
+	m_ability[0].setTexture(*(textures->getTexture(Textures::Ability)));
+	m_ability[0].setPosition(1280 - 130, 720 - 129);
+	m_ability[1].setPosition(m_ability[0].getPosition().x + 15, m_ability[0].getPosition().y + 18);
+	m_ability[2].setPosition(m_ability[0].getPosition().x + 80, m_ability[0].getPosition().y + 18);
+
 	m_dir = Direction::Down;
 }
 
@@ -359,11 +366,13 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 											item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
 
 											m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[3].Items[0].item))));
+											m_ability[1] = item.sprite;
 										}
 									}else
 									{
 										item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
 										m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[3].Items[0].item))));
+										m_ability[1] = item.sprite;
 									}
 									break;
 								case rHand:
@@ -377,11 +386,13 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 											item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
 											m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
 											m_d_gear[2].setPosition(getPosition().x, getPosition().y);
+											m_ability[2] = item.sprite;
 										}
 									}else
 									{
 										item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
 										m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
+										m_ability[2] = item.sprite;
 									}
 									break;
 								case TwoHand:
@@ -398,10 +409,61 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 									if (m_Gear.slots[3].Items.empty() && m_Gear.slots[2].Items.empty())
 									{
 										item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
-										m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
+										if (!IsSpell(m_Gear.slots[2].Items[0].item))
+										{
+											m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
+										}
+										m_ability[2] = item.sprite;
+									}
+									break;
+								case OneHand:
+									if (!m_Gear.slots[2].Items.empty())
+									{
+										if (!m_Gear.slots[3].Items.empty())
+										{
+											m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).y].Items.push_back(*m_Gear.slots[2].Items.begin());
+											m_Gear.slots[2].Items.clear();
+											item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
+											if (!IsSpell(m_Gear.slots[2].Items[0].item))
+											{
+												m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
+											}
+											m_ability[2] = item.sprite;
+										}else
+										{
+											if (GetSlot(m_Gear.slots[2].Items[0].item) != eGearSlot::TwoHand)
+											{
+												item.Equip(&m_Gear.slots[3], &m_inventory.slots[x][y], &m_inventory);
+												if (!IsSpell(m_Gear.slots[3].Items[0].item))
+												{
+													m_d_gear[3].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[3].Items[0].item))));
+												}
+												m_ability[2] = item.sprite;
+											}else
+											{
+												m_inventory.slots[m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).x][m_inventory.GetFirstAvailableSlot(m_Gear.slots[2].Items.begin()->item).y].Items.push_back(*m_Gear.slots[2].Items.begin());
+												m_Gear.slots[2].Items.clear();
+												item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
+												if (!IsSpell(m_Gear.slots[2].Items[0].item))
+												{
+													m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[3].Items[0].item))));
+												}
+												m_ability[2] = item.sprite;
+											}
+										}
+									}else
+									{
+										item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
+										if (!IsSpell(m_Gear.slots[2].Items[0].item))
+										{
+											m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
+										}
+										m_ability[1] = item.sprite;
 									}
 									break;
 								}
+								m_ability[2].setPosition(m_ability[0].getPosition().x + 15, m_ability[0].getPosition().y + 18);
+								m_ability[1].setPosition(m_ability[0].getPosition().x + 80, m_ability[0].getPosition().y + 18);
 							}
 							else
 							{
@@ -507,16 +569,41 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		if (!m_Gear.slots[i].Items.empty())
 		{
-			m_d_gear[i].draw(target, states);
+			if (!IsSpell(m_Gear.slots[i].Items[0].item))
+			{
+				m_d_gear[i].draw(target, states);
+			}
 		}
 	}
 }
 
-void Player::drawGUI(sf::RenderWindow* p_window){
+void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 
 	p_window->draw(m_healthbar);
 	p_window->draw(m_overlay);
-
+	p_window->draw(m_ability[0]);
+	if (!m_Gear.slots[2].Items.empty())
+	{
+		p_window->draw(m_ability[1]);
+		sf::Text text;
+		text.setFont(*ptr_font_holder->getFont(Fonts::Main));
+		int a = m_inventory.amount(m_Gear.slots[2].Items.begin()->item);
+		text.setString((a <= 99) ? std::to_string(m_inventory.amount(m_Gear.slots[2].Items.begin()->item)):"??");
+		text.setPosition(m_ability[1].getPosition().x, m_ability[1].getPosition().y + 60);
+		text.setColor(sf::Color(255, 255, 255, 255));
+		p_window->draw(text);
+	}
+	if (!m_Gear.slots[3].Items.empty())
+	{
+		p_window->draw(m_ability[2]);
+		sf::Text text;
+		text.setFont(*ptr_font_holder->getFont(Fonts::Main));
+		int a = m_inventory.amount(m_Gear.slots[3].Items.begin()->item);
+		text.setString((a <= 99) ? std::to_string(m_inventory.amount(m_Gear.slots[3].Items.begin()->item)):"??");
+		text.setPosition(m_ability[2].getPosition().x, m_ability[2].getPosition().y + 60);
+		text.setColor(sf::Color(255, 255, 255, 255));
+		p_window->draw(text);
+	}
 	if (inventoryState)
 	{
 		p_window->draw(m_inventory);
@@ -561,51 +648,103 @@ bool Player::isInRange(Mob* ptr_mob){
 	}
 }
 
-void Player::attack(const sf::RenderWindow & window){
-	
-	if (!m_Gear.slots[2].Items.empty())
+void Player::attack(const sf::RenderWindow & window, Attack p_attack){
+	switch (p_attack)
 	{
-		switch (m_Gear.slots[2].Items[0].item)
+	case aLeft:
+		if (!m_Gear.slots[3].Items.empty())
 		{
-		case Items::Bow:
-			if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
+			switch (m_Gear.slots[3].Items[0].item)
 			{
-				m_inventory.RemoveItem(Items::Arrow, 1);
-				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
-				sf::Sprite arrow_sprite;
-				arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
-				projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
-				arrow.setPosition(getPosition());
-				p_projectile_manager->m_arrows.push_back(arrow);
-				m_attackTimer.restart();
-			}
-			break;
-		case Items::TestSpell:
-			if (m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::TestSpell))
-			{
-				if (m_inventory.contains(Items::TestSpell))
+			case Items::Bow:
+				if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
 				{
-					m_inventory.RemoveItem(Items::TestSpell, 1);
-				}else
+					m_inventory.RemoveItem(Items::Arrow, 1);
+					float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
+					sf::Sprite arrow_sprite;
+					arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
+					projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
+					arrow.setPosition(getPosition());
+					p_projectile_manager->m_arrows.push_back(arrow);
+					m_attackTimer.restart();
+				}
+				break;
+			case Items::TestSpell:
+				if (m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::TestSpell))
 				{
-					if (!m_Gear.slots[2].Items.empty() && m_Gear.slots[2].Items[0].item == Items::TestSpell)
+					if (m_inventory.contains(Items::TestSpell))
 					{
-						m_Gear.slots[2].Items.pop_back();
+						m_inventory.RemoveItem(Items::TestSpell, 1);
 					}else
 					{
-						break;
+						if (!m_Gear.slots[3].Items.empty() && m_Gear.slots[3].Items[0].item == Items::TestSpell)
+						{
+							m_Gear.slots[3].Items.pop_back();
+						}else
+						{
+							break;
+						}
 					}
+					float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
+					sf::Sprite spell_sprite;
+					spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
+					p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
+					m_attackTimer.restart();
 				}
-				float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
-				sf::Sprite spell_sprite;
-				spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
-				p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
-				m_attackTimer.restart();
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
 		}
+		break;
+	case aRight:
+		if (!m_Gear.slots[2].Items.empty())
+		{
+			switch (m_Gear.slots[2].Items[0].item)
+			{
+			case Items::Bow:
+				if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
+				{
+					m_inventory.RemoveItem(Items::Arrow, 1);
+					float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
+					sf::Sprite arrow_sprite;
+					arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
+					projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
+					arrow.setPosition(getPosition());
+					p_projectile_manager->m_arrows.push_back(arrow);
+					m_attackTimer.restart();
+				}
+				break;
+			case Items::TestSpell:
+				if (m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::TestSpell))
+				{
+					if (m_inventory.contains(Items::TestSpell))
+					{
+						m_inventory.RemoveItem(Items::TestSpell, 1);
+					}else
+					{
+						if (!m_Gear.slots[2].Items.empty() && m_Gear.slots[2].Items[0].item == Items::TestSpell)
+						{
+							m_Gear.slots[2].Items.pop_back();
+						}else
+						{
+							break;
+						}
+					}
+					float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
+					sf::Sprite spell_sprite;
+					spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
+					p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
+					m_attackTimer.restart();
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		break;
+	default:
+		break;
 	}
 }
 

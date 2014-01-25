@@ -120,6 +120,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::HealthFull, "resources/graphics/player/healthFull.png");
 		mTextures.loadTexture(Textures::HealthEmpty, "resources/graphics/player/healthEmpty.png");
 		mTextures.loadTexture(Textures::LoadingScreen, "resources/graphics/loadingscreen.png");
+		mTextures.loadTexture(Textures::Ability, "resources/graphics/player/ability.png");
 
 #pragma region Mob Textures
 		mTextures.loadTexture(Textures::TestMob, "resources/graphics/Mob/test.png");

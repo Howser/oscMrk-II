@@ -30,12 +30,13 @@ enum eGearSlot{
 	lHand,
 	rHand,
 	TwoHand,
+	OneHand,
 	Helmet,
 	Armor,
 	NoSlot,
 };
 
-static const char* GearSlotNames[6] = {"Left Hand", "Right Hand", "Two Hander", "Helmet", "Armor"};
+static const char* GearSlotNames[6] = {"Left Hand", "Right Hand", "Two Hander", "One Hand", "Helmet", "Armor"};
 
 enum itemType{
 	Normal,
@@ -233,7 +234,7 @@ static eGearSlot GetSlot(Items item){
 		return TwoHand;
 		break;
 	case TestSpell:
-		return TwoHand;
+		return OneHand;
 		break;
 	default:
 		return NoSlot;
@@ -289,7 +290,7 @@ static std::string GetStats(Items const& item, sf::Vector2i* size){
 	if (GetType(item) == itemType::Gear)
 	{
 		std::string stats = (std::string)w_ItemNames[item];
-		if (GetSlot(item) == eGearSlot::rHand ||GetSlot(item) == eGearSlot::TwoHand)
+		if (GetSlot(item) == eGearSlot::rHand || GetSlot(item) == eGearSlot::OneHand|| GetSlot(item) == eGearSlot::TwoHand)
 		{
 			//weapon
 			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + std::to_string(GetSpeed(item));

@@ -217,7 +217,7 @@ void GameState::draw()
 		window->setView(window->getDefaultView());
 		window->draw(sprite, &mShader);
 		mMap.draw_mini_map(window, mView.getCenter().x, mView.getCenter().y);
-		mPlayer.drawGUI(window);
+		mPlayer.drawGUI(window, getContext().fonts);
 	} 
 	else 
 	{

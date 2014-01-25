@@ -23,6 +23,7 @@ namespace Textures
 		HealthFull,
 		HealthEmpty,
 		LoadingScreen,
+		Ability,
 
 		///<summary>Items: 
 		Arrow,

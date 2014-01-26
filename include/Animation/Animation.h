@@ -20,7 +20,7 @@ class Animation
 
 		void			update();
 
-		bool			isPlaying() const;
+		bool			isPlaying(int animation = -1) const;
 
 	private:
 		sf::Clock		mFrameTimer;

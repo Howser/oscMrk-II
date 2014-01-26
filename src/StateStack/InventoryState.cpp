@@ -6,9 +6,9 @@ InventoryState::InventoryState(StateStack& stateStack, Context context, States::
 	State(stateStack, context, id),
 	mSprite(),
 	inventory(),//player inventory
-	GearState(*context.textures, inventory->width*inventory->slotSprite.getLocalBounds().width + inventory->width*5)
+	GearState(*context.textures, inventory->width*inventory->slotSprite.getLocalBounds().width + inventory->width*5, 0, 0)
 {
-	mSprite.setTexture(*getContext().textures->getTexture(Textures::Inventory));
+	//mSprite.setTexture(*getContext().textures->getTexture(Textures::Inventory));
 	setPersistent(true);
 	/*inventory.slots[0][0].Items.push_back(ArmorItem(Items::TestArmor, *getContext().textures));
 	inventory.slots[8][0].Items.push_back(ArmorItem(Items::TestArmorC, *getContext().textures));

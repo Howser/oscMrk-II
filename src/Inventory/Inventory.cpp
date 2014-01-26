@@ -1,6 +1,6 @@
 #include "Inventory\Inventory.h"
 
-Inventory::Inventory(int WIDTH, int HEIGHT, int offset, TextureHolder const& textures) 
+Inventory::Inventory(int WIDTH, int HEIGHT, int x_offset, int y_offset, TextureHolder const& textures) 
 	: width(WIDTH), height(HEIGHT){
 		Slot slot = Slot(0, 0);
 		slots.resize(width, std::vector<Slot>(height, slot));
@@ -12,7 +12,7 @@ Inventory::Inventory(int WIDTH, int HEIGHT, int offset, TextureHolder const& tex
 				slots[x][y].x = x;
 				slots[x][y].y = y;
 				slots[x][y].fontPtr = &font;
-				slots[x][y].setPosition(x * SLOTWIDTH + 5*x + offset, y * SLOTHEIGHT + 5*y);
+				slots[x][y].setPosition(x * SLOTWIDTH + 5*x + x_offset, y * SLOTHEIGHT + 5*y + y_offset);
 			}
 		}
 		slotSprite.setTexture(*textures.getTexture(Textures::InventorySlot));

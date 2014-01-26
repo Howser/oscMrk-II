@@ -11,7 +11,7 @@
 
 class Inventory : public sf::Drawable{
 public:
-	Inventory(int width, int height, int offset, TextureHolder const& textures);
+	Inventory(int width, int height, int x_offset, int y_offset, TextureHolder const& textures);
 	Inventory();
 	~Inventory();
 

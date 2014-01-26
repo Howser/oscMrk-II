@@ -106,7 +106,6 @@ void Application::loadResources()
 		// Textures
 		mTextures.loadTexture(Textures::Titlescreen, "resources/graphics/titlescreen.png");
 		mTextures.loadTexture(Textures::Mini_Map_sheet, "resources/graphics/map/mini.png");
-		mTextures.loadTexture(Textures::Inventory, "resources/graphics/inventoryyo.png");
 		mTextures.loadTexture(Textures::Tilesheet, "resources/graphics/map/tileset.png");
 		mTextures.loadTexture(Textures::Button, "resources/graphics/gui/baseButton.png");
 		mTextures.loadTexture(Textures::Player, "resources/graphics/player/player.png");
@@ -121,6 +120,8 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::HealthEmpty, "resources/graphics/player/healthEmpty.png");
 		mTextures.loadTexture(Textures::LoadingScreen, "resources/graphics/loadingscreen.png");
 		mTextures.loadTexture(Textures::Ability, "resources/graphics/player/ability.png");
+		mTextures.loadTexture(Textures::gui_Inventory, "resources/graphics/player/inventory.png");
+		mTextures.loadTexture(Textures::gui_LootInventory, "resources/graphics/player/loot_inventory.png");
 
 #pragma region Mob Textures
 		mTextures.loadTexture(Textures::TestMob, "resources/graphics/Mob/test.png");

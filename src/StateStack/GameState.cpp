@@ -1,5 +1,6 @@
 #include "StateStack\GameState.h"
 #include "Mob\MobTypeManager.h"
+#include "Math\GeneralMath.h"
 
 #include <iostream>
 
@@ -17,7 +18,8 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mPlayer(context.textures, context.fonts, &mobManager.mobs, &m_projectile_manager, &mMap.tiles, &m_light_manager),
 	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager),
 	mParticleSystem(),
-	mLoadingThread(&gen::Map::Gen, &mMap)
+	mLoadingThread(&gen::Map::Gen, &mMap),
+	mFirstLoad(true)
 {
 	mLoadingSprite.setTexture(*context.textures->getTexture(Textures::LoadingScreen));
 
@@ -25,7 +27,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
 	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
 
-	mCurrentType = gen::Hell;
+	mCurrentType = gen::Prison;
 	mMap.type = mCurrentType;
 	mView.zoom(1.f);
 
@@ -53,7 +55,7 @@ bool GameState::update(sf::Time dt)
 	if (!mLoading)
 	{
 		mView.setCenter(mPlayer.getPosition());
-		
+
 		if (!mPlayer.inventoryState)
 		{
 			mPlayerController.update(dt, *getContext().window, mView, &m_light_manager);
@@ -76,6 +78,28 @@ bool GameState::update(sf::Time dt)
 		// Update loading bar
 		if (!mMap.generating && !mMap.loaded)
 		{
+			// If we don't check this there is a chance that the map generates a Cave first
+			if (!mFirstLoad)
+			{
+				mFirstLoad = false;
+				int x = math::random(0, 10);
+				switch (mCurrentType)
+				{
+				case gen::Prison:
+					if (x < 6)
+						mCurrentType = gen::Cave;
+					break;
+				case gen::Cave:
+					if (x < 6)
+						mCurrentType = gen::Hell;
+					break;
+				case gen::Hell:
+					break;
+				default:
+					break;
+				}
+				mMap.type = mCurrentType;
+			}
 			mLoadingThread.launch();
 
 			// CLEAR STUFF
@@ -86,13 +110,13 @@ bool GameState::update(sf::Time dt)
 			mMap.mobSpawners.clear();
 			mPlayer.m_path.clear();
 			pathFinder.Clear();
-			std::cout << "starting map gen" << std::endl;
+			std::cout << "Started map gen" << std::endl;
 		}
 		else if (!mMap.generating && mMap.loaded)
 		{
 			// Set all the other map stuff after generating it
 			mLoading = false;
-			std::cout << "Finished gening map" << std::endl;
+			std::cout << "Finished map gen" << std::endl;
 			if (mMap.rooms.size() > 0)
 			{
 				mView.setCenter(sf::Vector2f(mMap.rooms[0].x*WIDTH, mMap.rooms[0].y*HEIGHT));
@@ -130,10 +154,10 @@ bool GameState::update(sf::Time dt)
 
 			pathFinder.mapSize = mMap.size;
 			pathFinder.GetMap(&mMap.tiles);
-				
+
 			Light l1(sf::Color(175, 175, 175, 150), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
 			m_light_manager.m_lights.push_back(l1);
-		
+
 		}
 		mMutex.unlock();
 	}
@@ -212,7 +236,7 @@ void GameState::draw()
 		}
 
 		passLightsToShader(&mShader, &all_lights, &mView);
-		
+
 		sf::Sprite sprite(mDiffuseRender.getTexture());
 		window->setView(window->getDefaultView());
 		window->draw(sprite, &mShader);

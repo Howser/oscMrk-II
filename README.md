@@ -1,7 +1,9 @@
-oscMrk-II
+Descending Endora
 =========
 
-Top secret public project
+Top secret public project.
+
+Descending Endora is a dungeon crawler game with a large focus on spells and ranged attacks. 
 
 Links
 ========

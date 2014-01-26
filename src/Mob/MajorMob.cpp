@@ -10,7 +10,7 @@ MajorMob::MajorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>
 	width = GetWidth(type);
 	height = GetHeight(type);
 	setOrigin(GetWidth(type)/2, GetHeight(type)/2);
-	inventory = Inventory(10, 10, 10, *textureHolder);
+	inventory = Inventory(10, 10, 0, 0, *textureHolder);
 	this->p_deadMobs = p_deadMobs;
 	this->type = type;
 	this->textureHolder = textureHolder;
@@ -44,7 +44,7 @@ MajorMob::MajorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	width = GetWidth(type);
 	height = GetHeight(type);
 	setOrigin(width/2, height/2);
-	inventory = Inventory(10, 10, 10, *mob.textureHolder);
+	inventory = Inventory(10, 10, 0, 0, *mob.textureHolder);
 	textureHolder = mob.textureHolder;
 	this->p_deadMobs = p_deadMobs;
 	switch (type)

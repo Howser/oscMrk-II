@@ -17,10 +17,10 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_sprite(),
 	m_velocity(),
 	m_path(),
-	m_animation(sf::Vector2i(24, 23), 3, .5f),
-	m_inventory(10, 10, 0, *textures),
-	m_lootInventory(10, 10, 10*SLOTWIDTH + 10*5 + 100, *textures),
-	m_Gear(*textures, m_inventory.width*SLOTWIDTH + SLOTWIDTH),
+	m_animation(sf::Vector2i(24, 23), 3, .2f),
+	m_inventory(10, 10, 640 - (textures->getTexture(Textures::gui_Inventory)->getSize().x + textures->getTexture(Textures::gui_LootInventory)->getSize().x - 3)/2 + 3, 360 - (textures->getTexture(Textures::gui_Inventory)->getSize().y)/2 + 5, *textures),
+	m_lootInventory(10, 10, 640 - (textures->getTexture(Textures::gui_Inventory)->getSize().x + textures->getTexture(Textures::gui_LootInventory)->getSize().x - 3)/2 + textures->getTexture(Textures::gui_Inventory)->getSize().x + 20, 360 - (textures->getTexture(Textures::gui_Inventory)->getSize().y)/2 + 5, *textures),
+	m_Gear(*textures, m_inventory.width*SLOTWIDTH + SLOTWIDTH, 640 - (textures->getTexture(Textures::gui_Inventory)->getSize().x + textures->getTexture(Textures::gui_LootInventory)->getSize().x - 3)/2 + 10, 360 - (textures->getTexture(Textures::gui_Inventory)->getSize().y)/2 + 44),
 	inventoryState(false),
 	lootState(false),
 	tabClicked(false),
@@ -28,8 +28,8 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_stackManager(*textures),
 	m_tooltip(*textures),
 	m_deleteItem(*textures),
-	m_invRect(sf::Rect<int>(0, 0, m_inventory.width*SLOTWIDTH + m_inventory.width*5, m_inventory.height*SLOTHEIGHT + m_inventory.height*5)),
-	m_lootInvRect(sf::Rect<int>(m_lootInventory.slots[0][0].getPosition().x, m_lootInventory.slots[0][0].getPosition().y, m_lootInventory.width*SLOTWIDTH + m_lootInventory.width*5, m_lootInventory.height*SLOTHEIGHT + m_lootInventory.width*5)),
+	m_invRect(sf::Rect<int>(640 - (textures->getTexture(Textures::gui_Inventory)->getSize().x + textures->getTexture(Textures::gui_LootInventory)->getSize().x - 3)/2 + 3, 360 - (textures->getTexture(Textures::gui_Inventory)->getSize().y)/2 + 5, m_inventory.width*SLOTWIDTH + m_inventory.width*5, m_inventory.height*SLOTHEIGHT + m_inventory.height*5)),
+	m_lootInvRect(sf::Rect<int>(640 - (textures->getTexture(Textures::gui_Inventory)->getSize().x + textures->getTexture(Textures::gui_LootInventory)->getSize().x - 3)/2 + textures->getTexture(Textures::gui_Inventory)->getSize().x + 20, 360 - (textures->getTexture(Textures::gui_Inventory)->getSize().y)/2 + 5, m_lootInventory.width*SLOTWIDTH + m_lootInventory.width*5, m_lootInventory.height*SLOTHEIGHT + m_lootInventory.width*5)),
 	m_healthbar(*(textures->getTexture(Textures::HealthEmpty)), *(textures->getTexture(Textures::HealthFull))),
 	ptr_light_manager(ptr_light_manager)
 {
@@ -65,11 +65,11 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	{
 		m_d_gear.push_back(D_Gear());
 		m_d_gear.back().setPosition(getPosition());
-		m_d_gear.back().m_animation = Animation(sf::Vector2i(24, 23), 3, 0.5f);
+		m_d_gear.back().m_animation = Animation(sf::Vector2i(24, 23), 3, 0.1f);
 	}
 	m_attackTimer.restart();
 	m_healthbar.setPosition(0, 720 - 129);
-	m_healthbar.mLoaded.setColor(sf::Color(211, 40, 40, 255));
+	m_healthbar.mLoaded.setColor(sf::Color(255, 100, 40, 255));
 	m_overlay.setPosition(m_healthbar.getPosition());
 	m_health = 100;
 
@@ -78,6 +78,10 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_ability[1].setPosition(m_ability[0].getPosition().x + 15, m_ability[0].getPosition().y + 18);
 	m_ability[2].setPosition(m_ability[0].getPosition().x + 80, m_ability[0].getPosition().y + 18);
 
+	m_gui_inventory.setTexture(*(textures->getTexture(Textures::gui_Inventory)));
+	m_gui_inventory.setPosition(640 - (textures->getTexture(Textures::gui_Inventory)->getSize().x + textures->getTexture(Textures::gui_LootInventory)->getSize().x - 3)/2, 360 - (textures->getTexture(Textures::gui_Inventory)->getSize().y)/2);
+	m_gui_loot_inventory.setTexture(*(textures->getTexture(Textures::gui_LootInventory)));
+	m_gui_loot_inventory.setPosition(m_gui_inventory.getPosition().x + m_gui_inventory.getTextureRect().width - 3, m_gui_inventory.getPosition().y);
 	m_dir = Direction::Down;
 }
 
@@ -136,31 +140,43 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 		switch (m_dir)
 		{
 		case Up:
-			m_animation.loop(0);
-			for (int i = 0; i < m_d_gear.size(); i++)
+			if (!m_animation.isPlaying(0))
 			{
-				m_d_gear[i].m_animation.loop(0);
+				m_animation.loop(0);
+				for (int i = 0; i < m_d_gear.size(); i++)
+				{
+					m_d_gear[i].m_animation.loop(0);
+				}
 			}
 			break;
 		case Down:
-			m_animation.loop(2);
-			for (int i = 0; i < m_d_gear.size(); i++)
+			if (!m_animation.isPlaying(2))
 			{
-				m_d_gear[i].m_animation.loop(2);
+				m_animation.loop(2);
+				for (int i = 0; i < m_d_gear.size(); i++)
+				{
+					m_d_gear[i].m_animation.loop(2);
+				}
 			}
 			break;
 		case Left:
-			m_animation.loop(3);
-			for (int i = 0; i < m_d_gear.size(); i++)
+			if (!m_animation.isPlaying(3))
 			{
-				m_d_gear[i].m_animation.loop(3);
+				m_animation.loop(3);
+				for (int i = 0; i < m_d_gear.size(); i++)
+				{
+					m_d_gear[i].m_animation.loop(3);
+				}
 			}
 			break;
 		case Right:
-			m_animation.loop(1);
-			for (int i = 0; i < m_d_gear.size(); i++)
+			if (!m_animation.isPlaying(1))
 			{
-				m_d_gear[i].m_animation.loop(1);
+				m_animation.loop(1);
+				for (int i = 0; i < m_d_gear.size(); i++)
+				{
+					m_d_gear[i].m_animation.loop(1);
+				}
 			}
 			break;
 		default:
@@ -174,6 +190,8 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 				m_d_gear[i].m_animation.update();
 			}
 		}
+
+		stop();
 
 		m_sprite.setTextureRect(m_animation.getFrame());
 		for (int i = 0; i < m_d_gear.size(); i++)
@@ -211,7 +229,7 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 
 	if (!m_stackManager.show && !m_deleteItem.show)
 	{
-		if (sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_invRect) || (lootState && sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_lootInvRect)) || sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(sf::Rect<int>(m_inventory.width*SLOTWIDTH + 5*m_inventory.width, 0, SLOTWIDTH*3, SLOTHEIGHT*2)))
+		if (sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_invRect) || (lootState && sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_lootInvRect)) || sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(sf::Rect<int>(m_gui_inventory.getPosition().x + 372, m_gui_inventory.getPosition().y + 44, SLOTWIDTH*3, SLOTHEIGHT*2)))//here
 		{
 			bool broken = false;
 			for (unsigned int i = 0; i < m_Gear.slots.size(); i++)
@@ -608,10 +626,12 @@ void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 	}
 	if (inventoryState)
 	{
+		p_window->draw(m_gui_inventory);
 		p_window->draw(m_inventory);
 		p_window->draw(m_Gear);
 		if (lootState)
 		{
+			p_window->draw(m_gui_loot_inventory);
 			p_window->draw(m_lootInventory);
 		}
 		if (!m_mouseSlot.Items.empty())

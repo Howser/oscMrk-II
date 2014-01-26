@@ -8,7 +8,6 @@ namespace Textures
 		Tilesheet,
 		Mini_Map_sheet,
 		Titlescreen,
-		Inventory,
 		Button,
 		Player,
 		TestMob,
@@ -24,6 +23,8 @@ namespace Textures
 		HealthEmpty,
 		LoadingScreen,
 		Ability,
+		gui_Inventory,
+		gui_LootInventory,
 
 		///<summary>Items: 
 		Arrow,

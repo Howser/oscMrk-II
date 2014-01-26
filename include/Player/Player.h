@@ -97,6 +97,7 @@ private:
 
 	///<summary>[0] = background, [1] = left hand, [2] = right hand.</summary>
 	sf::Sprite m_ability[3];
+	sf::Sprite m_gui_inventory, m_gui_loot_inventory;
 
 	///<summary>Quantity for the left/right hand.</summary>
 	int m_ability_q_1, m_ability_q_2;

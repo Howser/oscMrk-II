@@ -114,9 +114,6 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 	{
 		setPosition(getPosition().x + m_velocity.x, getPosition().y + m_velocity.y);
 		
-		m_velocity.x = 0;
-		m_velocity.y = 0;
-
 		if (std::abs(m_velocity.x) > std::abs(m_velocity.y))
 		{
 			if (m_velocity.x > 0)

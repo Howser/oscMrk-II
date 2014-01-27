@@ -69,7 +69,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	}
 	m_attackTimer.restart();
 	m_healthbar.setPosition(0, 720 - 129);
-	m_healthbar.mLoaded.setColor(sf::Color(255, 100, 40, 255));
+	m_healthbar.mLoaded.setColor(sf::Color(220, 40, 40, 255));
 	m_overlay.setPosition(m_healthbar.getPosition());
 	m_health = 100;
 
@@ -607,8 +607,8 @@ void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 		p_window->draw(m_ability[1]);
 		sf::Text text;
 		text.setFont(*ptr_font_holder->getFont(Fonts::Main));
-		int a = m_inventory.amount(m_Gear.slots[2].Items.begin()->item);
-		text.setString((a <= 99) ? std::to_string(m_inventory.amount(m_Gear.slots[2].Items.begin()->item)):"??");
+		int a = m_inventory.amount(GetAmmo(m_Gear.slots[2].Items.begin()->item));
+		text.setString((a <= 99) ? std::to_string(a):"??");
 		text.setPosition(m_ability[1].getPosition().x, m_ability[1].getPosition().y + 60);
 		text.setColor(sf::Color(255, 255, 255, 255));
 		p_window->draw(text);
@@ -618,8 +618,8 @@ void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 		p_window->draw(m_ability[2]);
 		sf::Text text;
 		text.setFont(*ptr_font_holder->getFont(Fonts::Main));
-		int a = m_inventory.amount(m_Gear.slots[3].Items.begin()->item);
-		text.setString((a <= 99) ? std::to_string(m_inventory.amount(m_Gear.slots[3].Items.begin()->item)):"??");
+		int a = m_inventory.amount(GetAmmo(m_Gear.slots[3].Items.begin()->item));
+		text.setString((a <= 99) ? std::to_string(a):"??");
 		text.setPosition(m_ability[2].getPosition().x, m_ability[2].getPosition().y + 60);
 		text.setColor(sf::Color(255, 255, 255, 255));
 		p_window->draw(text);

@@ -242,6 +242,22 @@ static eGearSlot GetSlot(Items item){
 	}
 }
 
+static Items GetAmmo(const Items & p_item){
+	switch (p_item)
+	{
+	case Items::TestSpell:
+		return TestSpell;
+		break;
+	case Items::Bow:
+		return Arrow;
+		break;
+	default:
+		return p_item;
+		break;
+	}
+	return p_item;
+}
+
 static bool IsSpell(const Items & item){
 	switch (item)
 	{

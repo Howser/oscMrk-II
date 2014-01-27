@@ -33,7 +33,6 @@ void gen::Map::Gen(){
 	tiles.clear();
 	rooms.clear();
 	tiles.resize(mapWidth, std::vector<Tile>(mapHeight, Tile()));
-
 	for (int x = 0; x < mapWidth; x++)
 	{
 		for (int y = 0; y < mapHeight; y++)
@@ -887,9 +886,9 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 }
 
 void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
-	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 0) ? X/WIDTH - 1280/WIDTH:0, y = 0; x < X/WIDTH + 1280/WIDTH; x++)
+	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 1) ? X/WIDTH - 1280/WIDTH:0, y = 0; x < X/WIDTH + 1280/WIDTH; x++)
 	{
-		for (y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
+		for (y = (Y/HEIGHT - 1280/HEIGHT >= 1) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
 		{
 			if (x > 0 && x < tiles.size() && y > 0 && y < tiles[0].size()) 
 			{

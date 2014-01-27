@@ -80,7 +80,10 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		if (!playerCollision)
 		{
 			followPath(deltaTime);
-			move(velocity);
+			if (!IntersectsWall(sf::Rect<int>(getPosition().x - width/2 + velocity.x + 3, getPosition().y + velocity.y, width - 6, height/2 - 3), *map))
+			{
+				move(velocity);
+			}
 			for (int i = 0; i < m_arrows.size(); i++)
 			{
 				m_arrows[i].move(velocity);

@@ -81,7 +81,6 @@ bool GameState::update(sf::Time dt)
 			// If we don't check this there is a chance that the map generates a Cave first
 			if (!mFirstLoad)
 			{
-				mFirstLoad = false;
 				int x = math::random(0, 10);
 				switch (mCurrentType)
 				{
@@ -100,6 +99,8 @@ bool GameState::update(sf::Time dt)
 				}
 				mMap.type = mCurrentType;
 			}
+
+			mFirstLoad = false;
 			mLoadingThread.launch();
 
 			// CLEAR STUFF

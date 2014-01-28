@@ -30,7 +30,7 @@ void Spell::update(sf::Time & p_dt){
 			{
 				if (x >= 0 && x < (*p_tiles).size() && y >= 0 && y < (*p_tiles)[0].size())
 				{
-					if ((*p_tiles)[x][y].type == 2)
+					if ((*p_tiles)[x][y].type != 1)
 					{
 						if (sf::Rect<int>((int)getPosition().x, (int)getPosition().y, 1, 1).intersects(sf::Rect<int>(x*32, y*32, 32, 32)))
 						{

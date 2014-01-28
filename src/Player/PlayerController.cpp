@@ -114,15 +114,20 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 			}
 		}
 	}
-
 	if ((rightMouseClicked && sf::Mouse::isButtonPressed(sf::Mouse::Right)) || (leftMouseClicked && sf::Mouse::isButtonPressed(sf::Mouse::Left)))
 	{
-		if (targetPtr == NULL || !targetPtr->dead)
+		sf::Vector2i mpos = sf::Mouse::getPosition(window);
+		mpos.x += playerPtr->getPosition().x - view.getSize().x/2;
+		mpos.y += playerPtr->getPosition().y - view.getSize().y/2;
+		targetPtr = mobManagerPtr->getAtPosition(mpos.x, mpos.y);
+		if (targetPtr == NULL)
+		{
+			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
+		}else if (!targetPtr->dead)
 		{
 			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
 		}
 	}
-
 	leftMouseClicked = false;
 	rightMouseClicked = false;
 }

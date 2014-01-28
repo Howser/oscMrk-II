@@ -59,13 +59,13 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 					(*i)->prevPos = (*i)->getPosition();
 				}
 #pragma region Mob-Mob Collision
-				if (!(*i)->playerCollision)
+				if (math::distance((sf::Vector2i)(*i)->getPosition(), (sf::Vector2i)playerPosition) > 48) //(!(*i)->playerCollision)a
 				{
 					for (j = m_tree.search(*mobs[(*i)->ID])->mobs.begin(); j != m_tree.search(*mobs[(*i)->ID])->mobs.end(); ++j)
 					{
 						if ((*i)->ID != (*j)->ID)
 						{
-							if (!(*j)->dead && !(*i)->worldCollision && !(*j)->worldCollision && !(*j)->playerCollision)
+							if (!(*j)->dead && !(*i)->worldCollision && !(*j)->worldCollision && math::distance((sf::Vector2i)(*i)->getPosition(), (sf::Vector2i)playerPosition) > 48)//!(*j)->playerCollision)
 							{
 								if (math::distance((*i)->getPosition(), (*j)->getPosition()) <= 32)
 								{

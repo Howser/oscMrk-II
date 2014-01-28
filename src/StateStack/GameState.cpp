@@ -156,7 +156,7 @@ bool GameState::update(sf::Time dt)
 			pathFinder.mapSize = mMap.size;
 			pathFinder.GetMap(&mMap.tiles);
 
-			Light l1(sf::Color(175, 175, 175, 150), sf::Vector3f(0.5f, 0.5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
+			Light l1(sf::Color(175, 175, 175, 255), sf::Vector3f(.5f, .5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
 			m_light_manager.m_lights.push_back(l1);
 
 		}
@@ -206,7 +206,6 @@ void GameState::draw()
 		mDiffuseRender.draw(mobManager);
 		mDiffuseRender.draw(mPlayer);
 		mDiffuseRender.draw(mParticleSystem);
-
 		mDiffuseRender.display();
 
 		// Render normals to the normal map

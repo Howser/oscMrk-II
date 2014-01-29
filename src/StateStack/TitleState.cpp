@@ -9,6 +9,7 @@ TitleState::TitleState(StateStack& stateStack, Context context, States::ID id)
 	mTitleSprite()
 {
 	mTitleSprite.setTexture(*(getContext().textures->getTexture(Textures::Titlescreen)));
+	mTitleSprite.setPosition(640 - mTitleSprite.getTextureRect().width/2, 360 - mTitleSprite.getTextureRect().height/2);
 	context.mouse->setState(gui::Mouse::Invalid);
 }
 

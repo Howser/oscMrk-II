@@ -126,6 +126,9 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 		}else if (!targetPtr->dead)
 		{
 			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
+		}else if (math::distance(targetPtr->getPosition(), playerPtr->getPosition()) > LOOT_DISTANCE)
+		{
+			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
 		}
 	}
 	leftMouseClicked = false;

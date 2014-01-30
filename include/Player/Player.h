@@ -82,6 +82,8 @@ public:
 	std::vector<sf::Vector2f> m_path;
 	sf::Vector2f m_velocity;
 
+	int m_health;
+
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -92,8 +94,6 @@ private:
 	Animation m_animation;
 	sf::Rect<int> m_invRect, m_lootInvRect;
 	std::vector<std::vector<gen::Tile>>* ptr_tiles;
-	
-	int m_health;
 
 	///<summary>[0] = background, [1] = left hand, [2] = right hand.</summary>
 	sf::Sprite m_ability[3];

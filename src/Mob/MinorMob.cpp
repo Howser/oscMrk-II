@@ -23,6 +23,7 @@ MinorMob::MinorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>
 		break;
 	}
 	timeSincePath = 0.f;
+	m_attack_timer = GetAttackSpeed(type);
 	worldCollision = false;
 	dead = false;
 	aggro = false;
@@ -54,12 +55,13 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 		break;
 	}
 	timeSincePath = 0.f;
+	m_attack_timer = GetAttackSpeed(type);
 	worldCollision = false;
 	dead = false;
 	aggro = false;
 }
 
-void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition){
+void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health){
 	if (health <= 0)
 	{
 		die();
@@ -71,22 +73,29 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 			{
 				updatePath -= deltaTime.asSeconds();
 			}
+			if (m_attack_timer > 0)
+			{
+				m_attack_timer -= deltaTime.asSeconds();
+			}else
+			{
+				if (math::distance(getPosition(), playerPosition) <= GetAtackDistance(type))
+				{
+					dealDamage(p_health);
+					m_attack_timer = GetAttackSpeed(type);
+				}
+			}
 		}
 		if (!aggro && path.empty())
 		{
 			timeSincePath += deltaTime.asSeconds();
 		}
 		checkCollision(map, playerPosition);
-		if (!playerCollision)
+		//if (!playerCollision)
 		{
 			followPath(deltaTime);
 			if (!IntersectsWall(sf::Rect<int>(getPosition().x - width/2 + velocity.x + 3, getPosition().y + velocity.y, width - 6, height/2 - 3), *map))
 			{
 				move(velocity);
-			}
-			for (int i = 0; i < m_arrows.size(); i++)
-			{
-				m_arrows[i].move(velocity);
 			}
 		}
 	}
@@ -95,11 +104,6 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 void MinorMob::draw(sf::RenderTarget & target, sf::RenderStates states) const{
 	states.transform *= getTransform();
 	target.draw(sprite, states);
-	for (int i = 0; i < m_arrows.size(); i++)
-	{
-		states.transform = m_arrows[i].getTransform();
-		target.draw(m_arrows[i], states);
-	}
 }
 
 void MinorMob::takeDamage(int damage){

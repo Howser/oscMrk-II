@@ -62,7 +62,7 @@ bool GameState::update(sf::Time dt)
 			mPlayer.update(dt, *getContext().window);
 			if (!mobManager.mobs.empty())
 			{
-				mobManager.Update(dt, mPlayer.getPosition());
+				mobManager.Update(dt, mPlayer.getPosition(), &mPlayer.m_health);
 			}
 			mMap.update(dt);
 			m_projectile_manager.update(dt);

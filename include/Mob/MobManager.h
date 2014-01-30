@@ -55,7 +55,7 @@ public:
 	void Add(Mob & mob);
 	void Build_Tree();
 
-	void Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition);
+	void Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition, int* p_health);
 	void SetView(sf::View const& view);
 	void draw(sf::RenderTarget & target, sf::RenderStates states) const;
 	

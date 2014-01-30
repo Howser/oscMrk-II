@@ -47,6 +47,7 @@ static int GetDamage(TYPE const& type){
 	return 0;
 }
 
+///<summary>Seconds.</summary>
 static float GetAttackSpeed(TYPE const& type){
 	switch (type)
 	{
@@ -55,6 +56,23 @@ static float GetAttackSpeed(TYPE const& type){
 		break;
 	case special:
 		return 2.f;
+		break;
+	default:
+		return 0;
+		break;
+	}
+	return 0;
+}
+
+///<summary>Pixels.</summary>
+static float GetAtackDistance(const TYPE & p_type){
+	switch (p_type)
+	{
+	case test:
+		return 64.f;
+		break;
+	case special:
+		return 64.f;
 		break;
 	default:
 		return 0;

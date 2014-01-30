@@ -45,12 +45,12 @@ void MobManager::Build_Tree(){
 	m_tree.build(p_tiles, mobs);
 }
 
-void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition){
+void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition, int* p_health){
 	for (Mobs::const_iterator i = mobs.begin(), j = m_tree.search(*mobs[(*i)->ID])->mobs.begin(); i != mobs.end(); ++i)
 	{
 		if (!(*i)->dead)
 		{
-			(*i)->update(tiles, deltaTime, (sf::Vector2f)playerPosition);
+			(*i)->update(tiles, deltaTime, (sf::Vector2f)playerPosition, p_health);
 			if (math::distance((*i)->getPosition(), playerPosition) <= 735 || (*i)->aggro)//if it's on the screen, give it a path/check other mobs/do other shit. This isn't noticable to the player, but it gives us pretty drastic performance boosts
 			{
 				if (math::distance((*i)->prevPos, (*i)->getPosition()) >= 32)

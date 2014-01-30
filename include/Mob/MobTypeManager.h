@@ -31,11 +31,11 @@ static int GetHp(TYPE const& type){
 	return 0;
 }
 
-static int GetDamage(TYPE const& type){
+static float GetDamage(TYPE const& type){
 	switch (type)
 	{
 	case test:
-		return 5;
+		return 5.f;
 		break;
 	case special:
 		return 12;

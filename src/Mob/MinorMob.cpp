@@ -73,12 +73,12 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 			{
 				updatePath -= deltaTime.asSeconds();
 			}
-			if (m_attack_timer > 0)
+			if (math::distance(getPosition(), playerPosition) <= GetAtackDistance(type))
 			{
-				m_attack_timer -= deltaTime.asSeconds();
-			}else
-			{
-				if (math::distance(getPosition(), playerPosition) <= GetAtackDistance(type))
+				if (m_attack_timer > 0)
+				{
+					m_attack_timer -= deltaTime.asSeconds();
+				}else
 				{
 					dealDamage(p_health);
 					m_attack_timer = GetAttackSpeed(type);
@@ -118,7 +118,7 @@ void MinorMob::takeDamage(int damage){
 }
 
 void MinorMob::dealDamage(int* health){
-	*health = GetDamage(type) - (std::abs(GetDamage(type) - *health) > 0 ? 0:std::abs(GetDamage(type) - *health));
+	*health -= GetDamage(type);
 }
 
 void MinorMob::die(){

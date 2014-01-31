@@ -106,7 +106,7 @@ void Application::loadResources()
 		// Textures
 		mTextures.loadTexture(Textures::Titlescreen, "resources/graphics/titlescreen.png");
 		mTextures.loadTexture(Textures::Mini_Map_sheet, "resources/graphics/map/mini.png");
-		mTextures.loadTexture(Textures::Tilesheet, "resources/graphics/map/tileset.png");
+		mTextures.loadTexture(Textures::Tilesheet, "resources/graphics/map/cave_tileset.png");
 		mTextures.loadTexture(Textures::Button, "resources/graphics/gui/baseButton.png");
 		mTextures.loadTexture(Textures::Player, "resources/graphics/player/player.png");
 		mTextures.loadTexture(Textures::MouseClick, "resources/graphics/gui/cursor_click.png");

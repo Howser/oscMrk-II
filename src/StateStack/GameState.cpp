@@ -27,7 +27,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
 	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
 
-	mCurrentType = gen::Prison;
+	mCurrentType = gen::Cave;
 	mMap.type = mCurrentType;
 	mView.zoom(1.f);
 

@@ -113,7 +113,7 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 	if (!inventoryState)
 	{
 		setPosition(getPosition().x + m_velocity.x, getPosition().y + m_velocity.y);
-		
+
 		if (std::abs(m_velocity.x) > std::abs(m_velocity.y))
 		{
 			if (m_velocity.x > 0)
@@ -673,93 +673,94 @@ void Player::attack(const sf::RenderWindow & window, Attack p_attack){
 	case aLeft:
 		if (!m_Gear.slots[3].Items.empty())
 		{
-			switch (m_Gear.slots[3].Items[0].item)
+			if (m_inventory.contains(GetAmmo(m_Gear.slots[3].Items[0].item)) || m_Gear.slots[3].Items[0].item == GetAmmo(m_Gear.slots[3].Items[0].item)  || GetAmmo(m_Gear.slots[3].Items[0].item) == Items::NOITEM)
 			{
-			case Items::Bow:
-				if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
+				if (IsSpell(m_Gear.slots[3].Items[0].item))
 				{
-					m_inventory.RemoveItem(Items::Arrow, 1);
-					float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
-					sf::Sprite arrow_sprite;
-					arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
-					projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
-					arrow.setPosition(getPosition());
-					p_projectile_manager->m_arrows.push_back(arrow);
-					m_attackTimer.restart();
-				}
-				break;
-			case Items::TestSpell:
-				if (m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::TestSpell))
+					spell_attack(m_Gear.slots[3].Items[0].item, window);
+				}else
 				{
-					if (m_inventory.contains(Items::TestSpell))
+					switch (m_Gear.slots[3].Items[0].item)
 					{
-						m_inventory.RemoveItem(Items::TestSpell, 1);
-					}else
-					{
-						if (!m_Gear.slots[3].Items.empty() && m_Gear.slots[3].Items[0].item == Items::TestSpell)
+					case Items::Bow:
+						if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
 						{
-							m_Gear.slots[3].Items.pop_back();
-						}else
-						{
-							break;
+							float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
+							sf::Sprite arrow_sprite;
+							arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
+							projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
+							arrow.setPosition(getPosition());
+							p_projectile_manager->m_arrows.push_back(arrow);
+							m_attackTimer.restart();
 						}
+						break;
 					}
-					float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
-					sf::Sprite spell_sprite;
-					spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
-					p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
-					m_attackTimer.restart();
 				}
-				break;
-			default:
-				break;
+				if (m_inventory.contains(GetAmmo(m_Gear.slots[3].Items[0].item)))
+				{
+					m_inventory.RemoveItem(GetAmmo(m_Gear.slots[3].Items[0].item), 1);
+				}else if (m_Gear.slots[3].Items[0].item == GetAmmo(m_Gear.slots[3].Items[0].item))
+				{
+					m_Gear.slots[3].Items.pop_back();
+				}
 			}
 		}
 		break;
 	case aRight:
 		if (!m_Gear.slots[2].Items.empty())
 		{
-			switch (m_Gear.slots[2].Items[0].item)
+			if (m_inventory.contains(GetAmmo(m_Gear.slots[2].Items[0].item)) || m_Gear.slots[2].Items[0].item == GetAmmo(m_Gear.slots[2].Items[0].item) || GetAmmo(m_Gear.slots[2].Items[0].item) == Items::NOITEM)
 			{
-			case Items::Bow:
-				if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
+				if (IsSpell(m_Gear.slots[2].Items[0].item))
 				{
-					m_inventory.RemoveItem(Items::Arrow, 1);
-					float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
-					sf::Sprite arrow_sprite;
-					arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
-					projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
-					arrow.setPosition(getPosition());
-					p_projectile_manager->m_arrows.push_back(arrow);
-					m_attackTimer.restart();
-				}
-				break;
-			case Items::TestSpell:
-				if (m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::TestSpell))
+					spell_attack(m_Gear.slots[2].Items[0].item, window);
+				}else
 				{
-					if (m_inventory.contains(Items::TestSpell))
+					switch (m_Gear.slots[2].Items[0].item)
 					{
-						m_inventory.RemoveItem(Items::TestSpell, 1);
-					}else
-					{
-						if (!m_Gear.slots[2].Items.empty() && m_Gear.slots[2].Items[0].item == Items::TestSpell)
+					case Items::Bow:
+						if (m_inventory.contains(Items::Arrow) && m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::Bow))
 						{
-							m_Gear.slots[2].Items.pop_back();
-						}else
-						{
-							break;
+
+							float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
+							sf::Sprite arrow_sprite;
+							arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
+							projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
+							arrow.setPosition(getPosition());
+							p_projectile_manager->m_arrows.push_back(arrow);
+							m_attackTimer.restart();
 						}
+						break;
+					default:
+						break;
 					}
-					float angle = std::atan2f(sf::Mouse::getPosition(window).y - 720/2, sf::Mouse::getPosition(window).x - 1280/2);
-					sf::Sprite spell_sprite;
-					spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
-					p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
-					m_attackTimer.restart();
 				}
-				break;
-			default:
-				break;
+				if (m_inventory.contains(GetAmmo(m_Gear.slots[2].Items[0].item)))
+				{
+					m_inventory.RemoveItem(GetAmmo(m_Gear.slots[2].Items[0].item), 1);
+				}else if (m_Gear.slots[2].Items[0].item == GetAmmo(m_Gear.slots[2].Items[0].item))
+				{
+					m_Gear.slots[2].Items.pop_back();
+				}
 			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::spell_attack(const Items & p_item, const sf::RenderWindow & p_window){
+	switch (p_item)
+	{
+	case Items::TestSpell:
+		if (m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::TestSpell))
+		{
+			float angle = std::atan2f(sf::Mouse::getPosition(p_window).y - 720/2, sf::Mouse::getPosition(p_window).x - 1280/2);
+			sf::Sprite spell_sprite;
+			spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
+			p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
+			m_attackTimer.restart();
 		}
 		break;
 	default:

@@ -58,6 +58,7 @@ public:
 
 	bool isInRange(Mob* ptr_mob);
 	void attack(const sf::RenderWindow & window, Attack p_attack);
+	void spell_attack(const Items & p_item, const sf::RenderWindow & p_window);
 
 	bool isPathing();
 

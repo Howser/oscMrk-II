@@ -30,6 +30,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mCurrentType = gen::Cave;
 	mMap.type = mCurrentType;
 	mView.zoom(1.f);
+	mView.setCenter(-mView.getSize().x, -mView.getSize().y);
 
 	sf::Vector2u size = context.window->getSize();
 	mNormalRender.create(size.x, size.y);

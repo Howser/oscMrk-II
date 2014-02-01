@@ -109,6 +109,12 @@
     <Filter Include="Header Files\Effects\Spells">
       <UniqueIdentifier>{fb414086-07ca-4dc8-9370-7439fc100197}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Spells and Projectiles">
+      <UniqueIdentifier>{1129f417-b144-47db-94b0-672921ff1dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Spells and Projectiles">
+      <UniqueIdentifier>{86e3f386-c6cc-4185-859f-d957c426d8c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Animation\Animation.h">
@@ -252,17 +258,8 @@
     <ClInclude Include="..\include\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Item\Arrow.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Item\ProjectileManager.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Gui\HealthBar.h">
       <Filter>Header Files\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Item\Spell.h">
-      <Filter>Header Files\Item</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Effects\Lights\Light.h">
       <Filter>Header Files\Effects\Lights</Filter>
@@ -300,11 +297,26 @@
     <ClInclude Include="..\include\Effects\Particles\ParticleSystem.h">
       <Filter>Header Files\Effects\Particles</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Item\Projectile.h">
-      <Filter>Header Files\Item</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Map\Properties\Gate.h">
       <Filter>Header Files\Map\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Spells and Projectiles\Arrow.h">
+      <Filter>Header Files\Spells and Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Spells and Projectiles\Projectile.h">
+      <Filter>Header Files\Spells and Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Spells and Projectiles\ProjectileManager.h">
+      <Filter>Header Files\Spells and Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Spells and Projectiles\Spell.h">
+      <Filter>Header Files\Spells and Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Spells and Projectiles\AOE.h">
+      <Filter>Header Files\Spells and Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Spells and Projectiles\Buff.h">
+      <Filter>Header Files\Spells and Projectiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -360,9 +372,6 @@
     </ClCompile>
     <ClCompile Include="..\src\Inventory\Tooltip.cpp">
       <Filter>Source Files\Inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Item\BaseItem.cpp">
-      <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Item\GearItem.cpp">
       <Filter>Source Files\Item</Filter>
@@ -442,17 +451,8 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Item\Arrow.cpp">
-      <Filter>Source Files\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Item\ProjectileManager.cpp">
-      <Filter>Source Files\Item</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Gui\HealthBar.cpp">
       <Filter>Source Files\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Item\Spell.cpp">
-      <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Effects\Lights\Light.cpp">
       <Filter>Source Files\Effects\Lights</Filter>
@@ -483,6 +483,24 @@
     </ClCompile>
     <ClCompile Include="..\src\Effects\Particles\ParticleSystem.cpp">
       <Filter>Source Files\Effects\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Item\BaseItem.cpp">
+      <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Spells and Projectiles\Arrow.cpp">
+      <Filter>Source Files\Spells and Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Spells and Projectiles\ProjectileManager.cpp">
+      <Filter>Source Files\Spells and Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Spells and Projectiles\Spell.cpp">
+      <Filter>Source Files\Spells and Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Spells and Projectiles\AOE.cpp">
+      <Filter>Source Files\Spells and Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Spells and Projectiles\Buff.cpp">
+      <Filter>Source Files\Spells and Projectiles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

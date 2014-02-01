@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML\Graphics\Sprite.hpp>
+#include <SFML\Graphics\Text.hpp>
 #include <string>
 
 enum Items //sort by type
@@ -16,6 +17,7 @@ enum Items //sort by type
 	Bow,
 	Mace,
 	TestSpell,
+	TestAOE,
 	NOITEM,
 	end,
 };
@@ -303,43 +305,62 @@ static bool IsSpell(const Items & item){
 eGearSlot;
 ///<summary>FORMAT: TYPE, case gear{GEAR SLOT, case weapon{DAMAGE, SPEED} case armor{ARMOR}} case misc{} case consumable{}</summary>
 static std::string GetStats(Items const& item, sf::Vector2i* size){
+	sf::Text text;
+	std::string stats = (std::string)w_ItemNames[item];
 	if (GetType(item) == itemType::Gear)
 	{
-		std::string stats = (std::string)w_ItemNames[item];
-		if (GetSlot(item) == eGearSlot::rHand || GetSlot(item) == eGearSlot::OneHand|| GetSlot(item) == eGearSlot::TwoHand)
+		if (GetSlot(item) == eGearSlot::rHand || GetSlot(item) == eGearSlot::lHand || GetSlot(item) == eGearSlot::OneHand|| GetSlot(item) == eGearSlot::TwoHand)
 		{
 			//weapon
 			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + std::to_string(GetSpeed(item));
-			stats.erase ( stats.find_last_not_of('0') + 1, std::string::npos );
-			size->x = 1;
-			size->y = 1;
+			stats.erase (stats.find_last_not_of('0') + 1, std::string::npos);
 		}else
 		{
 			//armor
 			stats += "\nArmor: " + std::to_string(GetArmor(item));
-			size->x = 1;
-			size->y = 1;
 		}
+		text.setString(stats);
+		size->x = text.getLocalBounds().width;
+		size->y = text.getLocalBounds().height;
 		return stats;
 	}else if (GetType(item) == itemType::Normal)
 	{
-		return (std::string)w_ItemNames[item] + "";
+		text.setString(stats);
+		size->x = text.getLocalBounds().width;
+		size->y = text.getLocalBounds().height;
+		return stats;
 	}
 }
 
-namespace spell{
-	static void update(const Items & p_item, sf::Vector2<float>* ptr_velocity){
+namespace buff{
+	///<summary>Seconds.</summary>
+	static float GetDuration(const Items & p_item){
+		switch (p_item)
+		{
+		default:
+			return 10.f;
+			break;
+		}
+		return 0.f;
+	}
 
+	///<summary>Seconds.</summary>
+	static float GetInterval(const Items & p_item){
+		switch (p_item)
+		{
+		default:
+			return 1.f;
+			break;
+		}
+		return 0.f;
 	}
-	/*static void use(const Items & item, Mob* ptr_mob){
-	if (IsSpell(item))
-	{
-	switch (item)
-	{
-	default:
 
-	break;
+	static void execute(int* ptr_value, const Items & p_item){
+		switch (p_item)
+		{
+		default:
+			(*ptr_value)--;
+			break;
+		}
 	}
-	}
-	}*/
 }

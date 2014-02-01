@@ -18,7 +18,6 @@ void Tooltip::SetStats(Slot* slot){
 	show = true;
 	stats = GetStats(slot->Items[0].item, &size);
 	setPosition(slot->getPosition().x + SLOTWIDTH, slot->getPosition().y);
-	setScale(size.x, size.y);
 	this->slot = slot;
 }
 
@@ -31,11 +30,10 @@ void Tooltip::draw(sf::RenderTarget & target, sf::RenderStates states)const{
 	states.transform *= getTransform();
 	target.draw(sprite, states);
 	sf::Text text;
+	text.setString(stats);
 	text.setFont(font);
 	text.setColor(sf::Color::White);
 	text.setScale(0.55f, 0.55f);
 	text.setPosition(getPosition());
-	text.setString(stats);
-
 	target.draw(text);
 }

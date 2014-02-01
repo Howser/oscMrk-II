@@ -4,9 +4,9 @@
 #include "Mob\Mob.h"
 #include <vector>
 
-#define SIZE 8
-
 namespace mobtree{
+	static const int SIZE = 8;
+
 	struct Branch{
 		std::vector<std::vector<gen::Tile*>> tiles;
 		std::vector<Mob*> mobs;

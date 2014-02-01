@@ -114,6 +114,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::InventorySlot, "resources/graphics/gui/inventorySlot.png");
 		mTextures.loadTexture(Textures::StackManager, "resources/graphics/gui/stackManager.png");
 		mTextures.loadTexture(Textures::Tooltip, "resources/graphics/gui/tooltip.png");
+		mTextures.loadTexture(Textures::Border, "resources/graphics/gui/border.png"); 
 		mTextures.loadTexture(Textures::DeleteItem, "resources/graphics/gui/deleteItem.png");
 		mTextures.loadTexture(Textures::PlayerOverlay, "resources/graphics/player/overlay.png");
 		mTextures.loadTexture(Textures::HealthFull, "resources/graphics/player/healthFull.png");

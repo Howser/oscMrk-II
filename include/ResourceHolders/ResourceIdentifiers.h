@@ -17,6 +17,7 @@ namespace Textures
 		InventorySlot,
 		StackManager,
 		Tooltip,
+		Border,
 		DeleteItem,
 		PlayerOverlay,
 		HealthFull,

@@ -7,9 +7,9 @@
 
 #include <vector>
 
-#include "Item\ProjectileManager.h"
-#include "Item\Arrow.h"
-#include "Item\Spell.h"
+#include "Spells and Projectiles\ProjectileManager.h"
+#include "Spells and Projectiles\Arrow.h"
+#include "Spells and Projectiles\Spell.h"
 #include "ResourceHolders\TextureHolder.h"
 #include "ResourceHolders\FontHolder.h"
 #include "Animation\Animation.h"

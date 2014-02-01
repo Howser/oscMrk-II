@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Effects\Lights\LightManager.h"
-#include "Item\ProjectileManager.h"
+#include "Spells and Projectiles\ProjectileManager.h"
 #include "State.h"
 #include "Map\Map.h"
 #include "PathFinder\PathFinder.h"

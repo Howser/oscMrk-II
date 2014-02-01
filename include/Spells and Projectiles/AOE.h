@@ -3,7 +3,6 @@
 #include <SFML\Graphics\Drawable.hpp>
 #include <SFML\Graphics\RenderTarget.hpp>
 #include "Item\ItemManager.h"
-#include "Spells and Projectiles\Buff.h"
 
 class AOE : public sf::Transformable, public sf::Drawable{
 public:
@@ -17,7 +16,6 @@ public:
 	float m_radius;
 	bool m_dead;
 	Items m_spell_type;
-	Buff m_buff;
 
 	void update(sf::Time & p_dt);
 	void draw(sf::RenderTarget & p_target, sf::RenderStates p_states)const;

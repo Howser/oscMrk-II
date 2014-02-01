@@ -67,7 +67,6 @@
     <ClInclude Include="..\include\ResourceHolders\TextureHolder.h" />
     <ClInclude Include="..\include\Spells and Projectiles\AOE.h" />
     <ClInclude Include="..\include\Spells and Projectiles\Arrow.h" />
-    <ClInclude Include="..\include\Spells and Projectiles\Buff.h" />
     <ClInclude Include="..\include\Spells and Projectiles\Projectile.h" />
     <ClInclude Include="..\include\Spells and Projectiles\ProjectileManager.h" />
     <ClInclude Include="..\include\Spells and Projectiles\Spell.h" />

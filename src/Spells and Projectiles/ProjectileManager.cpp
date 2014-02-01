@@ -47,7 +47,8 @@ void ProjectileManager::update(sf::Time & p_dt){
 					}
 					if (math::distance(ptr_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) <= m_AOE_spells[i].m_radius)
 					{
-						ptr_branches[l]->mobs[j]->m_buffs.push_back(m_AOE_spells[i].m_buff);
+						ptr_branches[l]->mobs[j]->m_buffs.push_back(buff::GetBuff(m_AOE_spells[i].m_spell_type));
+						ptr_branches[l]->mobs[j]->m_buffs.back().ID = m_AOE_spells[i].ID;
 					}
 				}
 			}
@@ -125,3 +126,15 @@ void ProjectileManager::draw(sf::RenderTarget & target, sf::RenderStates states)
 		m_arrows[i].draw(target, states);
 	}
 }
+
+namespace buff{
+	///<summary>Get the targeted variable.</summary>
+	static void GetTarget(Buff* ptr_buff, Mob* ptr_mob){
+		switch (ptr_buff->m_buff)
+		{
+		default:
+			ptr_buff->ptr_value = &ptr_mob->health;
+			break;
+		}
+	}
+};

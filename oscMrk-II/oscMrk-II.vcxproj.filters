@@ -315,9 +315,6 @@
     <ClInclude Include="..\include\Spells and Projectiles\AOE.h">
       <Filter>Header Files\Spells and Projectiles</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Spells and Projectiles\Buff.h">
-      <Filter>Header Files\Spells and Projectiles</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">

@@ -14,10 +14,10 @@
 #include "Item\BaseItem.h"
 #include "Item\GearItem.h"
 #include "Item\MiscItem.h"
+#include "Item\ItemManager.h"
 #include "Mob\MobTypeManager.h"
 #include "Mob\DeadMob.h"
 #include "Spells and Projectiles\Arrow.h"
-#include "Spells and Projectiles\Buff.h"
 
 class Mob : public sf::Transformable, public sf::Drawable{
 public:
@@ -42,7 +42,7 @@ public:
 	sf::Vector2f prevPos;
 	
 	std::vector<sf::Sprite> m_arrows;
-	std::vector<Buff> m_buffs;
+	std::vector<buff::Buff> m_buffs;
 
 	std::vector<sf::Vector2i> path;
 	int ID, width, height, health;//, damage, aggroDist, armor, speed, attackSpeed;

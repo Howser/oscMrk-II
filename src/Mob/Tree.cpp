@@ -3,6 +3,8 @@
 using namespace mobtree;
 
 void Tree::build(std::vector<std::vector<gen::Tile*>> tiles, std::vector<Mob*> mobs){
+	m_size.x = tiles.size()/SIZE;
+	m_size.y = tiles.back().size()/SIZE;
 	for (unsigned int x = 0, y = 0; x < tiles.size(); x += SIZE)
 	{
 		for (y = 0; y < tiles[x].size(); y += SIZE)
@@ -45,7 +47,7 @@ Branch* Tree::search(Mob const& mob){
 }
 
 Branch* Tree::search(sf::Vector2f const& position){
-	return &m_branches[(position.x/32)/SIZE + (position.y/32)/SIZE];
+	return &m_branches[(position.x/32)/SIZE + (((position.y/32)/SIZE)*m_size.x)];
 }
 
 void Tree::move(Mob* p_mob, Branch* p_from, Branch* p_to){

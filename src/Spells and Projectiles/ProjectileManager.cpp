@@ -12,34 +12,18 @@ void ProjectileManager::update(sf::Time & p_dt){
 	{
 		if (!m_AOE_spells[i].m_dead)
 		{
-			///<summary>An array of points to outline the border of the AOE spell in order to get the correct mob tree branches to search.</summary>
-			sf::Vector2<int> points[2] = {sf::Vector2<int>(m_AOE_spells[i].getPosition().x - m_AOE_spells[i].m_radius, m_AOE_spells[i].getPosition().y - m_AOE_spells[i].m_radius), sf::Vector2<int>(m_AOE_spells[i].getPosition().x + m_AOE_spells[i].m_radius, m_AOE_spells[i].getPosition().y + m_AOE_spells[i].m_radius)};
-			///<summary>A vector of branches to check for mobs that are within the radius of the AOE spell.</summary>
-			std::vector<mobtree::Branch*> ptr_branches;
-
-			for (int x = points[0].x/mobtree::SIZE, y = points[0].y/mobtree::SIZE; x < points[1].x/mobtree::SIZE; x++)
+			for (int l = 0; l < m_AOE_spells[i].m_branches.size(); l++)
 			{
-				for (int y = points[0].y/mobtree::SIZE; y < points[1].y/mobtree::SIZE; y++)
-				{
-					mobtree::Branch* ptr_branch = m_mobManager->m_tree.search(sf::Vector2f(x*mobtree::SIZE, y*mobtree::SIZE));
-					if (ptr_branch != NULL)
-					{
-						ptr_branches.push_back(ptr_branch);
-					}
-				}
-			}
-			for (int l = 0; l < ptr_branches.size(); l++)
-			{
-				for (int j = 0; j < ptr_branches[l]->mobs.size(); j++)
+				for (int j = 0; j < m_AOE_spells[i].m_branches[l]->mobs.size(); j++)
 				{
 					bool broken = false;
-					for (int b = 0; b < ptr_branches[l]->mobs[j]->m_buffs.size(); b++)
+					for (int b = 0; b < m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.size(); b++)
 					{
-						if (ptr_branches[l]->mobs[j]->m_buffs[b].ID == m_AOE_spells[i].ID)
+						if (m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs[b].ID == m_AOE_spells[i].ID)
 						{
-							if (math::distance(ptr_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) > m_AOE_spells[i].m_radius)
+							if (math::distance(m_AOE_spells[i].m_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) > m_AOE_spells[i].m_radius)
 							{
-								ptr_branches[l]->mobs[j]->m_buffs.erase(ptr_branches[l]->mobs[j]->m_buffs.begin() + b);
+								m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.erase(m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.begin() + b);
 							}
 							broken = true;
 							break;
@@ -49,14 +33,14 @@ void ProjectileManager::update(sf::Time & p_dt){
 					{
 						break;
 					}
-					if (math::distance(ptr_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) <= m_AOE_spells[i].m_radius)
+					if (math::distance(m_AOE_spells[i].m_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) <= m_AOE_spells[i].m_radius)
 					{
-						ptr_branches[l]->mobs[j]->m_buffs.push_back(buff::GetBuff(m_AOE_spells[i].m_spell_type));
-						ptr_branches[l]->mobs[j]->m_buffs.back().ID = m_AOE_spells[i].ID;
-						switch (ptr_branches[l]->mobs[j]->m_buffs.back().m_buff)
+						m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.push_back(buff::GetBuff(m_AOE_spells[i].m_spell_type));
+						m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.back().ID = m_AOE_spells[i].ID;
+						switch (m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.back().m_buff)
 						{
 						default:
-							ptr_branches[l]->mobs[j]->m_buffs.back().ptr_value = &ptr_branches[l]->mobs[j]->health;
+							m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.back().ptr_value = &m_AOE_spells[i].m_branches[l]->mobs[j]->health;
 							break;
 						}
 					}

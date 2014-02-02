@@ -325,7 +325,7 @@ namespace _AOE{
 			switch (p_item)
 			{
 			default:
-				return 96;
+				return 121/2;
 				break;
 			}
 		}

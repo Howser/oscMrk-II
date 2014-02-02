@@ -26,6 +26,8 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
 	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
+	mPlayer.ptr_tree = &mobManager.m_tree;
+	mPlayer.setPosition(-1280, -720);
 
 	mCurrentType = gen::Cave;
 	mMap.type = mCurrentType;

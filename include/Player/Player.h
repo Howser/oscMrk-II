@@ -85,6 +85,8 @@ public:
 
 	int m_health;
 
+	mobtree::Tree* ptr_tree;
+
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

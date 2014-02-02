@@ -22,6 +22,8 @@ namespace mobtree{
 	struct Tree{
 		std::vector<Branch> m_branches;
 
+		sf::Vector2<int> m_size;
+
 		void build(std::vector<std::vector<gen::Tile*>> tiles, std::vector<Mob*> mobs);
 
 		Branch* search(Mob const& mob);

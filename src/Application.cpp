@@ -124,6 +124,10 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::gui_Inventory, "resources/graphics/player/inventory.png");
 		mTextures.loadTexture(Textures::gui_LootInventory, "resources/graphics/player/loot_inventory.png");
 
+#pragma region Spells
+		mTextures.loadTexture(Textures::TestAoe, "resources/graphics/item/world/testAOE.png");
+#pragma endregion
+
 #pragma region Mob Textures
 		mTextures.loadTexture(Textures::TestMob, "resources/graphics/Mob/test.png");
 		mTextures.loadTexture(Textures::TestMobDead, "resources/graphics/Mob/dead.png");

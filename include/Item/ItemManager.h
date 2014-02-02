@@ -24,10 +24,10 @@ enum Items //sort by type
 };
 
 ///<summary>Strings that equate to the enum names.</summary>
-static const char* ItemNames[12] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Shield", "Sword", "Bow", "Mace", "Test_Spell"};
+static const char* ItemNames[13] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Shield", "Sword", "Bow", "Mace", "Test_Spell", "Test_AOE"};
 
 ///<summary>Strings for item names to display in tooltips, etc.</summary>
-static const char* w_ItemNames[12] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Shield", "Sword", "Bow", "Mace", "Test Spell"};
+static const char* w_ItemNames[13] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Shield", "Sword", "Bow", "Mace", "Test Spell", "Test_AOE"};
 
 enum eGearSlot{
 	lHand,
@@ -127,6 +127,9 @@ static itemType GetType(Items item){
 	case TestSpell:
 		return Gear;
 		break;
+	case TestAOE:
+		return Gear;
+		break;
 	default:
 		return Normal;
 		break;
@@ -145,6 +148,9 @@ static int GetDamage(Items item){
 		return 5;
 		break;
 	case TestSpell:
+		return 5;
+		break;
+	case TestAOE:
 		return 5;
 		break;
 	default:
@@ -239,6 +245,9 @@ static eGearSlot GetSlot(Items item){
 	case TestSpell:
 		return OneHand;
 		break;
+	case TestAOE:
+		return OneHand;
+		break;
 	default:
 		return NoSlot;
 		break;
@@ -250,6 +259,9 @@ static Items GetAmmo(const Items & p_item){
 	{
 	case Items::TestSpell:
 		return TestSpell;
+		break;
+	case TestAOE:
+		return TestAOE;
 		break;
 	case Items::Bow:
 		return Arrow;
@@ -297,9 +309,41 @@ static bool IsSpell(const Items & item){
 	case TestSpell:
 		return true;
 		break;
+	case TestAOE:
+		return true;
+		break;
 	default:
 		return false;
 		break;
+	}
+}
+
+namespace _AOE{
+	static float GetRadius(const Items & p_item){
+		if (IsSpell(p_item))
+		{
+			switch (p_item)
+			{
+			default:
+				return 96;
+				break;
+			}
+		}
+		return 0;
+	}
+
+	///<summary>Seconds.</summary>
+	static float GetDuration(const Items & p_item){
+		if (IsSpell(p_item))
+		{
+			switch (p_item)
+			{
+			default:
+				return 15;
+				break;
+			}
+		}
+		return 0;
 	}
 }
 
@@ -377,7 +421,7 @@ namespace buff{
 		switch (p_item)
 		{
 		default:
-			*ptr_value--;
+			(*ptr_value) = 0;
 			break;
 		}
 	}

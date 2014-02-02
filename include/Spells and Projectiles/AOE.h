@@ -7,7 +7,7 @@
 class AOE : public sf::Transformable, public sf::Drawable{
 public:
 	AOE();
-	AOE(Items & p_spell_type, float & p_radius, float & p_timer, sf::Vector2<int> & p_position);
+	AOE(Items p_spell_type, float p_radius, float p_timer, const sf::Vector2f & p_position);
 	~AOE();
 
 	///<summary>An id generated from the player class.</summary>
@@ -16,11 +16,11 @@ public:
 	float m_radius;
 	bool m_dead;
 	Items m_spell_type;
+	sf::Sprite m_sprite;
 
 	void update(sf::Time & p_dt);
 	void draw(sf::RenderTarget & p_target, sf::RenderStates p_states)const;
 
 private:
 	float m_timer;
-	sf::Sprite m_sprite;
 };

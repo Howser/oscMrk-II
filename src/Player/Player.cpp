@@ -52,6 +52,10 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Helmet_Destruction).x][m_inventory.GetFirstAvailableSlot(Items::Helmet_Destruction).y].Items.push_back(MiscItem(Items::Helmet_Destruction, *textures, -1));
 	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Armor_Darkness).x][m_inventory.GetFirstAvailableSlot(Items::Armor_Darkness).y].Items.push_back(MiscItem(Items::Armor_Darkness, *textures, -1));
 	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Helmet_Darkness).x][m_inventory.GetFirstAvailableSlot(Items::Helmet_Darkness).y].Items.push_back(MiscItem(Items::Helmet_Darkness, *textures, -1));
+	for (int i = 0; i < 10; i++)
+	{
+		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::TestAOE).x][m_inventory.GetFirstAvailableSlot(Items::TestAOE).y].Items.push_back(MiscItem(Items::TestAOE, *textures, -1));
+	}
 	Player::m_HelmetSlot = Items::NOITEM;
 	Player::m_ArmorSlot = Items::NOITEM;
 	Player::m_lHandSlot = Items::NOITEM;
@@ -760,6 +764,22 @@ void Player::spell_attack(const Items & p_item, const sf::RenderWindow & p_windo
 			sf::Sprite spell_sprite;
 			spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
 			p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false)));
+			m_attackTimer.restart();
+		}
+		break;
+	case Items::TestAOE:
+		if (m_attackTimer.getElapsedTime().asSeconds() > GetSpeed(Items::TestAOE))
+		{
+			sf::Sprite spell_sprite;
+			spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::TestAoe));
+			sf::Vector2i pos = (sf::Vector2i)getPosition();
+			AOE aoe = AOE(Items::TestAOE, _AOE::GetRadius(Items::TestAOE), _AOE::GetDuration(Items::TestAOE), sf::Vector2<float>(getPosition().x + (sf::Mouse::getPosition(p_window).x - 640) + _AOE::GetRadius(Items::TestAOE)/2, getPosition().y + (sf::Mouse::getPosition(p_window).y - 360) + _AOE::GetRadius(Items::TestAOE)/2));
+			
+			std::cout << "player X: " << getPosition().x << "    player Y: " << getPosition().y << "\n";
+			std::cout << "spell X: " << getPosition().x + (sf::Mouse::getPosition(p_window).x - 640) << "    spell Y: " << getPosition().y + (sf::Mouse::getPosition(p_window).y - 360) << "\n";
+			
+			aoe.m_sprite.setTexture(*p_texture_holder->getTexture(Textures::TestAoe));
+			p_projectile_manager->m_AOE_spells.push_back(aoe);
 			m_attackTimer.restart();
 		}
 		break;

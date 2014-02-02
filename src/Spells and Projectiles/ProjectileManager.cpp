@@ -37,6 +37,10 @@ void ProjectileManager::update(sf::Time & p_dt){
 					{
 						if (ptr_branches[l]->mobs[j]->m_buffs[b].ID == m_AOE_spells[i].ID)
 						{
+							if (math::distance(ptr_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) > m_AOE_spells[i].m_radius)
+							{
+								ptr_branches[l]->mobs[j]->m_buffs.erase(ptr_branches[l]->mobs[j]->m_buffs.begin() + b);
+							}
 							broken = true;
 							break;
 						}
@@ -49,6 +53,12 @@ void ProjectileManager::update(sf::Time & p_dt){
 					{
 						ptr_branches[l]->mobs[j]->m_buffs.push_back(buff::GetBuff(m_AOE_spells[i].m_spell_type));
 						ptr_branches[l]->mobs[j]->m_buffs.back().ID = m_AOE_spells[i].ID;
+						switch (ptr_branches[l]->mobs[j]->m_buffs.back().m_buff)
+						{
+						default:
+							ptr_branches[l]->mobs[j]->m_buffs.back().ptr_value = &ptr_branches[l]->mobs[j]->health;
+							break;
+						}
 					}
 				}
 			}

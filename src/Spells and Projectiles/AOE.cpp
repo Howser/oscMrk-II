@@ -6,7 +6,7 @@ AOE::AOE(){
 	setPosition(0, 0);
 }
 
-AOE::AOE(Items & p_spell_type, float & p_radius, float & p_timer, sf::Vector2<int> & p_position) : m_spell_type(p_spell_type), m_radius(p_radius), m_timer(p_timer), m_dead(false){
+AOE::AOE(Items p_spell_type, float p_radius, float p_timer, const sf::Vector2f & p_position) : m_spell_type(p_spell_type), m_radius(p_radius), m_timer(p_timer), m_dead(false){
 	setOrigin(m_radius, m_radius);
 	setPosition(p_position.x, p_position.y);
 }

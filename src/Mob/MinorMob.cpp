@@ -98,6 +98,11 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 				move(velocity);
 			}
 		}
+
+		for (int i = 0; i < m_buffs.size(); i++)
+		{
+			m_buffs[i].update(deltaTime);
+		}
 	}
 }
 

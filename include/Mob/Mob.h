@@ -24,6 +24,7 @@ public:
 	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health) = 0;
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 	virtual void takeDamage(int damage) = 0;
+	bool hasBuff(const Items & p_item);
 	bool IntersectsWall(sf::Rect<int> const& position, std::vector<std::vector<gen::Tile>> const& map);
 	void stop();
 	bool worldCollision, playerCollision, dead, aggro, t_update;

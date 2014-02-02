@@ -774,7 +774,6 @@ void Player::spell_attack(const Items & p_item, const sf::RenderWindow & p_windo
 			spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::TestAoe));
 			sf::Vector2i pos = (sf::Vector2i)getPosition();
 			AOE aoe = AOE(Items::TestAOE, _AOE::GetRadius(Items::TestAOE), _AOE::GetDuration(Items::TestAOE), sf::Vector2<float>(getPosition().x + (sf::Mouse::getPosition(p_window).x - 640), getPosition().y + (sf::Mouse::getPosition(p_window).y - 360)), ptr_tree);
-			
 			std::cout << "player X: " << getPosition().x << "    player Y: " << getPosition().y << "\n";
 			std::cout << "spell X: " << getPosition().x + (sf::Mouse::getPosition(p_window).x - 640) << "    spell Y: " << getPosition().y + (sf::Mouse::getPosition(p_window).y - 360) << "\n";
 			

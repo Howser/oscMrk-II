@@ -16,27 +16,9 @@ void ProjectileManager::update(sf::Time & p_dt){
 			{
 				for (int j = 0; j < m_AOE_spells[i].m_branches[l]->mobs.size(); j++)
 				{
-					bool broken = false;
-					for (int b = 0; b < m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.size(); b++)
-					{
-						if (m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs[b].ID == m_AOE_spells[i].ID)
-						{
-							if (math::distance(m_AOE_spells[i].m_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) > m_AOE_spells[i].m_radius)
-							{
-								m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.erase(m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.begin() + b);
-							}
-							broken = true;
-							break;
-						}
-					}
-					if (broken)
-					{
-						break;
-					}
-					if (math::distance(m_AOE_spells[i].m_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) <= m_AOE_spells[i].m_radius)
+					if (math::distance(m_AOE_spells[i].m_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) <= m_AOE_spells[i].m_radius && !m_AOE_spells[i].m_branches[l]->mobs[j]->hasBuff(m_AOE_spells[i].m_spell_type))
 					{
 						m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.push_back(buff::GetBuff(m_AOE_spells[i].m_spell_type));
-						m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.back().ID = m_AOE_spells[i].ID;
 						switch (m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.back().m_buff)
 						{
 						default:

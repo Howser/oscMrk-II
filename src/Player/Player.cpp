@@ -42,7 +42,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_inventory.slots[1][0].Items.push_back(GearItem(Items::Shield, *textures, -1));
 	m_inventory.slots[2][0].Items.push_back(GearItem(Items::Mace, *textures, -1));
 	m_inventory.slots[3][0].Items.push_back(GearItem(Items::Bow, *textures, -1));
-	for (int i = 0; i < 101; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::TestSpell).x][m_inventory.GetFirstAvailableSlot(Items::TestSpell).y].Items.push_back(MiscItem(Items::TestSpell, *textures, -1));
 	}
@@ -52,7 +52,7 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Helmet_Destruction).x][m_inventory.GetFirstAvailableSlot(Items::Helmet_Destruction).y].Items.push_back(MiscItem(Items::Helmet_Destruction, *textures, -1));
 	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Armor_Darkness).x][m_inventory.GetFirstAvailableSlot(Items::Armor_Darkness).y].Items.push_back(MiscItem(Items::Armor_Darkness, *textures, -1));
 	m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::Helmet_Darkness).x][m_inventory.GetFirstAvailableSlot(Items::Helmet_Darkness).y].Items.push_back(MiscItem(Items::Helmet_Darkness, *textures, -1));
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		m_inventory.slots[m_inventory.GetFirstAvailableSlot(Items::TestAOE).x][m_inventory.GetFirstAvailableSlot(Items::TestAOE).y].Items.push_back(MiscItem(Items::TestAOE, *textures, -1));
 	}

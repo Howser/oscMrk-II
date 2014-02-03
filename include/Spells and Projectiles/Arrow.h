@@ -1,6 +1,6 @@
 #pragma once
 #include "Map\Tile.h"
-#include "Item\Projectile.h"
+#include "Spells and Projectiles\Projectile.h"
 #include "Effects\Particles\ParticleSystem.h"
 
 #include <vector>

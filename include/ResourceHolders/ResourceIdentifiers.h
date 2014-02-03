@@ -19,6 +19,7 @@ namespace Textures
 		InventorySlot,
 		StackManager,
 		Tooltip,
+		Border,
 		DeleteItem,
 		PlayerOverlay,
 		HealthFull,
@@ -28,7 +29,7 @@ namespace Textures
 		gui_Inventory,
 		gui_LootInventory,
 
-		///<summary>Items: 
+		///<summary>Items.</summary>
 		Arrow,
 		Helmet_Destruction,
 		Helmet_Darkness,
@@ -41,7 +42,10 @@ namespace Textures
 		Bow,
 		Mace,
 
-		///<summary>Items that will be displayed on the palyer:
+		///<summary>Spells.</summary>
+		TestAoe,
+
+		///<summary>Items that will be displayed on the palyer.</summary>
 		d_Arrow,
 		d_Helmet_Destruction,
 		d_Helmet_Darkness,
@@ -53,8 +57,6 @@ namespace Textures
 		d_Sword,
 		d_Bow,
 		d_Mace,
-		///</summary>
-		///</summary>
 	};
 }
 

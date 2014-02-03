@@ -1,4 +1,4 @@
-#include "Item\Spell.h"
+#include "Spells and Projectiles\Spell.h"
 
 using namespace projectile;
 

@@ -13,14 +13,10 @@ namespace math{
 	int random(int low, int high, int exclude);
 
 	template <typename T>
-	float distance(sf::Vector2<T> const& lhs, sf::Vector2<T> const& rhs);
+	float distance(sf::Vector2<T> const& a, sf::Vector2<T> const& b);
 
 	///<summary> Converts an angle in radians to degrees </summary>
 	float toDegrees(float x);
-
-	template <typename T>
-	///<summary>Returns a rectangle from the intersection of two rectangles.</summary>
-	sf::Rect<T> intersection(const sf::Rect<T> & p_a, const sf::Rect<T> p_b);
 }
 
 #include "GeneralMath.inl"

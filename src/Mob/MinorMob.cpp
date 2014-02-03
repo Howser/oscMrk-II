@@ -98,6 +98,17 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 				move(velocity);
 			}
 		}
+
+		for (int i = 0; i < m_buffs.size(); i++)
+		{
+			if (m_buffs[i].m_duration > 0)
+			{
+				m_buffs[i].update(deltaTime);
+			}else
+			{
+				m_buffs.erase(m_buffs.begin() + i);
+			}
+		}
 	}
 }
 
@@ -262,4 +273,15 @@ void Mob::StickArrow(const projectile::Arrow & arrow){
 	s_arrow.setRotation(arrow.m_sprite.getRotation());
 	s_arrow.setPosition(sf::Vector2<float>(std::abs(getPosition().x - arrow.getPosition().x), std::abs(getPosition().y - arrow.getPosition().y)));
 	m_arrows.push_back(s_arrow);
+}
+
+bool Mob::hasBuff(const Items & p_item){
+	for (int i = 0; i < m_buffs.size(); i++)
+	{
+		if (m_buffs[i].m_buff == p_item)
+		{
+			return true;
+		}
+	}
+	return false;
 }

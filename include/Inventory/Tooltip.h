@@ -15,7 +15,7 @@ public:
 	Slot* slot;
 	std::string stats;
 	sf::Vector2i size;
-	sf::Sprite sprite;
+	sf::Sprite sprite, m_borders[4];
 	sf::Font font;
 	bool show;
 	void SetStats(Slot* slot);

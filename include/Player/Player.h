@@ -7,9 +7,9 @@
 
 #include <vector>
 
-#include "Item\ProjectileManager.h"
-#include "Item\Arrow.h"
-#include "Item\Spell.h"
+#include "Spells and Projectiles\ProjectileManager.h"
+#include "Spells and Projectiles\Arrow.h"
+#include "Spells and Projectiles\Spell.h"
 #include "ResourceHolders\TextureHolder.h"
 #include "ResourceHolders\FontHolder.h"
 #include "Animation\Animation.h"
@@ -58,6 +58,7 @@ public:
 
 	bool isInRange(Mob* ptr_mob);
 	void attack(const sf::RenderWindow & window, Attack p_attack);
+	void spell_attack(const Items & p_item, const sf::RenderWindow & p_window);
 
 	bool isPathing();
 
@@ -83,6 +84,8 @@ public:
 	sf::Vector2f m_velocity;
 
 	int m_health;
+
+	mobtree::Tree* ptr_tree;
 
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;

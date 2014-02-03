@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML\Graphics\Sprite.hpp>
+#include <SFML\Graphics\Text.hpp>
+#include <SFML\System\Time.hpp>
 #include <string>
 
 enum Items //sort by type
@@ -16,15 +18,16 @@ enum Items //sort by type
 	Bow,
 	Mace,
 	TestSpell,
+	TestAOE,
 	NOITEM,
 	end,
 };
 
 ///<summary>Strings that equate to the enum names.</summary>
-static const char* ItemNames[12] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Shield", "Sword", "Bow", "Mace", "Test_Spell"};
+static const char* ItemNames[13] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Shield", "Sword", "Bow", "Mace", "Test_Spell", "Test_AOE"};
 
 ///<summary>Strings for item names to display in tooltips, etc.</summary>
-static const char* w_ItemNames[12] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Shield", "Sword", "Bow", "Mace", "Test Spell"};
+static const char* w_ItemNames[13] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Shield", "Sword", "Bow", "Mace", "Test Spell", "Test_AOE"};
 
 enum eGearSlot{
 	lHand,
@@ -124,6 +127,9 @@ static itemType GetType(Items item){
 	case TestSpell:
 		return Gear;
 		break;
+	case TestAOE:
+		return Gear;
+		break;
 	default:
 		return Normal;
 		break;
@@ -142,6 +148,9 @@ static int GetDamage(Items item){
 		return 5;
 		break;
 	case TestSpell:
+		return 5;
+		break;
+	case TestAOE:
 		return 5;
 		break;
 	default:
@@ -236,6 +245,9 @@ static eGearSlot GetSlot(Items item){
 	case TestSpell:
 		return OneHand;
 		break;
+	case TestAOE:
+		return OneHand;
+		break;
 	default:
 		return NoSlot;
 		break;
@@ -247,6 +259,9 @@ static Items GetAmmo(const Items & p_item){
 	{
 	case Items::TestSpell:
 		return TestSpell;
+		break;
+	case TestAOE:
+		return TestAOE;
 		break;
 	case Items::Bow:
 		return Arrow;
@@ -294,52 +309,124 @@ static bool IsSpell(const Items & item){
 	case TestSpell:
 		return true;
 		break;
+	case TestAOE:
+		return true;
+		break;
 	default:
 		return false;
 		break;
 	}
 }
 
+namespace _AOE{
+	static float GetRadius(const Items & p_item){
+		if (IsSpell(p_item))
+		{
+			switch (p_item)
+			{
+			default:
+				return 121/2;
+				break;
+			}
+		}
+		return 0;
+	}
+
+	///<summary>Seconds.</summary>
+	static float GetDuration(const Items & p_item){
+		if (IsSpell(p_item))
+		{
+			switch (p_item)
+			{
+			default:
+				return 15;
+				break;
+			}
+		}
+		return 0;
+	}
+}
+
 eGearSlot;
 ///<summary>FORMAT: TYPE, case gear{GEAR SLOT, case weapon{DAMAGE, SPEED} case armor{ARMOR}} case misc{} case consumable{}</summary>
 static std::string GetStats(Items const& item, sf::Vector2i* size){
+	sf::Text text;
+	std::string stats = (std::string)w_ItemNames[item];
 	if (GetType(item) == itemType::Gear)
 	{
-		std::string stats = (std::string)w_ItemNames[item];
-		if (GetSlot(item) == eGearSlot::rHand || GetSlot(item) == eGearSlot::OneHand|| GetSlot(item) == eGearSlot::TwoHand)
+		if (GetSlot(item) == eGearSlot::rHand || GetSlot(item) == eGearSlot::lHand || GetSlot(item) == eGearSlot::OneHand|| GetSlot(item) == eGearSlot::TwoHand)
 		{
 			//weapon
 			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + std::to_string(GetSpeed(item));
-			stats.erase ( stats.find_last_not_of('0') + 1, std::string::npos );
-			size->x = 1;
-			size->y = 1;
+			stats.erase (stats.find_last_not_of('0') + 1, std::string::npos);
 		}else
 		{
 			//armor
 			stats += "\nArmor: " + std::to_string(GetArmor(item));
-			size->x = 1;
-			size->y = 1;
 		}
+		text.setString(stats);
+		size->x = text.getLocalBounds().width;
+		size->y = text.getLocalBounds().height;
 		return stats;
 	}else if (GetType(item) == itemType::Normal)
 	{
-		return (std::string)w_ItemNames[item] + "";
+		text.setString(stats);
+		size->x = text.getLocalBounds().width;
+		size->y = text.getLocalBounds().height;
+		return stats;
 	}
 }
 
-namespace spell{
-	static void update(const Items & p_item, sf::Vector2<float>* ptr_velocity){
+namespace buff{
+	struct Buff{
+		Buff(int* ptr_value, Items & p_buff);
+		Buff();
+		~Buff();
 
-	}
-	/*static void use(const Items & item, Mob* ptr_mob){
-	if (IsSpell(item))
-	{
-	switch (item)
-	{
-	default:
+		void update(sf::Time & p_dt);
 
-	break;
+		float m_duration;
+
+		///<summary>An id generated from the player class.</summary>
+		int ID;
+
+		int* ptr_value;
+		float m_interval;
+		Items m_buff;
+	};
+
+	///<summary>Seconds.</summary>
+	static float GetDuration(const Items & p_item){
+		switch (p_item)
+		{
+		default:
+			return 10.f;
+			break;
+		}
+		return 0.f;
 	}
+
+	///<summary>Seconds.</summary>
+	static float GetInterval(const Items & p_item){
+		switch (p_item)
+		{
+		default:
+			return 1.f;
+			break;
+		}
+		return 0.f;
 	}
-	}*/
+
+	static void execute(int* ptr_value, const Items & p_item){
+		switch (p_item)
+		{
+		default:
+			(*ptr_value) = 0;
+			break;
+		}
+	}
+
+	static Buff GetBuff(const Items & p_item){
+		return Buff(nullptr, (Items)p_item);
+	}
 }

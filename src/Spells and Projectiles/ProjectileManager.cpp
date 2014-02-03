@@ -1,4 +1,4 @@
-#include "Item\ProjectileManager.h"
+#include "Spells and Projectiles\ProjectileManager.h"
 
 ProjectileManager::ProjectileManager(){}
 ProjectileManager::ProjectileManager(MobManager* const& p_mobManager, ParticleSystem* const& p_particleSystem) : 
@@ -8,6 +8,32 @@ ProjectileManager::ProjectileManager(MobManager* const& p_mobManager, ParticleSy
 ProjectileManager::~ProjectileManager(){}
 
 void ProjectileManager::update(sf::Time & p_dt){
+	for (int i = 0; i < m_AOE_spells.size(); i++)
+	{
+		if (!m_AOE_spells[i].m_dead)
+		{
+			for (int l = 0; l < m_AOE_spells[i].m_branches.size(); l++)
+			{
+				for (int j = 0; j < m_AOE_spells[i].m_branches[l]->mobs.size(); j++)
+				{
+					if (math::distance(m_AOE_spells[i].m_branches[l]->mobs[j]->getPosition(), m_AOE_spells[i].getPosition()) <= m_AOE_spells[i].m_radius && !m_AOE_spells[i].m_branches[l]->mobs[j]->hasBuff(m_AOE_spells[i].m_spell_type))
+					{
+						m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.push_back(buff::GetBuff(m_AOE_spells[i].m_spell_type));
+						switch (m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.back().m_buff)
+						{
+						default:
+							m_AOE_spells[i].m_branches[l]->mobs[j]->m_buffs.back().ptr_value = &m_AOE_spells[i].m_branches[l]->mobs[j]->health;
+							break;
+						}
+					}
+				}
+			}
+			m_AOE_spells[i].update(p_dt);
+		}else
+		{
+			m_AOE_spells.erase(m_AOE_spells.begin() + i);
+		}
+	}
 	for (int i = 0; i < m_spells.size(); i++)
 	{
 		switch (m_spells[i].m_item)
@@ -57,6 +83,13 @@ void ProjectileManager::update(sf::Time & p_dt){
 }
 
 void ProjectileManager::draw(sf::RenderTarget & target, sf::RenderStates states)const{
+	for (int i = 0; i < m_AOE_spells.size(); i++)
+	{
+		if (!m_AOE_spells[i].m_dead)
+		{
+			m_AOE_spells[i].draw(target, states);
+		}
+	}
 	for (int i = 0; i < m_spells.size(); i++)
 	{
 		if (!m_spells[i].dead)
@@ -69,3 +102,15 @@ void ProjectileManager::draw(sf::RenderTarget & target, sf::RenderStates states)
 		m_arrows[i].draw(target, states);
 	}
 }
+
+namespace buff{
+	///<summary>Get the targeted variable.</summary>
+	static void GetTarget(Buff* ptr_buff, Mob* ptr_mob){
+		switch (ptr_buff->m_buff)
+		{
+		default:
+			ptr_buff->ptr_value = &ptr_mob->health;
+			break;
+		}
+	}
+};

@@ -1,7 +1,7 @@
 #pragma once
 #include "Map\Tile.h"
-#include "Item\Projectile.h"
-#include "ItemManager.h"
+#include "Spells and Projectiles\Projectile.h"
+#include "Item\ItemManager.h"
 #include "Effects\Lights\LightManager.h"
 #include "Effects\Particles\Emitter.h"
 #include "Effects\Particles\ParticleSystem.h"
@@ -25,5 +25,7 @@ namespace projectile{
 		void kill();
 		Light m_light;
 		sf::Vector2f m_position;
+		///<summary>An id generated from the player class.</summary>
+		int ID;
 	};
 };

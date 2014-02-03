@@ -14,15 +14,17 @@
 #include "Item\BaseItem.h"
 #include "Item\GearItem.h"
 #include "Item\MiscItem.h"
+#include "Item\ItemManager.h"
 #include "Mob\MobTypeManager.h"
 #include "Mob\DeadMob.h"
-#include "Item\Arrow.h"
+#include "Spells and Projectiles\Arrow.h"
 
 class Mob : public sf::Transformable, public sf::Drawable{
 public:
 	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health) = 0;
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 	virtual void takeDamage(int damage) = 0;
+	bool hasBuff(const Items & p_item);
 	bool IntersectsWall(sf::Rect<int> const& position, std::vector<std::vector<gen::Tile>> const& map);
 	void stop();
 	bool worldCollision, playerCollision, dead, aggro, t_update;
@@ -41,6 +43,7 @@ public:
 	sf::Vector2f prevPos;
 	
 	std::vector<sf::Sprite> m_arrows;
+	std::vector<buff::Buff> m_buffs;
 
 	std::vector<sf::Vector2i> path;
 	int ID, width, height, health;//, damage, aggroDist, armor, speed, attackSpeed;

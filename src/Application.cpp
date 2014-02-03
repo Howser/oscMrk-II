@@ -116,6 +116,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::InventorySlot, "resources/graphics/gui/inventorySlot.png");
 		mTextures.loadTexture(Textures::StackManager, "resources/graphics/gui/stackManager.png");
 		mTextures.loadTexture(Textures::Tooltip, "resources/graphics/gui/tooltip.png");
+		mTextures.loadTexture(Textures::Border, "resources/graphics/gui/border.png"); 
 		mTextures.loadTexture(Textures::DeleteItem, "resources/graphics/gui/deleteItem.png");
 		mTextures.loadTexture(Textures::PlayerOverlay, "resources/graphics/player/overlay.png");
 		mTextures.loadTexture(Textures::HealthFull, "resources/graphics/player/healthFull.png");
@@ -124,6 +125,10 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::Ability, "resources/graphics/player/ability.png");
 		mTextures.loadTexture(Textures::gui_Inventory, "resources/graphics/player/inventory.png");
 		mTextures.loadTexture(Textures::gui_LootInventory, "resources/graphics/player/loot_inventory.png");
+
+#pragma region Spells
+		mTextures.loadTexture(Textures::TestAoe, "resources/graphics/item/world/testAOE.png");
+#pragma endregion
 
 #pragma region Mob Textures
 		mTextures.loadTexture(Textures::TestMob, "resources/graphics/Mob/test.png");

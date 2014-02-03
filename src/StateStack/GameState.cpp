@@ -29,6 +29,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 
 	mCurrentType = gen::Cave;
 	mMap.type = mCurrentType;
+	mCurrentMapTexture = Textures::Cave_Sheet;
 	mView.zoom(1.f);
 
 	sf::Vector2u size = context.window->getSize();
@@ -253,5 +254,7 @@ void GameState::draw()
 
 void GameState::loadNormals()
 {
-	mNormalTextures.loadTexture(Textures::Tilesheet, "resources/graphics/map/normals.png");
+	mNormalTextures.loadTexture(Textures::Cave_Sheet, "resources/graphics/map/normals.png");
+	mNormalTextures.loadTexture(Textures::Prison_Sheet, "resources/graphics/map/tileset.png");
+	mNormalTextures.loadTexture(Textures::Hell_Sheet, "resources/graphics/map/tileset.png");
 }

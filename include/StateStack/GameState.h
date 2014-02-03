@@ -62,4 +62,6 @@ private:
 	sf::Mutex				mMutex;
 
 	bool					mFirstLoad;
+
+	Textures::ID			mCurrentMapTexture;
 };

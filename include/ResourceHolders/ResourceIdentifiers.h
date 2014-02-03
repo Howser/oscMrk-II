@@ -5,7 +5,9 @@ namespace Textures
 {
 	enum ID
 	{
-		Tilesheet,
+		Prison_Sheet,
+		Cave_Sheet,
+		Hell_Sheet,
 		Mini_Map_sheet,
 		Titlescreen,
 		Button,

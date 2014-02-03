@@ -45,6 +45,7 @@ namespace gen{
 		void SetBounds();
 		void update(sf::Time dt);
 		void draw_mini_map(sf::RenderWindow* ptr_window, int x, int y);
+		void draw_walls(sf::RenderTarget* target, sf::RenderStates states);
 
 		///<summary>Map size.</summary>
 		sf::Vector2i size;
@@ -96,5 +97,8 @@ namespace gen{
 
 		sf::Sprite m_mini_map_sprite;
 		sf::RectangleShape m_mini_map_player;
+
+		///<summary> DIS IS ONLY FOR RENDER TO MAEK BEAUTIFUL </summary>
+		std::vector<Tile> m_wall_tiles;
 	};
 }

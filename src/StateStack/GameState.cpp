@@ -31,6 +31,7 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 
 	mCurrentType = gen::Cave;
 	mMap.type = mCurrentType;
+	mCurrentMapTexture = Textures::Cave_Sheet;
 	mView.zoom(1.f);
 	mView.setCenter(-mView.getSize().x, -mView.getSize().y);
 
@@ -204,17 +205,26 @@ void GameState::draw()
 		mMap.SetBounds();
 		mDiffuseRender.draw(mMap);
 
-		// Mobs and player
+		// PROJECCASTE
 		mDiffuseRender.draw(m_projectile_manager);
+
+		// Walls for the map so that the spells can be under it
+		mMap.draw_walls(&mDiffuseRender, sf::RenderStates());
+		
+		// Mobs and player
 		mDiffuseRender.draw(mobManager);
 		mDiffuseRender.draw(mPlayer);
+
+		// Particle
 		mDiffuseRender.draw(mParticleSystem);
+
 		mDiffuseRender.display();
 
 		// Render normals to the normal map
 		mNormalRender.clear();
 		mNormalRender.setView(mView);
-		mNormalRender.draw(mMap, mNormalTextures.getTexture(Textures::Tilesheet));
+		mNormalRender.draw(mMap, mNormalTextures.getTexture(mCurrentMapTexture));
+		mMap.draw_walls(&mNormalRender, mNormalTextures.getTexture(mCurrentMapTexture));
 		mNormalRender.display();
 
 		// Render diffuse texture to window using shader with normal map
@@ -256,5 +266,7 @@ void GameState::draw()
 
 void GameState::loadNormals()
 {
-	mNormalTextures.loadTexture(Textures::Tilesheet, "resources/graphics/map/normals.png");
+	mNormalTextures.loadTexture(Textures::Cave_Sheet, "resources/graphics/map/normals.png");
+	mNormalTextures.loadTexture(Textures::Prison_Sheet, "resources/graphics/map/tileset.png");
+	mNormalTextures.loadTexture(Textures::Hell_Sheet, "resources/graphics/map/tileset.png");
 }

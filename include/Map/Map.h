@@ -45,6 +45,7 @@ namespace gen{
 		void SetBounds();
 		void update(sf::Time dt);
 		void draw_mini_map(sf::RenderWindow* ptr_window, int x, int y);
+		void draw_walls(sf::RenderTarget* target, sf::RenderStates states);
 
 		///<summary>Map size.</summary>
 		sf::Vector2i size;
@@ -52,6 +53,9 @@ namespace gen{
 		bool loaded;    // If false the map will be regenerated
 		bool generating;
 		gen::Type type; // This needs to be set to the right map before Gen() get's called
+
+		///<summary>For rendering purposes only. This does not affect collisions or any other gameplay aspect in any way.</summary>
+		std::vector<Tile> m_wall_tiles;
 
 	private:
 		void Path(Room* from, Room* to);

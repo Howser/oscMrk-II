@@ -325,7 +325,7 @@ namespace _AOE{
 			switch (p_item)
 			{
 			default:
-				return 121/2;
+				return 242/2;
 				break;
 			}
 		}
@@ -339,7 +339,7 @@ namespace _AOE{
 			switch (p_item)
 			{
 			default:
-				return 15;
+				return .25f;
 				break;
 			}
 		}
@@ -400,7 +400,7 @@ namespace buff{
 		switch (p_item)
 		{
 		default:
-			return 10.f;
+			return 9.f;
 			break;
 		}
 		return 0.f;
@@ -411,7 +411,7 @@ namespace buff{
 		switch (p_item)
 		{
 		default:
-			return 1.f;
+			return 3.f;
 			break;
 		}
 		return 0.f;

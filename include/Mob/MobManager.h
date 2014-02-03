@@ -69,10 +69,10 @@ public:
 	TextureHolder* textures;
 	sf::Vector2<float> playerPosition;
 
+	bool m_update;
+
 private:
 	PathFinder* pathFinder;
-
-	bool update(int const& id);
 };
 
 /*	   '.'´`\/´`'.'

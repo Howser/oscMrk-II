@@ -23,7 +23,7 @@ void PathFinder::GetMap(std::vector<std::vector<gen::Tile>>* map){
 			node.x = x;
 			node.y = y;
 			node.id = (*map)[x][y].type;
- 			nodes.push_back(node);
+			nodes.push_back(node);
 		}
 	}
 }
@@ -55,15 +55,21 @@ void PathFinder::CalculateHGF(Node* node, Node* destination){
 }
 
 int PathFinder::GetLowestFOpen(){
-	unsigned int low = open[0];
-	for (unsigned int i = 0; i < open.size(); i++)
+	if (!open.empty())
 	{
-		if (nodes[open[i]].F < nodes[low].F)
+		unsigned int low = open[0];
+		for (unsigned int i = 0; i < open.size(); i++)
 		{
-			low = open[i];
+			if (nodes[open[i]].F < nodes[low].F)
+			{
+				low = open[i];
+			}
 		}
+		return low;
+	}else
+	{
+		return 0;
 	}
-	return low;
 }
 
 int PathFinder::GetIndexOf(Node* node){

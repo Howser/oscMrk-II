@@ -110,10 +110,12 @@ bool GameState::update(sf::Time dt)
 			mobManager.mobs.clear();
 			mobManager.minorMobs.clear();
 			mobManager.majorMobs.clear();
+			mobManager.deadMobs.clear();
 			m_light_manager.m_lights.clear();
 			mMap.mobSpawners.clear();
 			mPlayer.m_path.clear();
 			pathFinder.Clear();
+			mobManager.m_update = false;
 			std::cout << "Started map gen" << std::endl;
 		}
 		else if (!mMap.generating && mMap.loaded)
@@ -132,15 +134,10 @@ bool GameState::update(sf::Time dt)
 			}
 			for (unsigned int i = 0; i < mMap. mobSpawners.size(); i++)
 			{
-				if (mMap.mobSpawners[i].amount > 0 || mMap.mobSpawners[i].s_amount > 0)
+				if (mMap.mobSpawners[i].amount + mMap.mobSpawners[i].s_amount > 0)
 				{
 					sf::Vector2f pos(mMap.mobSpawners[i].x*WIDTH, mMap.mobSpawners[i].y*HEIGHT);
-					if (math::distance(mPlayer.getPosition(), pos) < mapSize.x*WIDTH*2)
-					{
-						mMap.mobSpawners[i].SpawnMobs(&mobManager, mobManager.textures);
-						mMap.mobSpawners[i].amount = 0;
-						mMap.mobSpawners.erase(mMap.mobSpawners.begin() + i);
-					}
+					mMap.mobSpawners[i].SpawnMobs(&mobManager, mobManager.textures);
 				}
 			}
 			mMap.mobSpawners.clear();
@@ -155,7 +152,7 @@ bool GameState::update(sf::Time dt)
 				mobManager.mobs.push_back(&mobManager.majorMobs[i]);
 			}
 			mobManager.Build_Tree();
-
+			
 			pathFinder.mapSize = mMap.size;
 			pathFinder.GetMap(&mMap.tiles);
 
@@ -163,6 +160,7 @@ bool GameState::update(sf::Time dt)
 			m_light_manager.m_lights.push_back(l1);
 
 		}
+		mobManager.m_update = true;
 		mMutex.unlock();
 	}
 	return false;

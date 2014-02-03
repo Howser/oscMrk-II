@@ -2,6 +2,11 @@
 
 using namespace mobtree;
 
+Tree::Tree(){
+	m_branches.clear();
+	m_size = sf::Vector2<int>(0, 0);
+}
+
 void Tree::build(std::vector<std::vector<gen::Tile*>> tiles, std::vector<Mob*> mobs){
 	m_size.x = tiles.size()/SIZE;
 	m_size.y = tiles.back().size()/SIZE;

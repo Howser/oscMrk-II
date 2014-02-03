@@ -4,14 +4,15 @@
 gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* mobManager, LightManager* ptr_light_manager, sf::Mutex& mutex)
 	:
 	font(*fontHolder->getFont(Fonts::Main)),
-	tileset(*textureHolder->getTexture(Textures::Tilesheet)),
+	tileset(*textureHolder->getTexture(Textures::Cave_Sheet)),
 	m_mini_tileset(*textureHolder->getTexture(Textures::Mini_Map_sheet)),
 	mobManagerPtr(mobManager),
 	ptr_texture_holder(textureHolder),
 	ptr_light_manager(ptr_light_manager),
 	loaded(false),
 	generating(false),
-	m_mutex(mutex)
+	m_mutex(mutex),
+	m_wall_tiles()
 {
 	m_mini_map_sprite.setTexture(m_mini_tileset);
 	m_mini_map_sprite.setColor(sf::Color(255, 255, 255, 100));
@@ -33,6 +34,8 @@ void gen::Map::Gen(){
 	tiles.clear();
 	rooms.clear();
 	tiles.resize(mapWidth, std::vector<Tile>(mapHeight, Tile()));
+
+
 	for (int x = 0; x < mapWidth; x++)
 	{
 		for (int y = 0; y < mapHeight; y++)
@@ -644,12 +647,14 @@ void gen::Map::Resize(){
 	size.x = highX - lowX;
 	size.y = highY - lowY;
 	std::vector<std::vector<Tile>> temp;
+
 	try {
 		temp.resize(size.x, std::vector<Tile>(size.y, Tile()));
 	}
 	catch (std::length_error e){
 		std::cout << e.what() << std::endl;
 	}
+
 	for (unsigned int x = lowX, y = lowY; x < highX; x++)
 	{
 		for (y = lowY; y < highY; y++)
@@ -657,8 +662,12 @@ void gen::Map::Resize(){
 			temp[x - lowX][y - lowY] = tiles[x][y];
 			temp[x - lowX][y - lowY].x -= lowX;
 			temp[x - lowX][y - lowY].y -= lowY;
+			if (tiles[x][y].type == 2 || tiles[x][y].type == 3){
+				m_wall_tiles.push_back(temp[x - lowX][y - lowY]);
+			}
 		}
 	}
+
 	if (rooms.size() > 0)
 	{
 		for (unsigned int i = 0; i < rooms.size(); i++)
@@ -683,6 +692,7 @@ void gen::Map::Resize(){
 		}
 	}
 	tiles = temp;
+
 }
 
 void gen::Map::ApplyID(){
@@ -838,7 +848,7 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 		{
 			if (x < size.x && x >= 0 && y < size.y && y >= 0)
 			{
-				if (tiles[x][y].type != 0)
+				if (tiles[x][y].type == 1)
 				{
 					sprite.setTextureRect(sf::Rect<int>(tiles[x][y].ID*WIDTH, 0*HEIGHT, WIDTH, HEIGHT));
 					sprite.setPosition(x*WIDTH, y*HEIGHT);
@@ -847,42 +857,6 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 			}
 		}
 	}
-
-	/*sf::Text text;
-	text.setFont(font);
-	text.setColor(sf::Color::Black);*/
-	/*for (unsigned int i = 0; i < rooms.size(); i++)
-	{
-	text.setPosition((float)rooms[i].x*WIDTH + (rooms[i].width/2)*WIDTH, (float)rooms[i].y*HEIGHT + (rooms[i].height/2)*HEIGHT);
-	text.setString(std::to_string(i));
-	if (rooms[i].mobs > 0)
-	{
-	if (255 - rooms[i].mobs*35 > -1)
-	{
-	text.setColor(sf::Color(255, 255 - rooms[i].mobs*35, 255 - rooms[i].mobs*35));
-	}else
-	{
-	text.setColor(sf::Color(255, 0, 0));
-	}
-	}
-	target.draw(text);
-	}*/
-	/*for (unsigned int i = 0; i < mobSpawners.size(); i++)
-	{
-	text.setPosition((float)mobSpawners[i].x*WIDTH , (float)mobSpawners[i].y*HEIGHT);
-	text.setString(std::to_string(mobSpawners[i].amount));
-	if (mobSpawners[i].amount > 0)
-	{
-	if (255 - mobSpawners[i].amount*35 > -1)
-	{
-	text.setColor(sf::Color(255, 255 - mobSpawners[i].amount*35, 255 - mobSpawners[i].amount*35));
-	}else
-	{
-	text.setColor(sf::Color(255, 0, 0));
-	}
-	}
-	target.draw(text);
-	}*/
 }
 
 void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
@@ -902,6 +876,22 @@ void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
 		}
 	}
 	ptr_window->draw(m_mini_map_player);
+}
+
+void gen::Map::draw_walls(sf::RenderTarget* target, sf::RenderStates states)
+{
+	sf::Sprite sprite;
+	if (states.texture == nullptr) {
+		sprite.setTexture(tileset);
+	} else {
+		sprite.setTexture(*states.texture);
+	}
+
+	for (auto i = m_wall_tiles.begin(); i != m_wall_tiles.end(); ++i){
+		sprite.setTextureRect(sf::Rect<int>(i->ID * WIDTH, 0, WIDTH, HEIGHT));
+		sprite.setPosition(i->x * WIDTH, i->y * HEIGHT);
+		target->draw(sprite);
+	}
 }
 
 bool gen::Map::isPathable(int x, int y) const

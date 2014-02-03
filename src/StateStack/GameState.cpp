@@ -205,17 +205,26 @@ void GameState::draw()
 		mMap.SetBounds();
 		mDiffuseRender.draw(mMap);
 
-		// Mobs and player
+		// PROJECCASTE
 		mDiffuseRender.draw(m_projectile_manager);
+
+		// Walls for the map so that the spells can be under it
+		mMap.draw_walls(&mDiffuseRender, sf::RenderStates());
+		
+		// Mobs and player
 		mDiffuseRender.draw(mobManager);
 		mDiffuseRender.draw(mPlayer);
+
+		// Particle
 		mDiffuseRender.draw(mParticleSystem);
+
 		mDiffuseRender.display();
 
 		// Render normals to the normal map
 		mNormalRender.clear();
 		mNormalRender.setView(mView);
-		mNormalRender.draw(mMap, mNormalTextures.getTexture(Textures::Tilesheet));
+		mNormalRender.draw(mMap, mNormalTextures.getTexture(mCurrentMapTexture));
+		mMap.draw_walls(&mNormalRender, mNormalTextures.getTexture(mCurrentMapTexture));
 		mNormalRender.display();
 
 		// Render diffuse texture to window using shader with normal map

@@ -24,13 +24,20 @@ AOE::AOE(Items p_spell_type, float p_radius, float p_timer, const sf::Vector2f &
 			}
 		}
 	}
+
+	m_color = sf::Color(255, 255, 255, 0);
 }
 
 AOE::~AOE(){}
 
 void AOE::update(sf::Time & p_dt){
+	m_sprite.setColor(m_color);
 	if (!m_dead)
 	{
+		if (m_color.a < 255)
+		{
+			m_color.a += (m_color.a + 255/10 <= 255) ? 255/10:255-m_color.a;
+		}
 		m_timer -= p_dt.asSeconds();
 		if (m_timer <= 0)
 		{

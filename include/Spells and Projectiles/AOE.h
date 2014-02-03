@@ -18,6 +18,7 @@ public:
 	bool m_dead;
 	Items m_spell_type;
 	sf::Sprite m_sprite;
+	sf::Color m_color;
 
 	///<summary>A vector of branches to check for mobs that are within the radius of the AOE spell.</summary>
 	std::vector<mobtree::Branch*> m_branches;

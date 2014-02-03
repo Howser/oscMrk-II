@@ -9,7 +9,8 @@ ProjectileManager::~ProjectileManager(){}
 
 void ProjectileManager::update(sf::Time & p_dt){
 	for (int i = 0; i < m_AOE_spells.size(); i++)
-	{
+	{   
+		m_AOE_spells[i].update(p_dt);
 		if (!m_AOE_spells[i].m_dead)
 		{
 			for (int l = 0; l < m_AOE_spells[i].m_branches.size(); l++)
@@ -28,10 +29,15 @@ void ProjectileManager::update(sf::Time & p_dt){
 					}
 				}
 			}
-			m_AOE_spells[i].update(p_dt);
 		}else
 		{
-			m_AOE_spells.erase(m_AOE_spells.begin() + i);
+			if (m_AOE_spells[i].m_color.a <= 10)
+			{
+				m_AOE_spells.erase(m_AOE_spells.begin() + i);
+			}else
+			{
+				m_AOE_spells[i].m_color.a *= 0.9f;
+			}
 		}
 	}
 	for (int i = 0; i < m_spells.size(); i++)
@@ -52,9 +58,6 @@ void ProjectileManager::update(sf::Time & p_dt){
 			{
 				m_spells[i].kill();
 				m_spells[i].m_light.color.a *= 0.9f;
-				m_spells[i].m_light.color.r *= 0.9f;
-				m_spells[i].m_light.color.g *= 0.9f;
-				m_spells[i].m_light.color.b *= 0.9f;
 				if (m_spells[i].m_light.color.a <= 1)
 					m_spells.erase(m_spells.begin() + i);
 			}
@@ -85,10 +88,7 @@ void ProjectileManager::update(sf::Time & p_dt){
 void ProjectileManager::draw(sf::RenderTarget & target, sf::RenderStates states)const{
 	for (int i = 0; i < m_AOE_spells.size(); i++)
 	{
-		if (!m_AOE_spells[i].m_dead)
-		{
-			m_AOE_spells[i].draw(target, states);
-		}
+		m_AOE_spells[i].draw(target, states);
 	}
 	for (int i = 0; i < m_spells.size(); i++)
 	{

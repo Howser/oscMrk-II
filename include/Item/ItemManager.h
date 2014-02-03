@@ -13,10 +13,7 @@ enum Items //sort by type
 	Armor_Destruction,
 	Armor_Darkness,
 	Armor_Chaos,
-	Shield,
-	Sword,
 	Bow,
-	Mace,
 	TestSpell,
 	TestAOE,
 	NOITEM,
@@ -24,10 +21,10 @@ enum Items //sort by type
 };
 
 ///<summary>Strings that equate to the enum names.</summary>
-static const char* ItemNames[13] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Shield", "Sword", "Bow", "Mace", "Test_Spell", "Test_AOE"};
+static const char* ItemNames[10] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Bow", "Test_Spell", "Test_AOE"};
 
 ///<summary>Strings for item names to display in tooltips, etc.</summary>
-static const char* w_ItemNames[13] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Shield", "Sword", "Bow", "Mace", "Test Spell", "Test_AOE"};
+static const char* w_ItemNames[10] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Bow", "Test Spell", "Test AOE"};
 
 enum eGearSlot{
 	lHand,
@@ -67,16 +64,7 @@ static int StackSize(Items const& item){
 	case Armor_Destruction:
 		return 1;
 		break;
-	case Shield:
-		return 1;
-		break;
-	case Sword:
-		return 1;
-		break;
 	case Bow:
-		return 1;
-		break;
-	case Mace:
 		return 1;
 		break;
 	case TestSpell:
@@ -112,16 +100,7 @@ static itemType GetType(Items item){
 	case Armor_Destruction:
 		return Gear;
 		break;
-	case Shield:
-		return Gear;
-		break;
-	case Sword:
-		return Gear;
-		break;
 	case Bow:
-		return Gear;
-		break;
-	case Mace:
 		return Gear;
 		break;
 	case TestSpell:
@@ -139,11 +118,6 @@ static itemType GetType(Items item){
 static int GetDamage(Items item){
 	switch (item)
 	{
-	case Sword:
-		return 5;
-	case Mace:
-		return 5;
-		break;
 	case Bow:
 		return 5;
 		break;
@@ -162,11 +136,6 @@ static int GetDamage(Items item){
 static float GetSpeed(Items item){
 	switch (item)
 	{
-	case Sword:
-		return 0.5f;
-	case Mace:
-		return 1.f;
-		break;
 	case Bow:
 		return 0.4f;
 		break;
@@ -200,9 +169,6 @@ static int GetArmor(Items item){
 	case Armor_Destruction:
 		return 1;
 		break;
-	case Shield:
-		return 5;
-		break;
 	default:
 		return 0;
 		break;
@@ -230,16 +196,7 @@ static eGearSlot GetSlot(Items item){
 	case Armor_Destruction:
 		return Armor;
 		break;
-	case Shield:
-		return lHand;
-		break;
-	case Sword:
-		return rHand;
-		break;
 	case Bow:
-		return TwoHand;
-		break;
-	case Mace:
 		return TwoHand;
 		break;
 	case TestSpell:
@@ -294,16 +251,7 @@ static bool IsSpell(const Items & item){
 	case Armor_Destruction:
 		return false;
 		break;
-	case Shield:
-		return false;
-		break;
-	case Sword:
-		return false;
-		break;
 	case Bow:
-		return false;
-		break;
-	case Mace:
 		return false;
 		break;
 	case TestSpell:

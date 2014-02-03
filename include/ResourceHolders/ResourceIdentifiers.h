@@ -37,10 +37,7 @@ namespace Textures
 		Armor_Destruction,
 		Armor_Darkness,
 		Armor_Chaos,
-		Shield,
-		Sword,
 		Bow,
-		Mace,
 
 		///<summary>Spells.</summary>
 		TestAoe,
@@ -53,10 +50,7 @@ namespace Textures
 		d_Armor_Destruction,
 		d_Armor_Darkness,
 		d_Armor_Chaos,
-		d_Shield,
-		d_Sword,
 		d_Bow,
-		d_Mace,
 	};
 }
 

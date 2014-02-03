@@ -38,9 +38,6 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_overlay.setTexture(*(textures->getTexture(Textures::PlayerOverlay)));
 	m_mouseSlot.fontPtr = fonts->getFont(Fonts::Main);
 	setOrigin(16, 16);
-	m_inventory.slots[0][0].Items.push_back(GearItem(Items::Sword, *textures, -1));
-	m_inventory.slots[1][0].Items.push_back(GearItem(Items::Shield, *textures, -1));
-	m_inventory.slots[2][0].Items.push_back(GearItem(Items::Mace, *textures, -1));
 	m_inventory.slots[3][0].Items.push_back(GearItem(Items::Bow, *textures, -1));
 	for (int i = 0; i < 20; i++)
 	{

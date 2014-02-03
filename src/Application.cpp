@@ -143,10 +143,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::Armor_Destruction, "resources/graphics/item/inv/armor_destruction.png");
 		mTextures.loadTexture(Textures::Armor_Darkness, "resources/graphics/item/inv/armor_darkness.png");
 		mTextures.loadTexture(Textures::Armor_Chaos, "resources/graphics/item/inv/armor_chaos.png");
-		mTextures.loadTexture(Textures::Shield, "resources/graphics/item/inv/test.png");
-		mTextures.loadTexture(Textures::Sword, "resources/graphics/item/inv/sword.png");
 		mTextures.loadTexture(Textures::Bow, "resources/graphics/item/inv/bow.png");
-		mTextures.loadTexture(Textures::Mace, "resources/graphics/item/inv/mace.png");
 
 		mTextures.loadTexture(Textures::d_Arrow, "resources/graphics/item/world/arrow.png");
 		mTextures.loadTexture(Textures::d_Helmet_Destruction, "resources/graphics/item/world/test.png");
@@ -155,10 +152,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::d_Armor_Destruction, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Armor_Darkness, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Armor_Chaos, "resources/graphics/item/world/armor_chaos.png");
-		mTextures.loadTexture(Textures::d_Shield, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Sword, "resources/graphics/item/world/test.png");
 		mTextures.loadTexture(Textures::d_Bow, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Mace, "resources/graphics/item/world/test.png");
 #pragma endregion
 
 		// Fonts

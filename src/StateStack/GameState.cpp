@@ -113,6 +113,7 @@ bool GameState::update(sf::Time dt)
 			mobManager.majorMobs.clear();
 			m_light_manager.m_lights.clear();
 			mMap.mobSpawners.clear();
+			mMap.m_wall_tiles.clear();
 			mPlayer.m_path.clear();
 			pathFinder.Clear();
 			std::cout << "Started map gen" << std::endl;

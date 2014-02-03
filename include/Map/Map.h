@@ -54,6 +54,9 @@ namespace gen{
 		bool generating;
 		gen::Type type; // This needs to be set to the right map before Gen() get's called
 
+		///<summary>For rendering purposes only. This does not affect collisions or any other gameplay aspect in any way.</summary>
+		std::vector<Tile> m_wall_tiles;
+
 	private:
 		void Path(Room* from, Room* to);
 
@@ -97,8 +100,5 @@ namespace gen{
 
 		sf::Sprite m_mini_map_sprite;
 		sf::RectangleShape m_mini_map_player;
-
-		///<summary> DIS IS ONLY FOR RENDER TO MAEK BEAUTIFUL </summary>
-		std::vector<Tile> m_wall_tiles;
 	};
 }

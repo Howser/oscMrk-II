@@ -46,4 +46,6 @@ private:
 	sf::Text				mFrameCountText;
 
 	gui::Mouse				mMouse;
+
+	bool					mFocused;
 };

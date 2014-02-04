@@ -11,7 +11,8 @@ Application::Application()
 	mStateStack(State::Context(mWindow, mTextures, mFonts, mMouse)),
 	mFrameCount(0),
 	mFrameTimer(),
-	mFrameCountText()
+	mFrameCountText(),
+	mFocused(true)
 {
 	mWindow.setMouseCursorVisible(false);
 	mWindow.setVerticalSyncEnabled(true);
@@ -47,7 +48,8 @@ void Application::run()
 
 void Application::update(sf::Time dt)
 {
-	mStateStack.update(dt);
+	if (mFocused)
+		mStateStack.update(dt);
 	if (mStateStack.isEmpty())
 	{
 		mWindow.close();
@@ -73,6 +75,12 @@ void Application::handleEvents()
 		{
 			mWindow.close();
 		}
+		if (e.type == sf::Event::GainedFocus){
+			mFocused = true;
+		} else if (e.type == sf::Event::LostFocus) {
+			mFocused = false;
+		}
+
 		mStateStack.handleEvent(e);
 		mMouse.handleEvent(e);
 	}

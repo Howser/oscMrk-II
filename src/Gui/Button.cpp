@@ -3,7 +3,9 @@
 #include <SFML\Graphics\RenderTarget.hpp>
 #include <SFML\Graphics\RenderStates.hpp>
 
-gui::Button::Button(sf::Texture* texture, sf::Font* font)
+#include <SFML\Window\Event.hpp>
+
+gui::Button::Button(sf::Texture* texture, sf::Font* font, bool fade)
 	:
 	mTexture(texture),
 	mText(),
@@ -14,6 +16,9 @@ gui::Button::Button(sf::Texture* texture, sf::Font* font)
 	mText.setCharacterSize(22);
 	deactivate();
 	mText.setColor(sf::Color::Black);
+
+	if (fade)
+		mSprite.setColor(sf::Color(255, 255, 255, 0));
 }
 
 gui::Button::~Button()
@@ -44,7 +49,38 @@ void gui::Button::activate()
 
 void gui::Button::handleEvent(sf::Event const& event)
 {
+	if (event.type == sf::Event::MouseButtonPressed)
+	{
+		if (event.mouseButton.button == sf::Mouse::Button::Left)
+		{
+			int x = event.mouseButton.x;
+			int y = event.mouseButton.y;
 
+			if (x > getPosition().x && x <= getPosition().x + mSprite.getLocalBounds().width &&
+				y > getPosition().y && y <= getPosition().y + mSprite.getLocalBounds().height
+				)
+			{
+				activate();
+			}
+		}
+	}
+
+	if (event.type == sf::Event::MouseMoved)
+	{
+		int x = event.mouseMove.x;
+		int y = event.mouseMove.y;
+
+		if (x > getPosition().x && x <= getPosition().x + mSprite.getLocalBounds().width &&
+			y > getPosition().y && y <= getPosition().y + mSprite.getLocalBounds().height
+			)
+		{
+			select();
+		}
+		else 
+		{
+			deselect();
+		}
+	}
 }
 
 void gui::Button::setAction(std::function<void()> const& action) 
@@ -56,6 +92,16 @@ void gui::Button::select()
 {
 	Component::select();
 	mText.setColor(sf::Color::White);
+}
+
+bool gui::Button::fade_in()
+{
+	sf::Color c = mSprite.getColor();
+	c.a += 5;
+	
+	mSprite.setColor(c);
+
+	return c.a >= 255;
 }
 
 void gui::Button::deselect()

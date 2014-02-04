@@ -95,7 +95,6 @@ void Application::registerStates()
 	mStateStack.registerState<TitleState>(States::Title);
 	mStateStack.registerState<MenuState>(States::Menu);
 	mStateStack.registerState<GameState>(States::Game);
-	mStateStack.registerState<InventoryState>(States::Inventory);
 	mStateStack.pushState(States::Title);
 }
 

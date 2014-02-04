@@ -17,5 +17,12 @@ class MenuState : public State
 		bool					handleEvents(const sf::Event& event);
 
 	private:
-		gui::Container			mButtonContainer;
+		gui::Button				m_play_button;
+		gui::Button				m_exit_button;
+
+		sf::Sprite				m_background;
+
+		bool					m_background_move;
+		bool					m_button_fade;
+
 };

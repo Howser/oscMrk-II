@@ -12,7 +12,7 @@ namespace gui
 	class Button : public Component
 	{
 		public:
-									Button(sf::Texture* texture, sf::Font* font);
+									Button(sf::Texture* texture, sf::Font* font, bool fade = true);
 			virtual					~Button();
 
 			bool					isSelectable() const; // Returns true
@@ -27,6 +27,8 @@ namespace gui
 			
 			virtual void			select();
 			virtual void			deselect();
+
+			bool					fade_in();
 
 		private:
 			virtual void			draw(sf::RenderTarget& target, sf::RenderStates states) const;

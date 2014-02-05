@@ -3,7 +3,6 @@
 #include "GeneralMath.h"
 
 template <typename T>
-float math::distance(sf::Vector2<T> const& a, sf::Vector2<T> const& b){
-	sf::Vector2<T> C = sf::Vector2<T>(b.x, a.y);
-	return (float)std::sqrt((((C.x - a.x) * (C.x - a.x)) + ((C.y - b.y) * (C.y - b.y))));
+float math::distance(sf::Vector2<T> const& lhs, sf::Vector2<T> const& rhs){
+	return (float)std::sqrt(std::pow(std::abs(rhs.x - lhs.x), 2) + std::pow(std::abs(lhs.y - rhs.y), 2));
 }

@@ -399,7 +399,7 @@ void gen::Map::ApplyRoom(Room* room, bool* add, bool* cave){
 						int chance = math::random(0, 20);
 						if (chance >= 15)
 						{
-							tiles[x][y].type = 2;
+							//tiles[x][y].type = 2;
 							room->radius--;
 							i++;
 						}
@@ -409,7 +409,7 @@ void gen::Map::ApplyRoom(Room* room, bool* add, bool* cave){
 						int chance = math::random(0, 20);
 						if (chance >= 15)
 						{
-							tiles[x][y].type = 2;
+							//tiles[x][y].type = 2;
 							room->radius--;
 							i++;
 						}
@@ -652,7 +652,7 @@ void gen::Map::Resize(){
 		temp.resize(size.x, std::vector<Tile>(size.y, Tile()));
 	}
 	catch (std::length_error e){
-		std::cout << e.what() << std::endl;
+		std::cout << e.what() << std::endl;//<---- O.o
 	}
 
 	for (unsigned int x = lowX, y = lowY; x < highX; x++)
@@ -692,7 +692,6 @@ void gen::Map::Resize(){
 		}
 	}
 	tiles = temp;
-
 }
 
 void gen::Map::ApplyID(){
@@ -886,11 +885,15 @@ void gen::Map::draw_walls(sf::RenderTarget* target, sf::RenderStates states)
 	} else {
 		sprite.setTexture(*states.texture);
 	}
-
+	
+	sf::Rect<int> window = sf::Rect<int>(target->getView().getCenter().x - 640, target->getView().getCenter().y - 360, 1280, 720);
 	for (auto i = m_wall_tiles.begin(); i != m_wall_tiles.end(); ++i){
-		sprite.setTextureRect(sf::Rect<int>(i->ID * WIDTH, 0, WIDTH, HEIGHT));
-		sprite.setPosition(i->x * WIDTH, i->y * HEIGHT);
-		target->draw(sprite);
+		if (sf::Rect<int>(i->x*WIDTH, i->y*HEIGHT, WIDTH, HEIGHT).intersects(window))
+		{
+			sprite.setPosition(i->x * WIDTH, i->y * HEIGHT);
+			sprite.setTextureRect(sf::Rect<int>(i->ID * WIDTH, 0, WIDTH, HEIGHT));
+			target->draw(sprite);
+		}
 	}
 }
 

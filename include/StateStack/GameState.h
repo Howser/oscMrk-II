@@ -53,8 +53,7 @@ private:
 
 	PlayerController		mPlayerController;
 	Player					mPlayer;
-	
-	float					mSpawnRadius;
+
 	bool					mLoading;
 	sf::Sprite				mLoadingSprite;
 	sf::Thread				mLoadingThread;

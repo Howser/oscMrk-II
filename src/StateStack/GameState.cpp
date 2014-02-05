@@ -42,8 +42,12 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mShader.loadFromFile("resources/shaders/shader.frag", sf::Shader::Fragment);
 	loadNormals();
 
-	mSpawnRadius = std::sqrtf((float)std::pow(size.x/2, 2) + (float)std::pow(size.y/2, 2));
 	context.mouse->setState(gui::Mouse::Attack);
+
+	mShader.setParameter("texture", sf::Shader::CurrentTexture);
+	mShader.setParameter("normal", mNormalRender.getTexture());
+	mShader.setParameter("Resolution", getContext().window->getSize().x,  getContext().window->getSize().y);
+	mShader.setParameter("AmbientColor", .1f, .1f, .1f, 0.f);
 }
 
 GameState::~GameState()
@@ -154,7 +158,7 @@ bool GameState::update(sf::Time dt)
 				mobManager.mobs.push_back(&mobManager.majorMobs[i]);
 			}
 			mobManager.Build_Tree();
-			
+
 			pathFinder.mapSize = mMap.size;
 			pathFinder.GetMap(&mMap.tiles);
 
@@ -209,7 +213,7 @@ void GameState::draw()
 
 		// Walls for the map so that the spells can be under it
 		mMap.draw_walls(&mDiffuseRender, sf::RenderStates());
-		
+
 		// Mobs and player
 		mDiffuseRender.draw(mobManager);
 		mDiffuseRender.draw(mPlayer);
@@ -228,11 +232,6 @@ void GameState::draw()
 
 		// Render diffuse texture to window using shader with normal map
 		// Set the all the shader properties
-
-		mShader.setParameter("texture", sf::Shader::CurrentTexture);
-		mShader.setParameter("normal", mNormalRender.getTexture());
-		mShader.setParameter("Resolution", window->getSize().x,  window->getSize().y);
-		mShader.setParameter("AmbientColor", .1f, .1f, .1f, 0.f);
 
 		std::vector<Light> all_lights = m_light_manager.m_lights;
 

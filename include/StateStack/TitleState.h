@@ -5,6 +5,8 @@
 #include <SFML\Graphics\Text.hpp>
 #include <SFML\Graphics\Sprite.hpp>
 
+
+
 class TitleState : public State
 {
 	public:
@@ -18,4 +20,11 @@ class TitleState : public State
 
 	private:
 		sf::Sprite			mTitleSprite;
+
+		int 				m_max_alpha;
+		int 				m_min_alpha;
+		int					m_current_alpha;
+		bool				m_inc_alpha;
+	
+		sf::Text			m_text;
 };

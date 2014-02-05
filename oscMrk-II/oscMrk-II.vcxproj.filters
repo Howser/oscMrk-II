@@ -237,9 +237,6 @@
     <ClInclude Include="..\include\StateStack\GameState.h">
       <Filter>Header Files\StateStack</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\StateStack\InventoryState.h">
-      <Filter>Header Files\StateStack</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\StateStack\MenuState.h">
       <Filter>Header Files\StateStack</Filter>
     </ClInclude>
@@ -407,9 +404,6 @@
       <Filter>Source Files\Mob</Filter>
     </ClCompile>
     <ClCompile Include="..\src\StateStack\GameState.cpp">
-      <Filter>Source Files\StateStack</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\StateStack\InventoryState.cpp">
       <Filter>Source Files\StateStack</Filter>
     </ClCompile>
     <ClCompile Include="..\src\StateStack\MenuState.cpp">

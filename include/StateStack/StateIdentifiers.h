@@ -7,7 +7,6 @@ namespace States
 		Title,
 		Menu,
 		Game,
-		Inventory,
 		None,
 	};
 }

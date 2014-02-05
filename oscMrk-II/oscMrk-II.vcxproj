@@ -71,7 +71,6 @@
     <ClInclude Include="..\include\Spells and Projectiles\ProjectileManager.h" />
     <ClInclude Include="..\include\Spells and Projectiles\Spell.h" />
     <ClInclude Include="..\include\StateStack\GameState.h" />
-    <ClInclude Include="..\include\StateStack\InventoryState.h" />
     <ClInclude Include="..\include\StateStack\MenuState.h" />
     <ClInclude Include="..\include\StateStack\State.h" />
     <ClInclude Include="..\include\StateStack\StateIdentifiers.h" />
@@ -136,7 +135,6 @@
     <ClCompile Include="..\src\Spells and Projectiles\ProjectileManager.cpp" />
     <ClCompile Include="..\src\Spells and Projectiles\Spell.cpp" />
     <ClCompile Include="..\src\StateStack\GameState.cpp" />
-    <ClCompile Include="..\src\StateStack\InventoryState.cpp" />
     <ClCompile Include="..\src\StateStack\MenuState.cpp" />
     <ClCompile Include="..\src\StateStack\State.cpp" />
     <ClCompile Include="..\src\StateStack\StateStack.cpp" />

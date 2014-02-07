@@ -112,9 +112,13 @@ bool GameState::update(sf::Time dt)
 			mLoadingThread.launch();
 
 			// CLEAR STUFF
-			mobManager.Clear();
+			mobManager.mobs.clear();
+			mobManager.minorMobs.clear();
+			mobManager.majorMobs.clear();
+			mobManager.deadMobs.clear();
 			m_light_manager.m_lights.clear();
-			mMap.Clear();
+			mMap.mobSpawners.clear();
+			mMap.m_wall_tiles.clear();
 			mPlayer.m_path.clear();
 			pathFinder.Clear();
 			mobManager.m_update = false;

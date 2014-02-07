@@ -52,21 +52,19 @@ Branch* Tree::search(Mob const& mob){
 }
 
 Branch* Tree::search(sf::Vector2f const& position){
-	if (position.x/32 > m_branches.back().tiles.back().back()->x || position.y/32 > m_branches.back().tiles.back().back()->y)
-	{
-		return NULL;
-	}
-	return &m_branches[(position.x/32)/SIZE + (((position.y/32)/SIZE)*m_size.x)];
+	return &m_branches[(position.x/32)/SIZE + (((position.y/32)/SIZE)*m_size.x/SIZE)];
 }
 
 void Tree::move(Mob* p_mob, Branch* p_from, Branch* p_to){
-	if (p_from != NULL)
-	{
+	try{
 		p_from->RemoveMob(p_mob);
+	}catch(int e){
+		std::cout << "\033[0;31m" << "!!!ERROR!!!: MOB@: " << p_mob->ID << "WAS UNABLE TO BE REMOVED FROM IT'S BRANCH!\n";
 	}
-	if (p_to != NULL)
-	{
+	try{
 		p_to->AddMob(p_mob);
+	}catch(int e){
+		std::cout << "\033[0;31m" << "!!!ERROR!!!: MOB@: " << p_mob->ID << "WAS UNABLE TO BE MOVED TO IT'S NEW BRANCH!\n";
 	}
 }
 

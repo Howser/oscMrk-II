@@ -112,13 +112,9 @@ bool GameState::update(sf::Time dt)
 			mLoadingThread.launch();
 
 			// CLEAR STUFF
-			mobManager.mobs.clear();
-			mobManager.minorMobs.clear();
-			mobManager.majorMobs.clear();
-			mobManager.deadMobs.clear();
+			mobManager.Clear();
 			m_light_manager.m_lights.clear();
-			mMap.mobSpawners.clear();
-			mMap.m_wall_tiles.clear();
+			mMap.Clear();
 			mPlayer.m_path.clear();
 			pathFinder.Clear();
 			mobManager.m_update = false;
@@ -237,7 +233,7 @@ void GameState::draw()
 
 		for (int i = 0; i < m_projectile_manager.m_spells.size(); i++)
 		{
-			if (all_lights.size() < 131)
+			if (i < 130)
 			{
 				all_lights.push_back(m_projectile_manager.m_spells[i].m_light);
 			}else

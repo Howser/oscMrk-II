@@ -57,6 +57,8 @@ namespace gen{
 		///<summary>For rendering purposes only. This does not affect collisions or any other gameplay aspect in any way.</summary>
 		std::vector<Tile> m_wall_tiles;
 
+		void Clear();
+
 	private:
 		void Path(Room* from, Room* to);
 

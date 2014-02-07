@@ -461,3 +461,10 @@ Mob* MobManager::getAtPosition(sf::Vector2f position)
 	}
 	return getAtPosition(position.x, position.y);
 }
+
+void MobManager::Clear(){
+	mobs.clear();
+	minorMobs.clear();
+	majorMobs.clear();
+	deadMobs.clear();
+}

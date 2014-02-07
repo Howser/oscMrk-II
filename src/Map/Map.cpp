@@ -901,3 +901,8 @@ bool gen::Map::isPathable(int x, int y) const
 {
 	return (x > 0 && x < size.x && y > 0 && y < size.y && tiles[x][y].type == 1) ?  true:false;
 }
+
+void gen::Map::Clear(){
+	mobSpawners.clear();
+	m_wall_tiles.clear();
+}

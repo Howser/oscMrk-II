@@ -71,6 +71,8 @@ public:
 
 	bool m_update;
 
+	void Clear();
+
 private:
 	PathFinder* pathFinder;
 };

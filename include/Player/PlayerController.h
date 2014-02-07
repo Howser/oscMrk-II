@@ -31,6 +31,7 @@ private:
 	void			getPath(float x, float y);
 
 	void move_up(), move_down(), move_left(), move_right(), check_collision();
+	void stop();
 
 	sf::Vector2f	mPathStart;
 	sf::Vector2f    mPathEnd;

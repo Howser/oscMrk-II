@@ -234,8 +234,9 @@ void Mob::followPath(sf::Time& dt){
 		{
 			sf::Vector2f target = (sf::Vector2f)path.back() - getPosition();
 			target = vec::normalize(target);
-			velocity.x = target.x * GetSpeed(type) * dt.asSeconds();
-			velocity.y = target.y * GetSpeed(type) * dt.asSeconds();
+			velocity.x = target.x;
+			velocity.y = target.y;
+			velocity = vec::normalize(velocity) * GetSpeed(type) * dt.asSeconds();
 		}
 	}
 	else

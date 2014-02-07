@@ -63,4 +63,6 @@ private:
 	bool					mFirstLoad;
 
 	Textures::ID			mCurrentMapTexture;
+
+	bool					m_lost;
 };

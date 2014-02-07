@@ -10,6 +10,7 @@ namespace Textures
 		Hell_Sheet,
 		Mini_Map_sheet,
 		Titlescreen,
+		Losescreen,
 		Button,
 		Player,
 		TestMob,

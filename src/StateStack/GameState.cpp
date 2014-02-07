@@ -19,7 +19,8 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mPlayerController(&mPlayer, &pathFinder, &mMap, &mobManager),
 	mParticleSystem(),
 	mLoadingThread(&gen::Map::Gen, &mMap),
-	mFirstLoad(true)
+	mFirstLoad(true),
+	m_lost(false)
 {
 	mLoadingSprite.setTexture(*context.textures->getTexture(Textures::LoadingScreen));
 
@@ -66,8 +67,10 @@ bool GameState::update(sf::Time dt)
 
 		if (!mPlayer.inventoryState)
 		{
-			mPlayerController.update(dt, *getContext().window, mView, &m_light_manager);
-			mPlayer.update(dt, *getContext().window);
+			if (!m_lost){
+				mPlayerController.update(dt, *getContext().window, mView, &m_light_manager);
+				mPlayer.update(dt, *getContext().window);
+			}
 			if (!mobManager.mobs.empty())
 			{
 				mobManager.Update(dt, mPlayer.getPosition(), &mPlayer.m_health);
@@ -79,6 +82,16 @@ bool GameState::update(sf::Time dt)
 		}else
 		{
 			mPlayer.updateInventory(*getContext().window, *getContext().textures);
+		}
+		if (mPlayer.m_health < 0 && !m_lost) {
+			requestStackPush(States::Lose);
+			m_lost = true;
+		} else if (m_lost) {
+			// this is a dirty hack
+			// The first light will always be the players light 
+			// since that light is added when the map is created
+			m_light_manager.m_lights.front().m_alpha = -1;
+			m_light_manager.m_lights.front().color.a *= 0.99;
 		}
 	} else 
 	{
@@ -112,6 +125,7 @@ bool GameState::update(sf::Time dt)
 			mLoadingThread.launch();
 
 			// CLEAR STUFF
+			// THIS IS RETARDED AND DUMB DONT JUDGE
 			mobManager.mobs.clear();
 			mobManager.minorMobs.clear();
 			mobManager.majorMobs.clear();
@@ -122,6 +136,10 @@ bool GameState::update(sf::Time dt)
 			mPlayer.m_path.clear();
 			pathFinder.Clear();
 			mobManager.m_update = false;
+			m_projectile_manager.m_AOE_spells.clear();
+			m_projectile_manager.m_arrows.clear();
+			m_projectile_manager.m_spells.clear();
+
 			std::cout << "Started map gen" << std::endl;
 		}
 		else if (!mMap.generating && mMap.loaded)
@@ -251,7 +269,8 @@ void GameState::draw()
 		sf::Sprite sprite(mDiffuseRender.getTexture());
 		window->setView(window->getDefaultView());
 		window->draw(sprite, &mShader);
-		mMap.draw_mini_map(window, mView.getCenter().x, mView.getCenter().y);
+		if (!m_lost)
+			mMap.draw_mini_map(window, mView.getCenter().x, mView.getCenter().y);
 		mPlayer.drawGUI(window, getContext().fonts);
 	} 
 	else 

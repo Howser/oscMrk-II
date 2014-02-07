@@ -9,7 +9,7 @@
 #include "StateStack\TitleState.h"
 #include "StateStack\MenuState.h"
 #include "StateStack\GameState.h"
-#include "StateStack\InventoryState.h"
+#include "StateStack\LoseState.h"
 
 #include "ResourceHolders\FontHolder.h"
 
@@ -22,6 +22,7 @@ public:
 	Application();
 
 	void					run();
+	bool					mFocused;
 
 
 private:
@@ -47,5 +48,4 @@ private:
 
 	gui::Mouse				mMouse;
 
-	bool					mFocused;
 };

@@ -1,5 +1,11 @@
 #include "Player\PlayerController.h"
 
+
+// CONSTS
+namespace {
+	const sf::Vector2f speed(5, 5);
+}
+
 PlayerController::PlayerController(Player* player, PathFinder* pathfinder, gen::Map* map, MobManager* mobManager)
 	:
 	playerPtr(player),
@@ -39,8 +45,12 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 	}
 	if (!sf::Keyboard::isKeyPressed(sf::Keyboard::W) && !sf::Keyboard::isKeyPressed(sf::Keyboard::S) && !sf::Keyboard::isKeyPressed(sf::Keyboard::A) && !sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		playerPtr->m_velocity.x = 0;
-		playerPtr->m_velocity.y = 0;
+		stop();
+	}
+
+	// Constrain the speed if player is moving diagonaly 
+	if (vec::length(playerPtr->m_velocity) > speed.x) {
+		playerPtr->m_velocity = vec::normalize(playerPtr->m_velocity) * speed.x;
 	}
 
 	if (leftMouseClicked)
@@ -167,8 +177,6 @@ void PlayerController::getPath(float x, float y)
 	}
 }
 
-const sf::Vector2f speed(5, 5);
-
 void PlayerController::move_up(){
 	sf::Rect<int> rect = sf::Rect<int>(playerPtr->getPosition().x - 16 + 5, playerPtr->getPosition().y - speed.y + 1, 20, 15);
 	if (!intersects_wall(rect))
@@ -252,6 +260,12 @@ void PlayerController::check_collision(){
 			}
 		}
 	}
+}
+
+
+void PlayerController::stop(){
+	playerPtr->m_velocity.x = 0;
+	playerPtr->m_velocity.y = 0;
 }
 
 bool PlayerController::intersects_wall(const sf::Rect<int> & p_rect){

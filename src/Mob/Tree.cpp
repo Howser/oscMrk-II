@@ -52,6 +52,10 @@ Branch* Tree::search(Mob const& mob){
 }
 
 Branch* Tree::search(sf::Vector2f const& position){
+	if (position.x/32 > m_branches.back().tiles.back().back()->x || position.y/32 > m_branches.back().tiles.back().back()->y)
+	{
+		return NULL;
+	}
 	return &m_branches[(position.x/32)/SIZE + (((position.y/32)/SIZE)*m_size.x)];
 }
 

@@ -24,6 +24,7 @@ public:
 	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health) = 0;
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 	virtual void takeDamage(int damage) = 0;
+
 	bool hasBuff(const Items & p_item);
 	bool IntersectsWall(sf::Rect<int> const& position, std::vector<std::vector<gen::Tile>> const& map);
 	void stop();
@@ -57,6 +58,7 @@ public:
 	void checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f & playerPosition);
 	virtual void die() = 0;
 	void StickArrow(const projectile::Arrow & arrow);
+
 protected:
 	void followPath(sf::Time& dt);
 

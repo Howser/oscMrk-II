@@ -170,6 +170,7 @@ void Application::loadResources()
 		mFrameCountText.setColor(sf::Color::White);
 		mFrameCountText.setCharacterSize(16);
 		mFrameCountText.setFont(*mFonts.getFont(Fonts::Main));
+
 	}
 	catch (std::runtime_error e)
 	{

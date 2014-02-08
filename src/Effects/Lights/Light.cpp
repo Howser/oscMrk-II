@@ -9,7 +9,7 @@ Light::Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool 
 	m_draw(true),
 	m_add(false),
 	erase(false),
-	m_alpha((color.a > 0) ? color.a:255.f),
+	m_alpha((color.a > 0) ? color.a : 255.f),
 	m_elapsed(0.f),
 	m_screen(p_screen),
 	ptr_follow(NULL)
@@ -22,7 +22,8 @@ void Light::update(sf::Time & p_dt){
 		position.x = ptr_follow->x;
 		position.y = ptr_follow->y;
 	}
-	flicker(p_dt);
+	if (m_alpha != -1)
+		flicker(p_dt);
 }
 
 void Light::flicker(sf::Time & p_dt){

@@ -19,6 +19,8 @@ gui::Button::Button(sf::Texture* texture, sf::Font* font, bool fade)
 
 	if (fade)
 		mSprite.setColor(sf::Color(255, 255, 255, 0));
+
+	setOrigin(mSprite.getLocalBounds().width/2, mSprite.getLocalBounds().height/2);
 }
 
 gui::Button::~Button()
@@ -56,9 +58,11 @@ void gui::Button::handleEvent(sf::Event const& event)
 			int x = event.mouseButton.x;
 			int y = event.mouseButton.y;
 
-			if (x > getPosition().x && x <= getPosition().x + mSprite.getLocalBounds().width &&
-				y > getPosition().y && y <= getPosition().y + mSprite.getLocalBounds().height
-				)
+			sf::FloatRect bounds = mSprite.getLocalBounds();
+			bounds.left = getPosition().x - bounds.width / 2;
+			bounds.top = getPosition().y - bounds.height / 2;
+
+			if (bounds.intersects(sf::FloatRect(x, y, 1,1)))
 			{
 				activate();
 			}
@@ -70,9 +74,11 @@ void gui::Button::handleEvent(sf::Event const& event)
 		int x = event.mouseMove.x;
 		int y = event.mouseMove.y;
 
-		if (x > getPosition().x && x <= getPosition().x + mSprite.getLocalBounds().width &&
-			y > getPosition().y && y <= getPosition().y + mSprite.getLocalBounds().height
-			)
+		sf::FloatRect bounds = mSprite.getLocalBounds();
+		bounds.left = getPosition().x - bounds.width / 2;
+		bounds.top = getPosition().y - bounds.height / 2;
+
+		if (bounds.intersects(sf::FloatRect(x, y, 1,1)))
 		{
 			select();
 		}
@@ -98,7 +104,7 @@ bool gui::Button::fade_in()
 {
 	sf::Color c = mSprite.getColor();
 	c.a += 5;
-	
+
 	mSprite.setColor(c);
 
 	return c.a >= 255;

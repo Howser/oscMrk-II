@@ -597,6 +597,17 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 
+	sf::Color c = m_healthbar.mBase.getColor();
+	if (m_health < 0){
+		c.a *= 0.99;
+		m_healthbar.mBase.setColor(c);
+		m_healthbar.mLoaded.setColor(c);
+		m_overlay.setColor(c);
+		m_ability[0].setColor(c);
+		m_ability[1].setColor(c);
+		m_ability[2].setColor(c);
+	}
+
 	p_window->draw(m_healthbar);
 	p_window->draw(m_overlay);
 	p_window->draw(m_ability[0]);
@@ -608,7 +619,7 @@ void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 		int a = m_inventory.amount(GetAmmo(m_Gear.slots[2].Items.begin()->item));
 		text.setString((a <= 99) ? std::to_string(a):"??");
 		text.setPosition(m_ability[1].getPosition().x, m_ability[1].getPosition().y + 60);
-		text.setColor(sf::Color(255, 255, 255, 255));
+		text.setColor(c);
 		p_window->draw(text);
 	}
 	if (!m_Gear.slots[3].Items.empty())
@@ -619,7 +630,7 @@ void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 		int a = m_inventory.amount(GetAmmo(m_Gear.slots[3].Items.begin()->item));
 		text.setString((a <= 99) ? std::to_string(a):"??");
 		text.setPosition(m_ability[2].getPosition().x, m_ability[2].getPosition().y + 60);
-		text.setColor(sf::Color(255, 255, 255, 255));
+		text.setColor(c);
 		p_window->draw(text);
 	}
 	if (inventoryState)

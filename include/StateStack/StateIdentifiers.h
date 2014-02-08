@@ -7,6 +7,7 @@ namespace States
 		Title,
 		Menu,
 		Game,
+		Lose,
 		None,
 	};
 }

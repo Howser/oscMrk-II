@@ -103,6 +103,7 @@ void Application::registerStates()
 	mStateStack.registerState<TitleState>(States::Title);
 	mStateStack.registerState<MenuState>(States::Menu);
 	mStateStack.registerState<GameState>(States::Game);
+	mStateStack.registerState<LoseState>(States::Lose);
 	mStateStack.pushState(States::Title);
 }
 
@@ -112,6 +113,7 @@ void Application::loadResources()
 	{
 		// Textures
 		mTextures.loadTexture(Textures::Titlescreen, "resources/graphics/titlescreen.png");
+		mTextures.loadTexture(Textures::Losescreen, "resources/graphics/losescreen.png");
 		mTextures.loadTexture(Textures::Mini_Map_sheet, "resources/graphics/map/mini.png");
 		mTextures.loadTexture(Textures::Prison_Sheet, "resources/graphics/map/tileset.png");
 		mTextures.loadTexture(Textures::Cave_Sheet, "resources/graphics/map/cave_tileset.png");

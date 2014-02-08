@@ -312,6 +312,9 @@
     <ClInclude Include="..\include\Spells and Projectiles\AOE.h">
       <Filter>Header Files\Spells and Projectiles</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\StateStack\LoseState.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">
@@ -492,6 +495,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Spells and Projectiles\Buff.cpp">
       <Filter>Source Files\Spells and Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StateStack\LoseState.cpp">
+      <Filter>Source Files\StateStack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

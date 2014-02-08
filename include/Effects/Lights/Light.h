@@ -21,9 +21,11 @@ struct Light
 	bool erase; //remove it from m_lights in the manager
 	
 	void update(sf::Time & p_dt);
+	
+	float m_alpha;
 
 private:
-	float m_alpha;
+	
 	bool m_add, m_elapsed;
 	void flicker(sf::Time & p_dt);
 };

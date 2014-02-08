@@ -21,7 +21,7 @@ MenuState::MenuState(StateStack& stateStack, Context context, States::ID id)
 		requestStackPush(States::Game);
 	});
 	m_play_button.setText("Play");
-	m_play_button.setPosition(1280/2 - 20, 720/2 + 40);
+	m_play_button.setPosition(1280/2, 720/2 + 40);
 
 	// Exit button
 	m_exit_button.setAction([this] ()
@@ -29,7 +29,7 @@ MenuState::MenuState(StateStack& stateStack, Context context, States::ID id)
 		requestStackClear();
 	});
 	m_exit_button.setText("Exit");
-	m_exit_button.setPosition(1280/2 - 20, 720/2 + 80);
+	m_exit_button.setPosition(1280/2, 720/2 + 80);
 
 	// Background thing
 	m_background.setPosition(640 - m_background.getLocalBounds().width/2, 360 - m_background.getLocalBounds().height/2);

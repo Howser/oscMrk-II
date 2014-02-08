@@ -25,6 +25,8 @@ Boss::Boss(TextureHolder* textureHolder, std::vector<DeadMob>* p_deadMobs, std::
 	aggro = false;
 
 	m_current_phase = Phase::Normal;
+
+	m_phase_timer = sf::seconds(5);
 }
 
 
@@ -49,6 +51,9 @@ Boss::~Boss() {}
 
 void Boss::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health){
 
+	if (m_phase_clock.getElapsedTime() >= m_phase_time){
+		// math::random(Phase::Normal, Phase::END-1, m_
+	}
 }
 
 void Boss::draw(sf::RenderTarget & target, sf::RenderStates states) const {

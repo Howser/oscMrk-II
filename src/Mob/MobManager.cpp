@@ -61,7 +61,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 		{
 			if (!(*i)->dead)
 			{
-				(*i)->update(tiles, deltaTime, (sf::Vector2f)playerPosition, p_health);
+				(*i)->update(tiles, deltaTime, (sf::Vector2f)playerPosition, p_health, (*i));
 				if (math::distance((*i)->getPosition(), playerPosition) <= 735 || (*i)->aggro)//if it's on the screen, give it a path/check other mobs/do other shit. This isn't noticable to the player, but it gives us pretty drastic performance boosts
 				{
 					if (math::distance((*i)->prevPos, (*i)->getPosition()) >= 32)
@@ -241,7 +241,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 						if (!(*i)->playerCollision)
 						{
 							float dist = math::distance((*i)->getPosition(), playerPosition);
-							if (dist > WIDTH/2 && dist <= 735 && ((*i)->path.size() <= 1 || (*i)->updatePath <= 0))
+							if (dist > WIDTH/2 && dist <= 735 && ((*i)->path.size() <= 1 || (*i)->updatePath <= 0) && dist > GetAtackDistance((*i)->type))
 							{
 								std::auto_ptr<Mob> p_mob = (std::auto_ptr<Mob>)m_tree.m_branches[(*i)->m_branch].GetMobWithTarget((sf::Vector2i)playerPosition, *(*i));
 								if (p_mob.get() && p_mob->aggro && math::distance((*i)->getPosition(), playerPosition) > math::distance((*i)->getPosition(), p_mob->getPosition()))

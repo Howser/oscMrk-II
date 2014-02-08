@@ -63,7 +63,7 @@ MajorMob::MajorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	aggro = false;
 }
 
-void MajorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health){
+void MajorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob){
 	if (health <= 0)
 	{
 		die();

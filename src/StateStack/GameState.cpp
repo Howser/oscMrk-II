@@ -76,6 +76,10 @@ bool GameState::update(sf::Time dt)
 				mobManager.Update(dt, mPlayer.getPosition(), &mPlayer.m_health);
 			}
 			mMap.update(dt);
+			if (!mMap.rooms.empty())
+			{
+				std::cout << LineOfSight(sf::Vector2<int>(mPlayer.getPosition().x, mPlayer.getPosition().y + 5), (sf::Vector2<int>)mMap.rooms.front().getCenter(), &mMap.tiles) << "\n";
+			}
 			m_projectile_manager.update(dt);
 			mParticleSystem.update(dt);
 			m_light_manager.update(&mView, dt);
@@ -243,6 +247,13 @@ void GameState::draw()
 
 		// Particle
 		mDiffuseRender.draw(mParticleSystem);
+
+		sf::VertexArray line(sf::Lines, 2);
+		line[0].position = sf::Vector2<float>(mPlayer.getPosition().x, mPlayer.getPosition().y + 5);
+		line[1].position = mMap.rooms.front().getCenter();
+		line[0].color = sf::Color::Red;
+		line[1].color = sf::Color::Red;
+		mDiffuseRender.draw(line);
 
 		mDiffuseRender.display();
 

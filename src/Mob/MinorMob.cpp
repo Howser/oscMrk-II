@@ -61,54 +61,17 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	aggro = false;
 }
 
-void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health){
-	if (health <= 0)
+void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob){
+	switch (type)
 	{
-		die();
-	}else
-	{
-		if (aggro)
-		{
-			if (updatePath > 0)
-			{
-				updatePath -= deltaTime.asSeconds();
-			}
-			if (math::distance(getPosition(), playerPosition) <= GetAtackDistance(type))
-			{
-				if (m_attack_timer > 0)
-				{
-					m_attack_timer -= deltaTime.asSeconds();
-				}else
-				{
-					dealDamage(p_health);
-					m_attack_timer = GetAttackSpeed(type);
-				}
-			}
-		}
-		if (!aggro && path.empty())
-		{
-			timeSincePath += deltaTime.asSeconds();
-		}
-		checkCollision(map, playerPosition);
-		//if (!playerCollision)
-		{
-			followPath(deltaTime);
-			if (!IntersectsWall(sf::Rect<int>(getPosition().x - width/2 + velocity.x + 3, getPosition().y + velocity.y, width - 6, height/2 - 3), *map))
-			{
-				move(velocity);
-			}
-		}
-
-		for (int i = 0; i < m_buffs.size(); i++)
-		{
-			if (m_buffs[i].m_duration > 0)
-			{
-				m_buffs[i].update(deltaTime);
-			}else
-			{
-				m_buffs.erase(m_buffs.begin() + i);
-			}
-		}
+	case test:
+		Skeleton::update(map, deltaTime, playerPosition, p_health, ptr_mob);
+		break;
+	case special:
+		break;
+	default:
+		std::cout << "\033[0;31m" << "!!!ERROR!!!: TYPE NOT SUPPORTED\n";
+		break;
 	}
 }
 
@@ -135,7 +98,7 @@ void MinorMob::dealDamage(int* health){
 void MinorMob::die(){
 	dead = true;
 	sprite.setTexture(*textureHolder->getTexture(Textures::TestMobDead));
-	for (int i = 0; i < lootTable.lootItems.size(); i++)        
+	for (int i = 0; i < lootTable.lootItems.size(); i++)
 	{
 		switch (lootTable.lootItems[i].item)
 		{
@@ -285,4 +248,98 @@ bool Mob::hasBuff(const Items & p_item){
 		}
 	}
 	return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ///////////////////////////////                                           ///////////////////////////////
+ //Mob type specific functions//                                           //Mob type specific functions//
+///////////////////////////////                                           ///////////////////////////////
+
+
+
+
+
+
+void Skeleton::attack(const sf::Vector2<float>& p_player_position){
+	
+}
+
+void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_dt, sf::Vector2<float>& p_player_position, int* ptr_health, Mob* ptr_mob){
+	if (ptr_mob->health <= 0)
+	{
+		ptr_mob->die();
+	}else
+	{
+		if (ptr_mob->aggro)
+		{
+			if (ptr_mob->updatePath > 0)
+			{
+				ptr_mob->updatePath -= p_dt.asSeconds();
+			}
+			if (math::distance(ptr_mob->getPosition(), p_player_position) <= GetAtackDistance(ptr_mob->type))
+			{
+				if (ptr_mob->m_attack_timer > 0)
+				{
+					ptr_mob->m_attack_timer -= p_dt.asSeconds();
+				}else
+				{
+					ptr_mob->dealDamage(ptr_health);
+					ptr_mob->m_attack_timer = GetAttackSpeed(ptr_mob->type);
+				}
+			}
+		}
+		if (!ptr_mob->aggro && ptr_mob->path.empty())
+		{
+			ptr_mob->timeSincePath += p_dt.asSeconds();
+		}
+		ptr_mob->checkCollision(ptr_map, p_player_position);
+		//if (!playerCollision)
+		{
+			if (!ptr_mob->aggro)
+			{
+				ptr_mob->followPath(p_dt);
+			}else
+			{
+				if (math::distance(p_player_position, ptr_mob->getPosition()) > GetAtackDistance(ptr_mob->type))
+				{
+					ptr_mob->followPath(p_dt);
+				}else
+				{
+					if (LineOfSight(p_player_position, ptr_mob->getPosition(), ptr_map))
+					{
+						attack(p_player_position);
+					}else
+					{
+						ptr_mob->followPath(p_dt);
+					}
+				}
+			}
+			if (!ptr_mob->IntersectsWall(sf::Rect<int>(ptr_mob->getPosition().x - ptr_mob->width/2 + ptr_mob->velocity.x + 3, ptr_mob->getPosition().y + ptr_mob->velocity.y, ptr_mob->width - 6, ptr_mob->height/2 - 3), *ptr_map))
+			{
+				ptr_mob->move(ptr_mob->velocity);
+			}
+		}
+
+		for (int i = 0; i < ptr_mob->m_buffs.size(); i++)
+		{
+			if (ptr_mob->m_buffs[i].m_duration > 0)
+			{
+				ptr_mob->m_buffs[i].update(p_dt);
+			}else
+			{
+				ptr_mob->m_buffs.erase(ptr_mob->m_buffs.begin() + i);
+			}
+		}
+	}
 }

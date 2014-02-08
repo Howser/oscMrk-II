@@ -10,7 +10,7 @@ namespace math{
 	int random(int low, int high);
 
 	///<summary>Get a random number between low, and high, but not exclude</summary>
-	int random(int low, int high, int exclude);
+	int random(int low, int high, std::vector<int> exclude);
 
 	template <typename T>
 	float distance(sf::Vector2<T> const& a, sf::Vector2<T> const& b);

@@ -61,7 +61,7 @@ static float GetAttackSpeed(TYPE const& type){
 	switch (type)
 	{
 	case test:
-		return 0.5f;
+		return 2.f;
 		break;
 	case special:
 		return 2.f;
@@ -80,7 +80,7 @@ static float GetAtackDistance(const TYPE & p_type){
 	switch (p_type)
 	{
 	case test:
-		return 64.f;
+		return 256.f;
 		break;
 	case special:
 		return 64.f;

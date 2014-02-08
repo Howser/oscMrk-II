@@ -25,8 +25,10 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mLoadingSprite.setTexture(*context.textures->getTexture(Textures::LoadingScreen));
 
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
-	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder);
+	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder, &m_projectile_manager.m_spells, &m_projectile_manager.m_arrows);
 	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
+	mobManager.ptr_spells = &m_projectile_manager.m_spells;
+	mobManager.ptr_arrows = &m_projectile_manager.m_arrows;
 	mPlayer.ptr_tree = &mobManager.m_tree;
 	mPlayer.setPosition(-1280, -720);
 

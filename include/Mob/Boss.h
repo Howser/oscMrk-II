@@ -13,7 +13,7 @@ public:
 	Boss(Mob const& mob, std::vector<DeadMob>* p_deadMobs);
 	~Boss();
 
-	void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health);
+	void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows);
 	void draw(sf::RenderTarget & target, sf::RenderStates states) const;
 	void takeDamage(int damage);
 

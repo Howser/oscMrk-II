@@ -13,6 +13,8 @@
 #include "Inventory\LootTable.h"
 #include "PathFinder\PathFinder.h"
 #include "Tree.h"
+#include "Boss.h"
+
 
 ///<summary>Tiles from the starting position.</summary>
 #define WalkingDistance 10
@@ -43,6 +45,7 @@ public:
 	Mobs mobs;
 	MinorMobs minorMobs;
 	MajorMobs majorMobs;
+	Boss boss;
 
 	std::vector<std::vector<gen::Tile>>* tiles;
 	std::vector<LootTable> LootTables;
@@ -54,6 +57,8 @@ public:
 
 	void Add(Mob & mob);
 	void Build_Tree();
+
+	void MobManager::spawn_boss(sf::Vector2f position, TextureHolder* textures, std::function<void()> die_func);
 
 	void Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition, int* p_health);
 	void SetView(sf::View const& view);
@@ -89,4 +94,10 @@ private:
 \__________________________/ \|		o			\_______________/ \|	o ´o
 
 Two whales on an adventure.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+  *
+ * *
+*   *
 */
+

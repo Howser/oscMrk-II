@@ -14,6 +14,7 @@ namespace Textures
 		Button,
 		Player,
 		TestMob,
+		Boss,
 		TestMobDead,
 		MouseClick,
 		Mouse,

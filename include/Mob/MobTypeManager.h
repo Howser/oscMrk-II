@@ -8,12 +8,13 @@
 enum TYPE{
 	test,
 	special,
+	boss,
 
 	//used for targeting
 	PLAYER,
 };
 
-static const char* MobNames[2] = {"test.txt", "special.txt"};
+static const char* MobNames[3] = {"test.txt", "special.txt", "boss.txt"};
 
 static int GetHp(TYPE const& type){
 	switch (type)
@@ -23,6 +24,9 @@ static int GetHp(TYPE const& type){
 		break;
 	case special:
 		return 35;
+		break;
+	case boss:
+		return 100;
 		break;
 	default:
 		return 0;
@@ -39,6 +43,9 @@ static float GetDamage(TYPE const& type){
 		break;
 	case special:
 		return 12;
+		break;
+	case boss:
+		return 20;
 		break;
 	default:
 		return 0;
@@ -57,6 +64,8 @@ static float GetAttackSpeed(TYPE const& type){
 	case special:
 		return 2.f;
 		break;
+	case boss:
+		return 1.f;
 	default:
 		return 0;
 		break;
@@ -74,6 +83,8 @@ static float GetAtackDistance(const TYPE & p_type){
 	case special:
 		return 64.f;
 		break;
+	case boss:
+		return 80.f;
 	default:
 		return 0;
 		break;
@@ -90,6 +101,9 @@ static float GetSpeed(TYPE const& type){
 	case special:
 		return 100;
 		break;
+	case boss:
+		return 125;
+		break;
 	default:
 		return 0;
 		break;
@@ -100,6 +114,9 @@ static float GetSpeed(TYPE const& type){
 static int GetAggroDist(TYPE const& type){
 	switch (type)
 	{
+	case boss:
+		return 400;
+		break;
 	default:
 		return 250;
 		break;
@@ -125,6 +142,9 @@ static int GetWidth(TYPE const& type){
 	case special:
 		return 32;
 		break;
+	case boss:
+		return 32;
+		break;
 	default:
 		return 0;
 		break;
@@ -139,6 +159,9 @@ static int GetHeight(TYPE const& type){
 		return 32;
 		break;
 	case special:
+		return 32;
+		break;
+	case boss:
 		return 32;
 		break;
 	default:
@@ -165,6 +188,9 @@ static int GetPathingDistance(TYPE const& type){
 	case TYPE::special:
 		return 2;
 		break;
+	case boss:
+		return 2;
+		break;
 	default:
 		return 10;
 		break;
@@ -179,6 +205,8 @@ static int GetSpecialTimer(TYPE const& type){
 	case special:
 		return 5;
 		break;
+	case boss:
+		return 10; 
 	default:
 		return 0;
 		break;
@@ -207,6 +235,7 @@ static bool IsSpecial(TYPE const& type){
 		return false;
 		break;
 	case special:
+	case boss:
 		return true;
 		break;
 	case PLAYER:

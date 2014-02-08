@@ -87,7 +87,7 @@ bool GameState::update(sf::Time dt)
 			requestStackPush(States::Lose);
 			m_lost = true;
 		} else if (m_lost) {
-			// this is a dirty hack
+			// this is a dirty hack xXKillahSlayahXx
 			// The first light will always be the players light 
 			// since that light is added when the map is created
 			m_light_manager.m_lights.front().m_alpha = -1;
@@ -175,6 +175,11 @@ bool GameState::update(sf::Time dt)
 				mobManager.majorMobs[i].ID = mobManager.mobs.size();
 				mobManager.mobs.push_back(&mobManager.majorMobs[i]);
 			}
+
+			mobManager.spawn_boss(mPlayer.getPosition(), getContext().textures, [this](){
+				requestStackClear();
+			});
+
 			mobManager.Build_Tree();
 
 			pathFinder.mapSize = mMap.size;

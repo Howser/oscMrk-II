@@ -10,6 +10,20 @@ int math::random(int low, int high){
 	return low + (std::rand() % (high - low + 1));
 }
 
+int math::random(int low, int high, int exclude){
+	if (low > high){
+		int temp = low;
+		low = high;
+		high = temp;
+	}
+	int i = low + (std::rand() % (high - low + 1));
+	while (i == exclude)
+	{
+		i = random(low, high, exclude);
+	}
+	return i;
+}
+
 int math::random(int low, int high, std::vector<int> exclude){
 	if (low > high){
 		int temp = low;

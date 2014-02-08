@@ -52,10 +52,12 @@ Boss::~Boss() {}
 void Boss::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows){
 
 	if (m_phase_clock.getElapsedTime() >= m_phase_time){
-		// math::random(Phase::Normal, Phase::END-1, m_
+		math::random(Phase::Normal, Phase::END-1, m_current_phase); 
 		// set the phase
 
+
 		// execute the current phase
+
 	}
 }
 

@@ -27,6 +27,8 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	pathFinder = PathFinder(&mMap.tiles, mMap.size);
 	mobManager = MobManager(*context.textures, &mMap.tiles, &pathFinder, &m_projectile_manager.m_spells, &m_projectile_manager.m_arrows);
 	m_projectile_manager = ProjectileManager(&mobManager, &mParticleSystem);
+	mobManager.ptr_spells = &m_projectile_manager.m_spells;
+	mobManager.ptr_arrows = &m_projectile_manager.m_arrows;
 	mPlayer.ptr_tree = &mobManager.m_tree;
 	mPlayer.setPosition(-1280, -720);
 
@@ -91,7 +93,7 @@ bool GameState::update(sf::Time dt)
 			requestStackPush(States::Lose);
 			m_lost = true;
 		} else if (m_lost) {
-			// this is a dirty hack
+			// this is a dirty hack xXKillahSlayahXx
 			// The first light will always be the players light 
 			// since that light is added when the map is created
 			m_light_manager.m_lights.front().m_alpha = -1;
@@ -179,6 +181,11 @@ bool GameState::update(sf::Time dt)
 				mobManager.majorMobs[i].ID = mobManager.mobs.size();
 				mobManager.mobs.push_back(&mobManager.majorMobs[i]);
 			}
+
+			mobManager.spawn_boss(mPlayer.getPosition(), getContext().textures, [this](){
+				requestStackClear();
+			});
+
 			mobManager.Build_Tree();
 
 			pathFinder.mapSize = mMap.size;

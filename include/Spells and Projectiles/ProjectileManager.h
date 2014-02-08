@@ -8,7 +8,7 @@
 
 class ProjectileManager : public sf::Drawable{
 public:
-	ProjectileManager::ProjectileManager();
+	ProjectileManager();
 	ProjectileManager(MobManager* const& p_mobManager, ParticleSystem* const& p_particleSystem);
 	~ProjectileManager();
 	std::vector<projectile::Arrow> m_arrows;

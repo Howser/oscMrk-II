@@ -1,11 +1,17 @@
 #include "Mob\MobManager.h"
 
-MobManager::MobManager(TextureHolder & textureHolder, std::vector<std::vector<gen::Tile>>* tiles, PathFinder* pathFinder, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows) : textures(&textureHolder), pathFinder(pathFinder), tiles(tiles), playerPosition(-100, -100), ptr_spells(ptr_spells), ptr_arrows(ptr_arrows){
+MobManager::MobManager(TextureHolder & textureHolder, std::vector<std::vector<gen::Tile>>* tiles, PathFinder* pathFinder, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows) 
+	: textures(&textureHolder), 
+	pathFinder(pathFinder), 
+	tiles(tiles), 
+	playerPosition(-100, -100)
+{
 	for (unsigned int i = 0; i <= TYPE::special; i++)
 	{
 		LootTables.push_back(LootTable((TYPE)i));
 	}
 	m_update = true;
+
 }
 
 MobManager::MobManager(){
@@ -17,7 +23,9 @@ MobManager::~MobManager(){
 }
 
 void MobManager::Add(Mob & mob){
-	if (!IsSpecial(mob.type))
+	if (mob.type == TYPE::boss) {
+	}
+	else if (!IsSpecial(mob.type))
 	{
 		MinorMob minor_mob = MinorMob(mob, &deadMobs);
 		minor_mob.lootTable = LootTables[minor_mob.type];
@@ -254,6 +262,13 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 		}
 		this->playerPosition = playerPosition;
 	}
+}
+
+void MobManager::spawn_boss(sf::Vector2f position, TextureHolder* textures, std::function<void()> die_func){
+	boss = Boss(textures, &deadMobs, die_func);
+	boss.setPosition(position);
+	boss.ID = mobs.size();
+	mobs.push_back(&boss);
 }
 
 void MobManager::SetView(sf::View const& view){

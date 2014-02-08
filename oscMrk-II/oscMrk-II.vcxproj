@@ -51,6 +51,7 @@
     <ClInclude Include="..\include\Map\Tile.h" />
     <ClInclude Include="..\include\Math\GeneralMath.h" />
     <ClInclude Include="..\include\Math\VectorMath.h" />
+    <ClInclude Include="..\include\Mob\Boss.h" />
     <ClInclude Include="..\include\Mob\DeadMob.h" />
     <ClInclude Include="..\include\Mob\MajorMob.h" />
     <ClInclude Include="..\include\Mob\MinorMob.h" />
@@ -118,6 +119,7 @@
     <ClCompile Include="..\src\Map\Properties\Torch.cpp" />
     <ClCompile Include="..\src\Map\Tile.cpp" />
     <ClCompile Include="..\src\Math\GeneralMath.cpp" />
+    <ClCompile Include="..\src\Mob\Boss.cpp" />
     <ClCompile Include="..\src\Mob\DeadMob.cpp" />
     <ClCompile Include="..\src\Mob\MajorMob.cpp" />
     <ClCompile Include="..\src\Mob\MinorMob.cpp" />

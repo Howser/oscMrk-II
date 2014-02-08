@@ -61,11 +61,11 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	aggro = false;
 }
 
-void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob){
+void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows){
 	switch (type)
 	{
 	case test:
-		Skeleton::update(map, deltaTime, playerPosition, p_health, ptr_mob);
+		Skeleton::update(map, deltaTime, playerPosition, p_health, ptr_mob, ptr_spells, ptr_arrows);
 		break;
 	case special:
 		break;
@@ -262,8 +262,8 @@ bool Mob::hasBuff(const Items & p_item){
 
 
 
-  ///////////////////////////////                                           ///////////////////////////////
- //Mob type specific functions//                                           //Mob type specific functions//
+///////////////////////////////                                           ///////////////////////////////
+//Mob type specific functions//                                           //Mob type specific functions//
 ///////////////////////////////                                           ///////////////////////////////
 
 
@@ -271,11 +271,18 @@ bool Mob::hasBuff(const Items & p_item){
 
 
 
-void Skeleton::attack(const sf::Vector2<float>& p_player_position){
-	
+void Skeleton::attack(const sf::Vector2<float>& p_player_position, std::vector<projectile::Arrow>* ptr_arrows, Mob* ptr_mob, std::vector<std::vector<gen::Tile>>* ptr_tiles){
+	float angle = std::atan2f(ptr_mob->getPosition().y - p_player_position.y, ptr_mob->getPosition().x - p_player_position.x);
+	sf::Sprite arrow_sprite;
+	arrow_sprite.setTexture(*ptr_mob->textureHolder->getTexture(Textures::d_Arrow));
+	projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, NULL);
+	arrow.setPosition(ptr_mob->getPosition());
+	arrow.m_damage_player = true;
+	ptr_arrows->push_back(arrow);
+	ptr_mob->m_attack_timer = GetAttackSpeed(ptr_mob->type);
 }
 
-void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_dt, sf::Vector2<float>& p_player_position, int* ptr_health, Mob* ptr_mob){
+void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_dt, sf::Vector2<float>& p_player_position, int* ptr_health, Mob* ptr_mob, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows){
 	if (ptr_mob->health <= 0)
 	{
 		ptr_mob->die();
@@ -318,7 +325,7 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 				{
 					if (LineOfSight(p_player_position, ptr_mob->getPosition(), ptr_map))
 					{
-						attack(p_player_position);
+						attack(p_player_position, ptr_arrows, ptr_mob, ptr_map);
 					}else
 					{
 						ptr_mob->followPath(p_dt);

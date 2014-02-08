@@ -20,6 +20,9 @@ namespace projectile{
 		int m_damage;
 		sf::Sprite m_sprite;
 		Items m_item;
+
+		bool m_damage_player;
+
 	protected:
 		std::vector<std::vector<gen::Tile>>* p_tiles;
 		sf::Vector2<float> m_velocity;

@@ -8,10 +8,10 @@ sf::Vector2i gen::Cell::digpos(){
 	int X = x, Y = y;
 	if (a == 0)
 	{
-		X += math::random(-1, 1, 0);
+		X += math::random(-1, 1, std::vector<int>(0));
 	}else
 	{
-		Y += math::random(-1, 1, 0);
+		Y += math::random(-1, 1, std::vector<int>(0));
 	}
 	return sf::Vector2i(X, Y);
 }

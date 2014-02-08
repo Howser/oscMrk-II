@@ -10,16 +10,19 @@ int math::random(int low, int high){
 	return low + (std::rand() % (high - low + 1));
 }
 
-int math::random(int low, int high, int exclude){
+int math::random(int low, int high, std::vector<int> exclude){
 	if (low > high){
 		int temp = low;
 		low = high;
 		high = temp;
 	}
 	int i = low + (std::rand() % (high - low + 1));
-	if (i == exclude)
+	for (int j = 0; j < exclude.size(); j++)
 	{
-		random(low, high, exclude);
+		if (i == exclude[j])
+		{
+			random(low, high, exclude);
+		}
 	}
 	return i;
 }

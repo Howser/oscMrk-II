@@ -48,11 +48,17 @@ void ProjectileManager::update(sf::Time & p_dt){
 			if (!m_spells[i].dead)
 			{
 				m_spells[i].update(p_dt);
-				Mob* mob = m_mobManager->getAtPosition(m_spells[i].getPosition());
-				if (mob != nullptr && !mob->dead)
+				if (!m_spells[i].m_damage_player)
 				{
-					mob->takeDamage(m_spells[i].m_damage);
-					m_spells[i].kill();
+					Mob* mob = m_mobManager->getAtPosition(m_spells[i].getPosition());
+					if (mob != nullptr && !mob->dead)
+					{
+						mob->takeDamage(m_spells[i].m_damage);
+						m_spells[i].kill();
+					}
+				}else
+				{
+
 				}
 			}else
 			{
@@ -72,12 +78,18 @@ void ProjectileManager::update(sf::Time & p_dt){
 			if (!m_arrows[i].dead)
 			{
 				m_arrows[i].update(p_dt);
-				Mob* mob = m_mobManager->getAtPosition(m_arrows[i].getPosition());
-				if (mob != nullptr && !mob->dead)
+				if (!m_arrows[i].m_damage_player)
 				{
-					mob->takeDamage(m_arrows[i].m_damage);
-					m_arrows[i].kill();
-					m_arrows.erase(m_arrows.begin() + i);
+					Mob* mob = m_mobManager->getAtPosition(m_arrows[i].getPosition());
+					if (mob != nullptr && !mob->dead)
+					{
+						mob->takeDamage(m_arrows[i].m_damage);
+						m_arrows[i].kill();
+						m_arrows.erase(m_arrows.begin() + i);
+					}
+				}else
+				{
+
 				}
 			}
 			break;

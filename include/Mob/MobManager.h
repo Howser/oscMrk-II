@@ -12,6 +12,8 @@
 #include "Item\LootItem.h"
 #include "Inventory\LootTable.h"
 #include "PathFinder\PathFinder.h"
+#include "Spells and Projectiles\Spell.h"
+#include "Spells and Projectiles\Arrow.h"
 #include "Tree.h"
 
 ///<summary>Tiles from the starting position.</summary>
@@ -31,7 +33,7 @@ struct DeadMob;
 
 class MobManager : public sf::Drawable{
 public:
-	MobManager(TextureHolder & textureHolder, std::vector<std::vector<gen::Tile>>* tiles, PathFinder* pathFinder);
+	MobManager(TextureHolder & textureHolder, std::vector<std::vector<gen::Tile>>* tiles, PathFinder* pathFinder, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows);
 	MobManager();
 	~MobManager();
 
@@ -72,6 +74,9 @@ public:
 	bool m_update;
 
 	void Clear();
+
+	std::vector<projectile::Spell>* ptr_spells;
+	std::vector<projectile::Arrow>* ptr_arrows;
 
 private:
 	PathFinder* pathFinder;

@@ -35,6 +35,11 @@ private:
 	};
 	Phase m_current_phase;
 
+	void update_normal(sf::Time dt);
+	void update_laser(sf::Time dt);
+	void update_fireCircle(sf::Time dt);
+	void update_summon(sf::Time dt);
+
 	sf::Time m_phase_time;
 	sf::Clock m_phase_clock;
 

@@ -26,7 +26,7 @@ Boss::Boss(TextureHolder* textureHolder, std::vector<DeadMob>* p_deadMobs, std::
 
 	m_current_phase = Phase::Normal;
 
-	m_phase_timer = sf::seconds(5);
+	m_phase_time = sf::seconds(5);
 }
 
 
@@ -53,6 +53,9 @@ void Boss::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime,
 
 	if (m_phase_clock.getElapsedTime() >= m_phase_time){
 		// math::random(Phase::Normal, Phase::END-1, m_
+		// set the phase
+
+		// execute the current phase
 	}
 }
 

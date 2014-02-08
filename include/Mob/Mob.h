@@ -21,7 +21,7 @@
 
 class Mob : public sf::Transformable, public sf::Drawable{
 public:
-	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health) = 0;
+	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob) = 0;
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const = 0;
 	virtual void takeDamage(int damage) = 0;
 
@@ -59,9 +59,10 @@ public:
 	virtual void die() = 0;
 	void StickArrow(const projectile::Arrow & arrow);
 
-protected:
 	void followPath(sf::Time& dt);
 
 	virtual void dealDamage(int* health) = 0;
+
+protected:
 	std::vector<DeadMob>* p_deadMobs;
 };

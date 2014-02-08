@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "Map\Tile.h"
+#include "Math\GeneralMath.h"
 
 #define MOBS_per_FRAME 50
 #define MAX_MOBS_PATHING 1
@@ -81,6 +83,7 @@ static float GetAtackDistance(const TYPE & p_type){
 	return 0;
 }
 
+///<summary>Pixels per second.</summary>
 static float GetSpeed(TYPE const& type){
 	switch (type)
 	{
@@ -148,7 +151,6 @@ static int GetHeight(TYPE const& type){
 	return 0;
 }
 
-
 ///<summary>Seconds.</summary>
 static int GetTimeBetweenPathing(TYPE const& type){
 	switch (type)
@@ -185,6 +187,7 @@ static int GetSpecialTimer(TYPE const& type){
 	}
 	return 0;
 }
+
 
 
 static std::vector<TYPE> GetTargets(TYPE const& type){
@@ -234,4 +237,36 @@ namespace spcl{
 			break;
 		}
 	}
+}
+
+
+template <typename T>
+static bool LineOfSight(const sf::Vector2<T> & p_A, const sf::Vector2<T> & p_B, std::vector<std::vector<gen::Tile>>* ptr_map){
+	if (p_A == p_B)
+	{
+		return true;
+	}
+
+	/*float k = (p_A.y - p_B.y)/((p_A.x != p_B.x) ? p_A.x - p_B.x:1);
+	int m = ((p_A.x < p_B.x) ? p_A.y:p_B.y)/32;
+	std::vector<sf::Rect<int>> tiles;
+	for (int x = (p_A.x < p_B.x) ? p_A.x/32:p_B.x/32; x < ((p_A.x > p_B.x) ? p_A.x/32:p_B.x/32); x++)
+	{
+		tiles.push_back(sf::Rect<int>(x*32, k*x*32+m, 32, 32));
+	}*/
+
+	for (int x = (p_A.x < p_B.x) ? p_A.x/32:p_B.x/32; x < ((p_A.x > p_B.x) ? p_A.x/32:p_B.x/32); x++)
+	{
+		for (int y = (p_A.y < p_B.y) ? p_A.y/32:p_B.y/32; y < ((p_A.y > p_B.y) ? p_A.y/32:p_B.y/32); y++)
+		{
+			if ((*ptr_map)[x][y].type != 1)
+			{
+				if (math::LineIntersectsRect(p_A, p_B, sf::Rect<T>(x*32, y*32, 32, 32)))
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
 }

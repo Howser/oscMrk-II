@@ -14,6 +14,7 @@ Spell::Spell(const sf::Vector2f & p_position, float angle, const Items & p_item,
 		m_damage = p_damage;
 		p_tiles = ptr_tiles;
 		dead = false;
+		m_damage_player = false;
 }
 
 Spell::~Spell(){

@@ -75,22 +75,28 @@ void ProjectileManager::update(sf::Time & p_dt){
 		switch (m_arrows[i].m_item)
 		{
 		case Arrow:
-			if (!m_arrows[i].dead)
+			if (m_arrows[i].timer > 0)
 			{
-				m_arrows[i].update(p_dt);
-				if (!m_arrows[i].m_damage_player)
+				if (!m_arrows[i].dead)
 				{
-					Mob* mob = m_mobManager->getAtPosition(m_arrows[i].getPosition());
-					if (mob != nullptr && !mob->dead)
+					m_arrows[i].update(p_dt);
+					if (!m_arrows[i].m_damage_player)
 					{
-						mob->takeDamage(m_arrows[i].m_damage);
-						m_arrows[i].kill();
-						m_arrows.erase(m_arrows.begin() + i);
+						Mob* mob = m_mobManager->getAtPosition(m_arrows[i].getPosition());
+						if (mob != nullptr && !mob->dead)
+						{
+							mob->takeDamage(m_arrows[i].m_damage);
+							m_arrows[i].kill();
+							m_arrows.erase(m_arrows.begin() + i);
+						}
+					}else
+					{
+						
 					}
-				}else
-				{
-
 				}
+			}else
+			{
+				m_arrows.erase(m_arrows.begin() + i);
 			}
 			break;
 		}

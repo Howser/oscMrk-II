@@ -21,6 +21,8 @@ namespace projectile{
 		void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 		void kill();
 
+		///<summary>Delete the arrow from the world when this timer == 0.</summary>
+		float timer;
 	private:
 		ParticleSystem* ps;
 	};

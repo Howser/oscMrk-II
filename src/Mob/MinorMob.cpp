@@ -250,8 +250,8 @@ bool Mob::hasBuff(const Items & p_item){
 	return false;
 }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- //Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void Skeleton::attack(const sf::Vector2<float>& p_player_position, std::vector<projectile::Arrow>* ptr_arrows, Mob* ptr_mob, std::vector<std::vector<gen::Tile>>* ptr_tiles){
@@ -299,17 +299,14 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 				ptr_mob->followPath(p_dt);
 			}else
 			{
+				if (math::distance(p_player_position, ptr_mob->getPosition()) > GetAtackDistance(ptr_mob->type) || !LineOfSight(p_player_position, ptr_mob->getPosition(), ptr_map))
 				{
-					if (LineOfSight(p_player_position, ptr_mob->getPosition(), ptr_map))
+					ptr_mob->followPath(p_dt);
+				}else
+				{
+					if (ptr_mob->m_attack_timer <= 0)
 					{
-						ptr_mob->stop();
-						if (ptr_mob->m_attack_timer <= 0)
-						{
-							attack(p_player_position, ptr_arrows, ptr_mob, ptr_map);
-						}
-					}else
-					{
-						ptr_mob->followPath(p_dt);
+						attack(p_player_position, ptr_arrows, ptr_mob, ptr_map);
 					}
 				}
 			}

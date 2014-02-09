@@ -240,7 +240,7 @@ void MobManager::Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition
 						if (!(*i)->playerCollision)
 						{
 							float dist = math::distance((*i)->getPosition(), playerPosition);
-							if (dist > WIDTH/2 && dist <= 735 && ((*i)->path.size() <= 1 || (*i)->updatePath <= 0) && dist > GetAtackDistance((*i)->type))
+							if (dist > WIDTH/2 && dist <= 735 && ((*i)->path.size() <= 1 || (*i)->updatePath <= 0) && (dist > 32 && !LineOfSight(playerPosition, (*i)->getPosition(), tiles)))
 							{
 								std::auto_ptr<Mob> p_mob = (std::auto_ptr<Mob>)m_tree.m_branches[(*i)->m_branch].GetMobWithTarget((sf::Vector2i)playerPosition, *(*i));
 								if (p_mob.get() && p_mob->aggro && math::distance((*i)->getPosition(), playerPosition) > math::distance((*i)->getPosition(), p_mob->getPosition()))

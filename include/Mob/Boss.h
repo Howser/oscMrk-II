@@ -10,7 +10,6 @@ public:
 
 	Boss();
 	Boss(TextureHolder* textureHolder, std::vector<DeadMob>* p_deadMobs, std::function<void(void)> die_func);
-	Boss(Mob const& mob, std::vector<DeadMob>* p_deadMobs);
 	~Boss();
 
 	void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows);
@@ -35,13 +34,18 @@ private:
 	};
 	Phase m_current_phase;
 
-	void update_normal(sf::Time dt);
+	void update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_health);
 	void update_laser(sf::Time dt);
 	void update_fireCircle(sf::Time dt);
 	void update_summon(sf::Time dt);
 
 	sf::Time m_phase_time;
 	sf::Clock m_phase_clock;
+
+	sf::Time m_attack_time;
+	sf::Clock m_attack_clock;
+	float m_attack_range;
+	int m_attack_damage;
 
 	void dealDamage(int* health);
 };

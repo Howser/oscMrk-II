@@ -29,11 +29,19 @@ private:
 		///<summary>Stands still and shoots projectiles out in a circle.</summary>
 		FireCircle,
 		///<summary>Summons smaller mobs that attack the player.</summary>
-		Summon
+		Summon,
+
+		END
 	};
 	Phase m_current_phase;
 
-	void dealDamage(int* health);
+	void update_normal(sf::Time dt);
+	void update_laser(sf::Time dt);
+	void update_fireCircle(sf::Time dt);
+	void update_summon(sf::Time dt);
 
-	
+	sf::Time m_phase_time;
+	sf::Clock m_phase_clock;
+
+	void dealDamage(int* health);
 };

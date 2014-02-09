@@ -9,7 +9,10 @@
 namespace math{
 	int random(int low, int high);
 
-	///<summary>Get a random number between low, and high, but not exclude</summary>
+	///<summary>Get a random number between low(inclusive), and high(inclusive), but not exclude</summary>
+	int random(int low, int high, int exclude);
+
+	///<summary>Get a random number between low(inclusive), and high(inclusive), but not exclude</summary>
 	int random(int low, int high, std::vector<int> exclude);
 
 	template <typename T>

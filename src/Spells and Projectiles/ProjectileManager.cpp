@@ -29,7 +29,7 @@ void ProjectileManager::update(sf::Time & p_dt){
 					}
 				}
 			}
-		}else
+		} else
 		{
 			if (m_AOE_spells[i].m_color.a <= 10)
 			{

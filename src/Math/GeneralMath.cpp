@@ -43,5 +43,10 @@ int math::random(int low, int high, std::vector<int> exclude){
 
 float math::toDegrees(float x)
 {
-	return x * 180/std::_Pi;
+	return x * 180 / std::_Pi;
+}
+
+float math::toRadians(float x)
+{
+	return x / 180 * std::_Pi;
 }

@@ -21,6 +21,11 @@ namespace math{
 	///<summary> Converts an angle in radians to degrees </summary>
 	float toDegrees(float x);
 
+	///<summary> Converts an angle in degrees to radians</summary>
+	float toRadians(float x);
+
+
+
 	template <typename T>
 	bool LineIntersectsLine(const sf::Vector2<T> & l1p1, const sf::Vector2<T> & l1p2, const sf::Vector2<T> & l2p1, const sf::Vector2<T> & l2p2);
 

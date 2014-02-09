@@ -13,12 +13,11 @@
 #include <SFML\Graphics\Transformable.hpp>
 #include <SFML\Graphics\RenderTarget.hpp>
 
-#define SPEED 10
 
 namespace projectile{
 	class Spell : public Projectile{
 	public:
-		Spell(const sf::Vector2f & p_position, float angle, const Items & p_item, sf::Sprite & p_sprite, int p_damage, std::vector<std::vector<gen::Tile>>* ptr_tiles, Light & p_light);
+		Spell(const sf::Vector2f & p_position, float angle, const Items & p_item, sf::Sprite & p_sprite, int p_damage, std::vector<std::vector<gen::Tile>>* ptr_tiles, Light & p_light, bool damage_player, float speed);
 		~Spell();
 		void update(sf::Time & p_dt);
 		void draw(sf::RenderTarget & target, sf::RenderStates states)const;

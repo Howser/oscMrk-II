@@ -125,7 +125,7 @@ static int GetDamage(Items item){
 		return 5;
 		break;
 	case TestAOE:
-		return 5;
+		return 50;
 		break;
 	default:
 		return 0;
@@ -359,7 +359,7 @@ namespace buff{
 		switch (p_item)
 		{
 		default:
-			return 1.5f;
+			return 0.5f;
 			break;
 		}
 		return 0.f;
@@ -369,7 +369,7 @@ namespace buff{
 		switch (p_item)
 		{
 		default:
-			(*ptr_value) -= 3;
+			(*ptr_value) -= GetDamage(p_item);
 			break;
 		}
 	}

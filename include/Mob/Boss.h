@@ -36,13 +36,13 @@ private:
 
 	void update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_health, std::vector<std::vector<gen::Tile>>* map);
 	void update_laser(sf::Time dt);
-	void update_fireCircle(sf::Time dt);
+	void update_fireCircle(sf::Time dt, std::vector<projectile::Spell>* ptr_spells,  std::vector<std::vector<gen::Tile>>* map);
 	void update_summon(sf::Time dt);
 
 	sf::Time m_phase_time;
 	sf::Clock m_phase_clock;
 
-	sf::Time m_attack_time;
+	sf::Time m_attack_time;  // This needs to be set by every update_function
 	sf::Clock m_attack_clock;
 	float m_attack_range;
 	int m_attack_damage;

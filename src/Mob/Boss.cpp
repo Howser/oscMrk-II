@@ -58,7 +58,7 @@ void Boss::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime,
 		break;
 
 	case Boss::FireCircle:
-		update_fireCircle(deltaTime);
+		update_fireCircle(deltaTime, ptr_spells, map);
 		break;
 
 	case Boss::Summon:
@@ -93,7 +93,7 @@ void Boss::takeDamage(int damage) {
 	} else {
 		aggro = true;
 	}
-	std::cout << "ouch\n";
+	std::cout << "Boss HP: " << health << std::endl;
 }
 
 void Boss::dealDamage(int* health) {
@@ -106,11 +106,13 @@ void Boss::die() {
 
 void Boss::update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_health, std::vector<std::vector<gen::Tile>>* map) {
 	// if !inrange to attack, move towards player
+	m_attack_time = sf::seconds(GetAttackSpeed(type));
 
 	if (math::distance(getPosition(), playerPosition) > m_attack_range) {
 		followPath(dt);
 		move(velocity);
 		checkCollision(map, playerPosition);
+		std::cout << "moving" << std::endl;
 	} else { // attack player
 		if (m_attack_clock.getElapsedTime() >= m_attack_time) {
 			dealDamage(p_health);
@@ -121,15 +123,35 @@ void Boss::update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_hea
 }
 
 void Boss::update_laser(sf::Time dt) {
-
 	// stand fucking still (some type of root animation)
+	stop();
 	// lazer
+
 }
 
-void Boss::update_fireCircle(sf::Time dt) {
-
+void Boss::update_fireCircle(sf::Time dt, std::vector<projectile::Spell>* ptr_spells,  std::vector<std::vector<gen::Tile>>* map) {
 	// stand still (some type of root animation)
+	stop();
+
 	// shoot projectiles out in a circle, change the angle for each attack
+
+	// setup stuff
+	static int angle = 0;
+	int projectile_nr = 8;
+	int diff_angle = 360 / projectile_nr;
+	m_attack_time = sf::seconds(0.3f);
+	
+	if (m_attack_clock.getElapsedTime() >= m_attack_time){
+
+		for (int i = 0; i < projectile_nr; i++) {
+
+			sf::Sprite spell_sprite;
+			spell_sprite.setTexture(*textureHolder->getTexture(Textures::Armor_Chaos));
+			ptr_spells->push_back(projectile::Spell(getPosition(), math::toRadians(angle + diff_angle*i), Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), map, Light(sf::Color(255, 120, 80, 100), sf::Vector3f(getPosition().x, getPosition().y, .5f), sf::Vector3f(0.4f, 3.f, 40.f), false), true, 3));
+		}
+		angle += 10;
+		m_attack_clock.restart();
+	}
 }
 
 void Boss::update_summon(sf::Time dt) {

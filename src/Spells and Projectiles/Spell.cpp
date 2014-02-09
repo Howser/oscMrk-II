@@ -2,18 +2,18 @@
 
 using namespace projectile;
 
-Spell::Spell(const sf::Vector2f & p_position, float angle, const Items & p_item, sf::Sprite & p_sprite, int p_damage, std::vector<std::vector<gen::Tile>>* ptr_tiles, Light & p_light)
+Spell::Spell(const sf::Vector2f & p_position, float angle, const Items & p_item, sf::Sprite & p_sprite, int p_damage, std::vector<std::vector<gen::Tile>>* ptr_tiles, Light & p_light, bool damage_player, float speed)
 	: m_light(p_light), m_position(p_position){
 		m_light.ptr_follow = &m_position;
 		setPosition(p_position);
-		m_velocity = sf::Vector2f(std::cos(angle)*SPEED, std::sin(angle)*SPEED);
+		m_velocity = sf::Vector2f(std::cos(angle)*speed, std::sin(angle)*speed);
 		m_item = p_item;
 		m_sprite = p_sprite;
 		m_sprite.setOrigin(24, 1);
 		m_sprite.setRotation(angle*180/3.14);
 		m_damage = p_damage;
 		p_tiles = ptr_tiles;
-		m_damage_player = false;
+		m_damage_player = damage_player;
 		dead = false;
 }
 

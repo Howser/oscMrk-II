@@ -73,6 +73,17 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		std::cout << "\033[0;31m" << "!!!ERROR!!!: TYPE NOT SUPPORTED\n";
 		break;
 	}
+
+	for (int i = 0; i < m_buffs.size(); i++)
+	{
+		if (m_buffs[i].m_duration > 0)
+		{
+			m_buffs[i].update(deltaTime);
+		}else
+		{
+			m_buffs.erase(m_buffs.begin() + i);
+		}
+	}
 }
 
 void MinorMob::draw(sf::RenderTarget & target, sf::RenderStates states) const{
@@ -316,4 +327,5 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 			}
 		}
 	}
+
 }

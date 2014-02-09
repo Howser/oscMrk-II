@@ -13,6 +13,7 @@ Spell::Spell(const sf::Vector2f & p_position, float angle, const Items & p_item,
 		m_sprite.setRotation(angle*180/3.14);
 		m_damage = p_damage;
 		p_tiles = ptr_tiles;
+		m_damage_player = false;
 		dead = false;
 }
 

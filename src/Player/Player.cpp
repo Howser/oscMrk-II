@@ -702,6 +702,7 @@ void Player::attack(const sf::RenderWindow & window, Attack p_attack){
 							arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
 							projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
 							arrow.setPosition(getPosition());
+							arrow.m_damage_player = false;
 							p_projectile_manager->m_arrows.push_back(arrow);
 							m_attackTimer.restart();
 						}
@@ -739,6 +740,7 @@ void Player::attack(const sf::RenderWindow & window, Attack p_attack){
 							arrow_sprite.setTexture(*p_texture_holder->getTexture(Textures::d_Arrow));
 							projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, p_projectile_manager->m_particleSystem);
 							arrow.setPosition(getPosition());
+							arrow.m_damage_player = false;
 							p_projectile_manager->m_arrows.push_back(arrow);
 							m_attackTimer.restart();
 						}

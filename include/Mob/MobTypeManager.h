@@ -8,7 +8,7 @@
 #define MAX_MOBS_PATHING 1
 
 enum TYPE{
-	test,
+	skeleton,
 	special,
 	boss,
 
@@ -16,12 +16,12 @@ enum TYPE{
 	PLAYER,
 };
 
-static const char* MobNames[3] = {"test.txt", "special.txt", "boss.txt"};
+static const char* MobNames[3] = {"skeleton.txt", "special.txt", "boss.txt"};
 
 static int GetHp(TYPE const& type){
 	switch (type)
 	{
-	case test:
+	case skeleton:
 		return 15;
 		break;
 	case special:
@@ -40,7 +40,7 @@ static int GetHp(TYPE const& type){
 static float GetDamage(TYPE const& type){
 	switch (type)
 	{
-	case test:
+	case skeleton:
 		return 5.f;
 		break;
 	case special:
@@ -60,7 +60,7 @@ static float GetDamage(TYPE const& type){
 static float GetAttackSpeed(TYPE const& type){
 	switch (type)
 	{
-	case test:
+	case skeleton:
 		return 2.f;
 		break;
 	case special:
@@ -79,7 +79,7 @@ static float GetAttackSpeed(TYPE const& type){
 static float GetAtackDistance(const TYPE & p_type){
 	switch (p_type)
 	{
-	case test:
+	case skeleton:
 		return 256.f;
 		break;
 	case special:
@@ -98,7 +98,7 @@ static float GetAtackDistance(const TYPE & p_type){
 static float GetSpeed(TYPE const& type){
 	switch (type)
 	{
-	case test:
+	case skeleton:
 		return 175;
 		break;
 	case special:
@@ -139,7 +139,7 @@ static int GetUnAggroDist(const TYPE & type){
 static int GetWidth(TYPE const& type){
 	switch (type)
 	{
-	case test:
+	case skeleton:
 		return 32;
 		break;
 	case special:
@@ -158,7 +158,7 @@ static int GetWidth(TYPE const& type){
 static int GetHeight(TYPE const& type){
 	switch (type)
 	{
-	case test:
+	case skeleton:
 		return 32;
 		break;
 	case special:
@@ -234,7 +234,7 @@ static std::vector<TYPE> GetTargets(TYPE const& type){
 static bool IsSpecial(TYPE const& type){
 	switch (type)
 	{
-	case test:
+	case skeleton:
 		return false;
 		break;
 	case special:
@@ -255,7 +255,7 @@ namespace spcl{
 		std::vector<TYPE> targets = GetTargets(type);
 		switch (type)
 		{
-		case test:
+		case skeleton:
 			break;
 		case special:
 			*specialTimer = 0;

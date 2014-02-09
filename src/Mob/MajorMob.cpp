@@ -16,7 +16,7 @@ MajorMob::MajorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>
 	this->textureHolder = textureHolder;
 	switch (type)
 	{
-	case TYPE::test:
+	case TYPE::skeleton:
 		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
 		break;
 	case TYPE::special:
@@ -49,7 +49,7 @@ MajorMob::MajorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	this->p_deadMobs = p_deadMobs;
 	switch (type)
 	{
-	case TYPE::test:
+	case TYPE::skeleton:
 		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
 		break;
 	case TYPE::special:

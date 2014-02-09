@@ -15,7 +15,7 @@ MinorMob::MinorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>
 	this->textureHolder = textureHolder;
 	switch (type)
 	{
-	case TYPE::test:
+	case TYPE::skeleton:
 		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
 		break;
 	case TYPE::special:
@@ -47,7 +47,7 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	this->p_deadMobs = p_deadMobs;
 	switch (type)
 	{
-	case TYPE::test:
+	case TYPE::skeleton:
 		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
 		break;
 	case TYPE::special:
@@ -64,7 +64,7 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows){
 	switch (type)
 	{
-	case test:
+	case skeleton:
 		Skeleton::update(map, deltaTime, playerPosition, p_health, ptr_mob, ptr_spells, ptr_arrows);
 		break;
 	case special:

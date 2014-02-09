@@ -340,13 +340,13 @@ void gen::Map::CreateRoom(Room* room, bool add, bool cave){
 			rooms.push_back(*room);
 			if (rooms.size() > 1 && i <= mobRoomChance + 10)
 			{
-				mobSpawners.push_back(MobSpawner(room->getCenter().x/WIDTH, room->getCenter().y/HEIGHT, room->radius/10, TYPE::test, 0, TYPE::special));
+				mobSpawners.push_back(MobSpawner(room->getCenter().x/WIDTH, room->getCenter().y/HEIGHT, room->radius/10, TYPE::skeleton, 0, TYPE::special));
 			}
 		}else
 		{
 			if (i <= mobRoomChance)
 			{
-				mobSpawners.push_back(MobSpawner(room->getCenter().x/WIDTH, room->getCenter().y/HEIGHT, 1, TYPE::test, 0, TYPE::special));
+				mobSpawners.push_back(MobSpawner(room->getCenter().x/WIDTH, room->getCenter().y/HEIGHT, 1, TYPE::skeleton, 0, TYPE::special));
 			}
 		}
 	}else
@@ -367,13 +367,13 @@ void gen::Map::CreateRoom(int x, int y, short width, short height, bool add, boo
 			rooms.push_back(room);
 			if (rooms.size() > 1 && i <= mobRoomChance + 10)
 			{
-				mobSpawners.push_back(MobSpawner(room.getCenter().x/WIDTH, room.getCenter().y/HEIGHT, room.radius/10, TYPE::test, 0, TYPE::special));
+				mobSpawners.push_back(MobSpawner(room.getCenter().x/WIDTH, room.getCenter().y/HEIGHT, room.radius/10, TYPE::skeleton, 0, TYPE::special));
 			}
 		}else
 		{
 			if (i <= mobRoomChance)
 			{
-				mobSpawners.push_back(MobSpawner(room.getCenter().x/WIDTH, room.getCenter().y/HEIGHT, 1, TYPE::test, 0, TYPE::special));
+				mobSpawners.push_back(MobSpawner(room.getCenter().x/WIDTH, room.getCenter().y/HEIGHT, 1, TYPE::skeleton, 0, TYPE::special));
 			}
 		}
 	}else if (type != Type::Prison)

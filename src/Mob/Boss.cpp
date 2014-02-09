@@ -26,6 +26,8 @@ Boss::Boss(TextureHolder* textureHolder, std::vector<DeadMob>* p_deadMobs, std::
 	dead = false;
 	aggro = false;
 
+	health = GetHp(type);
+
 	m_current_phase = Phase::Normal;
 	m_phase_time = sf::seconds(5);
 
@@ -48,7 +50,7 @@ void Boss::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime,
 	switch (m_current_phase)
 	{
 	case Boss::Normal:
-		update_normal(deltaTime, playerPosition, p_health);
+		update_normal(deltaTime, playerPosition, p_health, map);
 		break;
 
 	case Boss::Laser:
@@ -66,6 +68,17 @@ void Boss::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime,
 	default:
 		break;
 	}
+
+	for (int i = 0; i < m_buffs.size(); i++)
+	{
+		if (m_buffs[i].m_duration > 0)
+		{
+			m_buffs[i].update(deltaTime);
+		}else
+		{
+			m_buffs.erase(m_buffs.begin() + i);
+		}
+	}
 }
 
 void Boss::draw(sf::RenderTarget & target, sf::RenderStates states) const {
@@ -74,7 +87,13 @@ void Boss::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 }
 
 void Boss::takeDamage(int damage) {
-
+	health -= damage;
+	if (health <= 0) {
+		die();
+	} else {
+		aggro = true;
+	}
+	std::cout << "ouch\n";
 }
 
 void Boss::dealDamage(int* health) {
@@ -82,17 +101,18 @@ void Boss::dealDamage(int* health) {
 }
 
 void Boss::die() {
-
+	die_func();
 }
 
-void Boss::update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_health) {
+void Boss::update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_health, std::vector<std::vector<gen::Tile>>* map) {
 	// if !inrange to attack, move towards player
 
 	if (math::distance(getPosition(), playerPosition) > m_attack_range) {
 		followPath(dt);
 		move(velocity);
+		checkCollision(map, playerPosition);
 	} else { // attack player
-			if (m_attack_clock.getElapsedTime() >= m_attack_time) {
+		if (m_attack_clock.getElapsedTime() >= m_attack_time) {
 			dealDamage(p_health);
 			m_attack_clock.restart();
 			// TODO: Attack animation

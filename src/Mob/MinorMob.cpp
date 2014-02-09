@@ -318,16 +318,5 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 				ptr_mob->move(ptr_mob->velocity);
 			}
 		}
-
-		for (int i = 0; i < ptr_mob->m_buffs.size(); i++)
-		{
-			if (ptr_mob->m_buffs[i].m_duration > 0)
-			{
-				ptr_mob->m_buffs[i].update(p_dt);
-			}else
-			{
-				ptr_mob->m_buffs.erase(ptr_mob->m_buffs.begin() + i);
-			}
-		}
 	}
 }

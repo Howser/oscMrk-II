@@ -11,7 +11,6 @@ MobManager::MobManager(TextureHolder & textureHolder, std::vector<std::vector<ge
 		LootTables.push_back(LootTable((TYPE)i));
 	}
 	m_update = true;
-
 }
 
 MobManager::MobManager(){

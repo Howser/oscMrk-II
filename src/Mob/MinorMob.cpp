@@ -17,7 +17,7 @@ MinorMob::MinorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>
 	{
 	case TYPE::skeleton:
 		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
-		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 1);
+		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 0.2f);
 		break;
 	}
 	timeSincePath = 0.f;
@@ -47,7 +47,7 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	{
 	case TYPE::skeleton:
 		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
-		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 1);
+		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 0.5f);
 		break;
 	}
 	timeSincePath = 0.f;

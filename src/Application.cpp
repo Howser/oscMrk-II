@@ -141,6 +141,7 @@ void Application::loadResources()
 
 #pragma region Mob Textures
 		mTextures.loadTexture(Textures::Skeleton, "resources/graphics/Mob/skeleton.png");
+		mTextures.loadTexture(Textures::Spider, "resources/graphics/Mob/spider.png");
 		mTextures.loadTexture(Textures::TestMobDead, "resources/graphics/Mob/dead.png");
 		mTextures.loadTexture(Textures::Boss, "resources/graphics/Mob/boss.png");
 #pragma endregion

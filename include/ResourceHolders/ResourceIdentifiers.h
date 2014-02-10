@@ -30,6 +30,7 @@ namespace Textures
 
 		///<summary>Mobs</summary>
 		Skeleton,
+		Spider,
 		Boss,
 		TestMobDead,
 

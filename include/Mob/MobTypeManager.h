@@ -9,6 +9,7 @@
 
 enum TYPE{
 	skeleton,
+	spider,
 	special,
 	boss,
 

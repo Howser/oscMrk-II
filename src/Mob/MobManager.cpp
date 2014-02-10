@@ -463,13 +463,14 @@ Mob* MobManager::getAtPosition(float x, float y)
 
 Mob* MobManager::getAtPosition(sf::Vector2f position)
 {
-	for (int i = 0; i < m_tree.search(position)->mobs.size(); i++)
+	mobtree::Branch* ptr_branch = m_tree.search(position);
+	for (int i = 0; i < ptr_branch->mobs.size(); i++)
 	{
-		if (sf::Rect<float>(m_tree.search(position)->mobs[i]->getPosition().x - m_tree.search(position)->mobs[i]->width/2, m_tree.search(position)->mobs[i]->getPosition().y - m_tree.search(position)->mobs[i]->height/2, m_tree.search(position)->mobs[i]->width, m_tree.search(position)->mobs[i]->height).intersects(sf::Rect<float>(position.x, position.y, 1, 1)))
+		if (sf::Rect<float>(ptr_branch->mobs[i]->getPosition().x - ptr_branch->mobs[i]->width/2, ptr_branch->mobs[i]->getPosition().y - ptr_branch->mobs[i]->height/2, ptr_branch->mobs[i]->width, ptr_branch->mobs[i]->height).intersects(sf::Rect<float>(position.x, position.y, 1, 1)))
 		{
 			if (!mobs[i]->dead)
 			{
-				return m_tree.search(position)->mobs[i];
+				return ptr_branch->mobs[i];
 			}
 		}
 	}

@@ -16,10 +16,8 @@ MinorMob::MinorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>
 	switch (type)
 	{
 	case TYPE::skeleton:
-		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
-		break;
-	case TYPE::special:
-		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
+		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
+		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 1);
 		break;
 	}
 	timeSincePath = 0.f;
@@ -48,10 +46,8 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	switch (type)
 	{
 	case TYPE::skeleton:
-		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
-		break;
-	case TYPE::special:
-		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
+		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
+		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 1);
 		break;
 	}
 	timeSincePath = 0.f;
@@ -84,6 +80,59 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 			m_buffs.erase(m_buffs.begin() + i);
 		}
 	}
+
+	if (velocity.x < 0)
+	{
+		m_direction = Direction::Left;
+	}else if (velocity.x > 0)
+	{
+		m_direction = Direction::Right;
+	}
+	if (velocity.y < 0 && std::abs(velocity.y) > std::abs(velocity.x))
+	{
+		m_direction = Direction::Up;
+	}else if (velocity.y > 0 && std::abs(velocity.y) > std::abs(velocity.x))
+	{
+		m_direction = Direction::Down;
+	}
+	if (aggro)
+	{
+		if (std::abs(velocity.x) + std::abs(velocity.y) == 0)
+		{
+			float angle = math::toDegrees(std::atan2f(playerPosition.y - getPosition().y, playerPosition.x - getPosition().x));
+			if (angle > 215 && angle <= 45)
+			{
+				m_direction = Direction::Up;
+			}else if (angle > 45 && angle <= 135)
+			{
+				m_direction = Direction::Right;
+			}else if (angle > 135 && angle <= 225)
+			{
+				m_direction = Direction::Down;
+			}else if (angle > 225 && angle <= 315)
+			{
+				m_direction = Direction::Left;
+			}
+		}
+	}
+	switch (m_direction)
+	{
+	case Mob::Up:
+		m_animation.loop(0);
+		break;
+	case Mob::Down:
+		m_animation.loop(2);
+		break;
+	case Mob::Left:
+		m_animation.loop(3);
+		break;
+	case Mob::Right:
+		m_animation.loop(1);
+		break;
+	default:
+		break;
+	}
+	sprite.setTextureRect(m_animation.getFrame());
 }
 
 void MinorMob::draw(sf::RenderTarget & target, sf::RenderStates states) const{

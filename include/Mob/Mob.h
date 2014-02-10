@@ -19,8 +19,10 @@
 #include "Mob\DeadMob.h"
 #include "Spells and Projectiles\Spell.h"
 #include "Spells and Projectiles\Arrow.h"
+#include "Animation\Animation.h"
 
 class Mob : public sf::Transformable, public sf::Drawable{
+	
 public:
 	virtual void update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows) = 0;
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const = 0;
@@ -65,5 +67,17 @@ public:
 	virtual void dealDamage(int* health) = 0;
 
 protected:
+	Animation m_animation;
 	std::vector<DeadMob>* p_deadMobs;
+
+	
+	enum Direction{
+		Walking,
+		Up,
+		Down,
+		Left,
+		Right,
+	};
+	///<summary>To know which animation to loop if the mob is standing still.</summary>
+	Direction m_direction;
 };

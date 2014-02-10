@@ -13,9 +13,6 @@ namespace Textures
 		Losescreen,
 		Button,
 		Player,
-		TestMob,
-		Boss,
-		TestMobDead,
 		MouseClick,
 		Mouse,
 		InventorySlot,
@@ -30,6 +27,11 @@ namespace Textures
 		Ability,
 		gui_Inventory,
 		gui_LootInventory,
+
+		///<summary>Mobs</summary>
+		Skeleton,
+		Boss,
+		TestMobDead,
 
 		///<summary>Items.</summary>
 		Arrow,

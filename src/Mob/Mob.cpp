@@ -128,3 +128,59 @@ bool Mob::hasBuff(const Items & p_item){
 	}
 	return false;
 }
+
+void Mob::UpdateAnimation(const sf::Vector2<float> & playerPosition){
+	if (velocity.x < 0)
+	{
+		m_direction = Direction::Left;
+	}else if (velocity.x > 0)
+	{
+		m_direction = Direction::Right;
+	}
+	if (velocity.y < 0 && std::abs(velocity.y) > std::abs(velocity.x))
+	{
+		m_direction = Direction::Up;
+	}else if (velocity.y > 0 && std::abs(velocity.y) > std::abs(velocity.x))
+	{
+		m_direction = Direction::Down;
+	}
+	if (aggro)
+	{
+		if (std::abs(velocity.x) + std::abs(velocity.y) < GetSpeed(type))
+		{
+			float angle = math::toDegrees(std::atan2f(playerPosition.y - getPosition().y, playerPosition.x - getPosition().x));
+			if (angle > 215 && angle <= 45)
+			{
+				m_direction = Direction::Up;
+			}else if (angle > 45 && angle <= 135)
+			{
+				m_direction = Direction::Right;
+			}else if (angle > 135 && angle <= 225)
+			{
+				m_direction = Direction::Down;
+			}else if (angle > 225 && angle <= 315)
+			{
+				m_direction = Direction::Left;
+			}
+		}
+	}
+	switch (m_direction)
+	{
+	case Mob::Up:
+		m_animation.loop(0);
+		break;
+	case Mob::Down:
+		m_animation.loop(2);
+		break;
+	case Mob::Left:
+		m_animation.loop(3);
+		break;
+	case Mob::Right:
+		m_animation.loop(1);
+		break;
+	default:
+		break;
+	}
+	m_animation.update();
+	sprite.setTextureRect(m_animation.getFrame());
+}

@@ -8,6 +8,7 @@ namespace States
 		Menu,
 		Game,
 		Lose,
+		Win,
 		None,
 	};
 }

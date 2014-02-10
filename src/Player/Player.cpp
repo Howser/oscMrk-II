@@ -598,7 +598,7 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 
 	sf::Color c = m_healthbar.mBase.getColor();
-	if (m_health < 0){
+	if (m_health <= 0){
 		c.a *= 0.99;
 		m_healthbar.mBase.setColor(c);
 		m_healthbar.mLoaded.setColor(c);

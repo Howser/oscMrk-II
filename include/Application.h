@@ -10,6 +10,7 @@
 #include "StateStack\MenuState.h"
 #include "StateStack\GameState.h"
 #include "StateStack\LoseState.h"
+#include "StateStack\WinState.h"
 
 #include "ResourceHolders\FontHolder.h"
 

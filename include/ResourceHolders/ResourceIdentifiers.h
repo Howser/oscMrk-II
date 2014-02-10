@@ -11,6 +11,7 @@ namespace Textures
 		Mini_Map_sheet,
 		Titlescreen,
 		Losescreen,
+		Winscreen,
 		Button,
 		Player,
 		MouseClick,

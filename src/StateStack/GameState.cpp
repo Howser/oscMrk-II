@@ -20,7 +20,8 @@ GameState::GameState(StateStack& stateStack, Context context, States::ID id)
 	mParticleSystem(),
 	mLoadingThread(&gen::Map::Gen, &mMap),
 	mFirstLoad(true),
-	m_lost(false)
+	m_lost(false),
+	m_win(false)
 {
 	mLoadingSprite.setTexture(*context.textures->getTexture(Textures::LoadingScreen));
 
@@ -85,7 +86,7 @@ bool GameState::update(sf::Time dt)
 		{
 			mPlayer.updateInventory(*getContext().window, *getContext().textures);
 		}
-		if (mPlayer.m_health < 0 && !m_lost) {
+		if (mPlayer.m_health < 0 && !m_lost && !m_win) {
 			requestStackPush(States::Lose);
 			m_lost = true;
 		} else if (m_lost) {
@@ -179,7 +180,9 @@ bool GameState::update(sf::Time dt)
 			}
 
 			mobManager.spawn_boss(mPlayer.getPosition(), getContext().textures, [this](){
-				requestStackClear();
+				requestStackPush(States::Win);
+				m_win = true;
+				mPlayer.m_health = -1;
 			});
 
 			mobManager.Build_Tree();
@@ -276,7 +279,7 @@ void GameState::draw()
 		sf::Sprite sprite(mDiffuseRender.getTexture());
 		window->setView(window->getDefaultView());
 		window->draw(sprite, &mShader);
-		if (!m_lost)
+		if (!m_lost || !m_win)
 			mMap.draw_mini_map(window, mView.getCenter().x, mView.getCenter().y);
 		mPlayer.drawGUI(window, getContext().fonts);
 	} 

@@ -47,7 +47,7 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	{
 	case TYPE::skeleton:
 		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
-		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 0.5f);
+		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 0.2f);
 		break;
 	}
 	timeSincePath = 0.f;
@@ -97,7 +97,7 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 	}
 	if (aggro)
 	{
-		if (std::abs(velocity.x) + std::abs(velocity.y) == 0)
+		if (std::abs(velocity.x) + std::abs(velocity.y) < 4)
 		{
 			float angle = math::toDegrees(std::atan2f(playerPosition.y - getPosition().y, playerPosition.x - getPosition().x));
 			if (angle > 215 && angle <= 45)

@@ -105,19 +105,21 @@ void Boss::die() {
 }
 
 void Boss::update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_health, std::vector<std::vector<gen::Tile>>* map) {
-	// if !inrange to attack, move towards player
-	m_attack_time = sf::seconds(GetAttackSpeed(type));
+	if (!dead) {
+		// if !inrange to attack, move towards player
+		m_attack_time = sf::seconds(GetAttackSpeed(type));
 
-	if (math::distance(getPosition(), playerPosition) > m_attack_range) {
-		followPath(dt);
-		move(velocity);
-		checkCollision(map, playerPosition);
-		std::cout << "moving" << std::endl;
-	} else { // attack player
-		if (m_attack_clock.getElapsedTime() >= m_attack_time) {
-			dealDamage(p_health);
-			m_attack_clock.restart();
-			// TODO: Attack animation
+		if (math::distance(getPosition(), playerPosition) > m_attack_range) {
+			followPath(dt);
+			move(velocity);
+			checkCollision(map, playerPosition);
+			std::cout << "moving" << std::endl;
+		} else { // attack player
+			if (m_attack_clock.getElapsedTime() >= m_attack_time) {
+				dealDamage(p_health);
+				m_attack_clock.restart();
+				// TODO: Attack animation
+			}
 		}
 	}
 }
@@ -140,7 +142,7 @@ void Boss::update_fireCircle(sf::Time dt, std::vector<projectile::Spell>* ptr_sp
 	int projectile_nr = 8;
 	int diff_angle = 360 / projectile_nr;
 	m_attack_time = sf::seconds(0.3f);
-	
+
 	if (m_attack_clock.getElapsedTime() >= m_attack_time){
 
 		for (int i = 0; i < projectile_nr; i++) {

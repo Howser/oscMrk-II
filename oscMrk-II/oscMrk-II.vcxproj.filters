@@ -318,6 +318,9 @@
     <ClInclude Include="..\include\Mob\Boss.h">
       <Filter>Header Files\Mob</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\StateStack\WinState.h">
+      <Filter>Header Files\StateStack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">
@@ -504,6 +507,9 @@
     </ClCompile>
     <ClCompile Include="..\src\Mob\Mob.cpp">
       <Filter>Source Files\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StateStack\WinState.cpp">
+      <Filter>Source Files\StateStack</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

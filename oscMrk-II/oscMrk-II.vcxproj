@@ -78,6 +78,7 @@
     <ClInclude Include="..\include\StateStack\StateIdentifiers.h" />
     <ClInclude Include="..\include\StateStack\StateStack.h" />
     <ClInclude Include="..\include\StateStack\TitleState.h" />
+    <ClInclude Include="..\include\StateStack\WinState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl" />
@@ -143,6 +144,7 @@
     <ClCompile Include="..\src\StateStack\State.cpp" />
     <ClCompile Include="..\src\StateStack\StateStack.cpp" />
     <ClCompile Include="..\src\StateStack\TitleState.cpp" />
+    <ClCompile Include="..\src\StateStack\WinState.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{13444BF6-D816-4E8D-908B-907055EA552D}</ProjectGuid>

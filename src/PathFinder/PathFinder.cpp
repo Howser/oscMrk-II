@@ -102,7 +102,8 @@ void PathFinder::Clear()
 	closed.clear();
 }
 
-std::vector<sf::Vector2i> PathFinder::GetPath(sf::Vector2i start, sf::Vector2i destination, bool tiles){
+std::vector<sf::Vector2i> PathFinder::GetPath(const sf::Vector2i & start, const sf::Vector2i & destination, bool tiles){
+	this->destination = destination;
 	if (start.x > 1 && start.x < mapSize.x - 1 && start.y > 1 && start.y < mapSize.y - 1 && destination.x > 1 && destination.x < mapSize.x - 1 && destination.y > 1 && destination.y < mapSize.y - 1 && (nodes[destination.x + destination.y * mapSize.x].id == 1 || nodes[destination.x + destination.y * mapSize.x].id == 3) && nodes[start.x + start.y * mapSize.x].id == 1)
 	{
 		path.clear();
@@ -123,7 +124,7 @@ std::vector<sf::Vector2i> PathFinder::GetPath(sf::Vector2i start, sf::Vector2i d
 		nodes[currentNode].closed = false;
 		open.push_back(currentNode);
 
-		while (!nodes[GetIndexOf(&destination)].closed && !nodes[GetIndexOf(&destination)].open)
+		while (!nodes[GetIndexOf(destination)].closed && !nodes[GetIndexOf(destination)].open)
 		{
 			currentNode = GetLowestFOpen();
 			nodes[currentNode].open = false;
@@ -272,6 +273,10 @@ std::vector<sf::Vector2i> PathFinder::GetPath(sf::Vector2i start, sf::Vector2i d
 }
 
 void PathFinder::SetPath(const sf::Vector2i & destination, bool tiles){
+	if (!tiles)
+	{
+		path.push_back(destination);
+	}
 	Node current = nodes[GetIndexOf(destination)];
 	path.push_back(sf::Vector2i(current.x, current.y));
 	while (current.parent != nullptr)

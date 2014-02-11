@@ -199,5 +199,4 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 			}
 		}
 	}
-
 }

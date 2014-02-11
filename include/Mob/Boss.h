@@ -35,7 +35,7 @@ private:
 	Phase m_current_phase;
 
 	void update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_health, std::vector<std::vector<gen::Tile>>* map);
-	void update_laser(sf::Time dt);
+	void update_laser(sf::Time dt, sf::Vector2f& playerPosition, std::vector<projectile::Spell>* ptr_spells,  std::vector<std::vector<gen::Tile>>* map);
 	void update_fireCircle(sf::Time dt, std::vector<projectile::Spell>* ptr_spells,  std::vector<std::vector<gen::Tile>>* map);
 	void update_summon(sf::Time dt);
 

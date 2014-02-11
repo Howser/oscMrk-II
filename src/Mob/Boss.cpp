@@ -136,7 +136,7 @@ void Boss::update_laser(sf::Time dt, sf::Vector2f& playerPosition, std::vector<p
 		float angle = std::atan2f(playerPosition.y - getPosition().y, playerPosition.x - getPosition().x);
 		sf::Sprite spell_sprite;
 		spell_sprite.setTexture(*textureHolder->getTexture(Textures::Armor_Chaos));
-		ptr_spells->push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), map, Light(sf::Color(255, 80, 40, 100), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false), true, spell_speed));
+		ptr_spells->push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, map, true));
 		m_attack_clock.restart();
 	}
 }
@@ -158,7 +158,7 @@ void Boss::update_fireCircle(sf::Time dt, std::vector<projectile::Spell>* ptr_sp
 
 			sf::Sprite spell_sprite;
 			spell_sprite.setTexture(*textureHolder->getTexture(Textures::Armor_Chaos));
-			ptr_spells->push_back(projectile::Spell(getPosition(), math::toRadians(angle + diff_angle*i), Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), map, Light(sf::Color(255, 80, 40, 100), sf::Vector3f(getPosition().x, getPosition().y, 0.075), sf::Vector3f(0, 5.f, 0.f), false), true, 3));
+			ptr_spells->push_back(projectile::Spell(getPosition(), math::toRadians(angle + diff_angle*i), Items::TestSpell, spell_sprite, map, true));
 		}
 		angle += 10;
 		m_attack_clock.restart();

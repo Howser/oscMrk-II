@@ -6,8 +6,6 @@
 
 #include <iostream>
 
-#include "Item\ItemManager.h"
-
 Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mobsPtr, ProjectileManager* p_projectile_manager, std::vector<std::vector<gen::Tile>>* ptr_tiles, LightManager* ptr_light_manager)
 	:
 	ptr_tiles(ptr_tiles),
@@ -427,7 +425,7 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 									if (m_Gear.slots[3].Items.empty() && m_Gear.slots[2].Items.empty())
 									{
 										item.Equip(&m_Gear.slots[2], &m_inventory.slots[x][y], &m_inventory);
-										if (!IsSpell(m_Gear.slots[2].Items[0].item))
+										if (!_SPELL::IsSpell(m_Gear.slots[2].Items[0].item))
 										{
 											m_d_gear[2].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Arrow + m_Gear.slots[2].Items[0].item))));
 										}
@@ -773,7 +771,7 @@ void Player::spell_attack(const Items & p_item, const sf::RenderWindow & p_windo
 			float angle = std::atan2f(sf::Mouse::getPosition(p_window).y - 720/2, sf::Mouse::getPosition(p_window).x - 1280/2);
 			sf::Sprite spell_sprite;
 			spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
-			p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, GetDamage(Items::TestSpell), ptr_tiles, Light(sf::Color(math::random(1, 255), math::random(1, 255), math::random(1, 255), 255), sf::Vector3f(getPosition().x, getPosition().y, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false), false, 10));
+			p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, ptr_tiles, false));
 			m_attackTimer.restart();
 		}
 		break;

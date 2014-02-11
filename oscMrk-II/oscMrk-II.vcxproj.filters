@@ -321,6 +321,12 @@
     <ClInclude Include="..\include\StateStack\WinState.h">
       <Filter>Header Files\StateStack</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Spells and Projectiles\SpellTypeManager.h">
+      <Filter>Header Files\Spells and Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Item\Items.h">
+      <Filter>Header Files\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Gui\Mouse.inl">

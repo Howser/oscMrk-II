@@ -19,6 +19,7 @@
 #include "Mob\DeadMob.h"
 #include "Spells and Projectiles\Spell.h"
 #include "Spells and Projectiles\Arrow.h"
+#include "Spells and Projectiles\SpellTypeManager.h"
 #include "Animation\Animation.h"
 
 class Mob : public sf::Transformable, public sf::Drawable{
@@ -47,7 +48,7 @@ public:
 	sf::Vector2f prevPos;
 
 	std::vector<sf::Sprite> m_arrows;
-	std::vector<buff::Buff> m_buffs;
+	std::vector<_BUFF::Buff> m_buffs;
 
 	std::vector<sf::Vector2i> path;
 	int ID, width, height, health;//, damage, aggroDist, armor, speed, attackSpeed;

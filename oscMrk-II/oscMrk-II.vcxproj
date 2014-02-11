@@ -37,6 +37,7 @@
     <ClInclude Include="..\include\Item\BaseItem.h" />
     <ClInclude Include="..\include\Item\GearItem.h" />
     <ClInclude Include="..\include\Item\ItemManager.h" />
+    <ClInclude Include="..\include\Item\Items.h" />
     <ClInclude Include="..\include\Item\LootItem.h" />
     <ClInclude Include="..\include\Item\MiscItem.h" />
     <ClInclude Include="..\include\Map\Map.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="..\include\Spells and Projectiles\Projectile.h" />
     <ClInclude Include="..\include\Spells and Projectiles\ProjectileManager.h" />
     <ClInclude Include="..\include\Spells and Projectiles\Spell.h" />
+    <ClInclude Include="..\include\Spells and Projectiles\SpellTypeManager.h" />
     <ClInclude Include="..\include\StateStack\GameState.h" />
     <ClInclude Include="..\include\StateStack\LoseState.h" />
     <ClInclude Include="..\include\StateStack\MenuState.h" />

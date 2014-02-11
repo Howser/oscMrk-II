@@ -5,6 +5,7 @@
 #include "AOE.h"
 #include "Mob\MobManager.h"
 #include "Effects\Particles\ParticleSystem.h"
+#include "SpellTypeManager.h"
 
 class ProjectileManager : public sf::Drawable{
 public:

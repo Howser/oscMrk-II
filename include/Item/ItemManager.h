@@ -3,30 +3,9 @@
 #include <SFML\Graphics\Text.hpp>
 #include <SFML\System\Time.hpp>
 #include <string>
+#include "Items.h"
 
-enum Items //sort by type
-{
-	Arrow,
-	Helmet_Destruction,
-	Helmet_Darkness,
-	Helmet_Chaos,
-	Armor_Destruction,
-	Armor_Darkness,
-	Armor_Chaos,
-	Bow,
-	TestSpell,
-	TestAOE,
-	NOITEM,
-	end,
-};
-
-///<summary>Strings that equate to the enum names.</summary>
-static const char* ItemNames[10] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Bow", "Test_Spell", "Test_AOE"};
-
-///<summary>Strings for item names to display in tooltips, etc.</summary>
-static const char* w_ItemNames[10] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Bow", "Test Spell", "Test AOE"};
-
-enum eGearSlot{
+static enum eGearSlot{
 	lHand,
 	rHand,
 	TwoHand,
@@ -36,14 +15,21 @@ enum eGearSlot{
 	NoSlot,
 };
 
-static const char* GearSlotNames[6] = {"Left Hand", "Right Hand", "Two Hander", "One Hand", "Helmet", "Armor"};
-
-enum itemType{
+static enum itemType{
 	Normal,
 	Gear,
 };
 
-static int StackSize(Items const& item){
+///<summary>Strings that equate to the enum names.</summary>
+static const char* ItemNames[10] = {"Arrow", "Helmet_Destruction", "Helmet_Darkness", "Helmet_Chaos", "Armor_Destruction", "Armor_Darkness", "Armor_Chaos", "Bow", "Test_Spell", "Test_AOE"};
+
+///<summary>Strings for item names to display in tooltips, etc.</summary>
+static const char* w_ItemNames[10] = {"Arrow", "Helmet of Destruction", "Helmet of Darkness", "Helmet of Chaos", "Armor of Destruction", "Armor of Darkness", "Armor of Chaos", "Bow", "Test Spell", "Test AOE"};
+
+static const char* GearSlotNames[6] = {"Left Hand", "Right Hand", "Two Hander", "One Hand", "Helmet", "Armor"};
+
+///<summary>Returns the maximum stack size for an item. Standard = 20 at the moment.</summary>
+static int StackSize(const Items & item){
 	switch (item)
 	{
 	case Helmet_Destruction:
@@ -76,7 +62,8 @@ static int StackSize(Items const& item){
 	}
 }
 
-static itemType GetType(Items item){
+///<summary>Returns either "Normal", or "Gear"</summary>
+static itemType GetType(const Items & item){
 	switch (item)
 	{
 	case Arrow:
@@ -115,17 +102,11 @@ static itemType GetType(Items item){
 	}
 }
 
-static int GetDamage(Items item){
+static int GetDamage(const Items & item){
 	switch (item)
 	{
 	case Bow:
 		return 5;
-		break;
-	case TestSpell:
-		return 5;
-		break;
-	case TestAOE:
-		return 3;
 		break;
 	default:
 		return 0;
@@ -133,7 +114,8 @@ static int GetDamage(Items item){
 	}
 }
 
-static float GetSpeed(Items item){
+///<summary>Returns the time between attacks for an item.</summary>
+static float GetSpeed(const Items & item){
 	switch (item)
 	{
 	case Bow:
@@ -148,7 +130,8 @@ static float GetSpeed(Items item){
 	}
 }
 
-static int GetArmor(Items item){
+///<summary>Returns the armor amount for an item. This value will be used when calculating the amount of damage to deal to the player.</summary>
+static int GetArmor(const Items & item){
 	switch (item)
 	{
 	case Helmet_Destruction:
@@ -175,7 +158,8 @@ static int GetArmor(Items item){
 	}
 }
 
-static eGearSlot GetSlot(Items item){
+///<summary>Returns the slot. Can either be "Helmet", "Armor", "TwoHand", "OneHand", or "NoSlot" for items that cannot be equipped.</summary>
+static eGearSlot GetSlot(const Items & item){
 	switch (item)
 	{
 	case Helmet_Destruction:
@@ -211,6 +195,7 @@ static eGearSlot GetSlot(Items item){
 	}
 }
 
+///<summary>Returns an item required to attack with the given item.</summary>
 static Items GetAmmo(const Items & p_item){
 	switch (p_item)
 	{
@@ -266,36 +251,6 @@ static bool IsSpell(const Items & item){
 	}
 }
 
-namespace _AOE{
-	static float GetRadius(const Items & p_item){
-		if (IsSpell(p_item))
-		{
-			switch (p_item)
-			{
-			default:
-				return 121;
-				break;
-			}
-		}
-		return 0;
-	}
-
-	///<summary>Seconds.</summary>
-	static float GetDuration(const Items & p_item){
-		if (IsSpell(p_item))
-		{
-			switch (p_item)
-			{
-			default:
-				return 2.5f;
-				break;
-			}
-		}
-		return 0;
-	}
-}
-
-eGearSlot;
 ///<summary>FORMAT: TYPE, case gear{GEAR SLOT, case weapon{DAMAGE, SPEED} case armor{ARMOR}} case misc{} case consumable{}</summary>
 static std::string GetStats(Items const& item, sf::Vector2i* size){
 	sf::Text text;
@@ -322,59 +277,5 @@ static std::string GetStats(Items const& item, sf::Vector2i* size){
 		size->x = text.getLocalBounds().width;
 		size->y = text.getLocalBounds().height;
 		return stats;
-	}
-}
-
-namespace buff{
-	struct Buff{
-		Buff(int* ptr_value, Items & p_buff);
-		Buff();
-		~Buff();
-
-		void update(sf::Time & p_dt);
-
-		float m_duration;
-
-		///<summary>An id generated from the player class.</summary>
-		int ID;
-
-		int* ptr_value;
-		float m_interval;
-		Items m_buff;
-	};
-
-	///<summary>Seconds.</summary>
-	static float GetDuration(const Items & p_item){
-		switch (p_item)
-		{
-		default:
-			return 9.f;
-			break;
-		}
-		return 0.f;
-	}
-
-	///<summary>Seconds.</summary>
-	static float GetInterval(const Items & p_item){
-		switch (p_item)
-		{
-		default:
-			return 0.5f;
-			break;
-		}
-		return 0.f;
-	}
-
-	static void execute(int* ptr_value, const Items & p_item){
-		switch (p_item)
-		{
-		default:
-			(*ptr_value) -= GetDamage(p_item);
-			break;
-		}
-	}
-
-	static Buff GetBuff(const Items & p_item){
-		return Buff(nullptr, (Items)p_item);
 	}
 }

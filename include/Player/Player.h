@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Spells and Projectiles\ProjectileManager.h"
+#include "Spells and Projectiles\SpellTypeManager.h"
 #include "Spells and Projectiles\Arrow.h"
 #include "Spells and Projectiles\Spell.h"
 #include "ResourceHolders\TextureHolder.h"
@@ -16,6 +17,7 @@
 #include "Inventory\Inventory.h"
 #include "Item\BaseItem.h"
 #include "Item\GearItem.h"
+#include "Item\ItemManager.h"
 #include "Inventory\GearSlots.h"
 #include "Mob\Mob.h"
 #include "Inventory\StackManager.h"

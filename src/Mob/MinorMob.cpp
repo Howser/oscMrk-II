@@ -63,6 +63,9 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 	case skeleton:
 		Skeleton::update(map, deltaTime, playerPosition, p_health, ptr_mob, ptr_spells, ptr_arrows);
 		break;
+	case spider:
+		Spider::update(map, deltaTime, playerPosition, p_health, ptr_mob);
+		break;
 	default:
 		std::cout << "\033[0;31m" << "!!!ERROR!!!: TYPE NOT SUPPORTED\n";
 		break;

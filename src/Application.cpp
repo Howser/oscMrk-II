@@ -4,7 +4,7 @@
 
 Application::Application()
 	:
-	mWindow(sf::VideoMode(1280, 720), "OscMrk-II", sf::Style::Close),
+	mWindow(sf::VideoMode(1280, 720), "Descending Endora", sf::Style::Close),
 	mTextures(),
 	mFonts(),
 	mMouse(&mWindow),
@@ -104,6 +104,7 @@ void Application::registerStates()
 	mStateStack.registerState<MenuState>(States::Menu);
 	mStateStack.registerState<GameState>(States::Game);
 	mStateStack.registerState<LoseState>(States::Lose);
+	mStateStack.registerState<WinState>(States::Win);
 	mStateStack.pushState(States::Title);
 }
 
@@ -114,6 +115,7 @@ void Application::loadResources()
 		// Textures
 		mTextures.loadTexture(Textures::Titlescreen, "resources/graphics/titlescreen.png");
 		mTextures.loadTexture(Textures::Losescreen, "resources/graphics/losescreen.png");
+		mTextures.loadTexture(Textures::Winscreen, "resources/graphics/winscreen.png");
 		mTextures.loadTexture(Textures::Mini_Map_sheet, "resources/graphics/map/mini.png");
 		mTextures.loadTexture(Textures::Prison_Sheet, "resources/graphics/map/tileset.png");
 		mTextures.loadTexture(Textures::Cave_Sheet, "resources/graphics/map/cave_tileset.png");
@@ -140,7 +142,8 @@ void Application::loadResources()
 #pragma endregion
 
 #pragma region Mob Textures
-		mTextures.loadTexture(Textures::TestMob, "resources/graphics/Mob/test.png");
+		mTextures.loadTexture(Textures::Skeleton, "resources/graphics/Mob/skeleton.png");
+		mTextures.loadTexture(Textures::Spider, "resources/graphics/Mob/spider.png");
 		mTextures.loadTexture(Textures::TestMobDead, "resources/graphics/Mob/dead.png");
 		mTextures.loadTexture(Textures::Boss, "resources/graphics/Mob/boss.png");
 #pragma endregion

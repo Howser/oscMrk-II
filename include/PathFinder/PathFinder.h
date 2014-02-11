@@ -13,7 +13,7 @@ public:
 	PathFinder(std::vector<std::vector<gen::Tile>>* tilePtr, sf::Vector2i const& mapSize);
         ~PathFinder();
 
-        std::vector<sf::Vector2i> GetPath(sf::Vector2i start, sf::Vector2i destination, bool tiles);
+        std::vector<sf::Vector2i> GetPath(const sf::Vector2i & start, const sf::Vector2i & destination, bool tiles);
 
 		void GetMap(std::vector<std::vector<gen::Tile>>* p_tile);
 
@@ -39,4 +39,6 @@ private:
 		int GetIndexOf(const sf::Vector2i& node);
 		int GetIndexOf(std::vector<int> & list, Node* node);
 		void Clear(std::vector<int>* list);
+
+		sf::Vector2<int> destination;
 };

@@ -9,6 +9,7 @@
 
 enum TYPE{
 	skeleton,
+	spider,
 	special,
 	boss,
 
@@ -175,9 +176,11 @@ static int GetHeight(TYPE const& type){
 }
 
 ///<summary>Seconds.</summary>
-static int GetTimeBetweenPathing(TYPE const& type){
+static float GetTimeBetweenPathing(TYPE const& type){
 	switch (type)
 	{
+	case boss:
+		return 0.4;
 	default:
 		return 1;
 		break;
@@ -281,7 +284,7 @@ static bool LineOfSight(const sf::Vector2<T> & p_A, const sf::Vector2<T> & p_B, 
 	std::vector<sf::Rect<int>> tiles;
 	for (int x = (p_A.x < p_B.x) ? p_A.x/32:p_B.x/32; x < ((p_A.x > p_B.x) ? p_A.x/32:p_B.x/32); x++)
 	{
-		tiles.push_back(sf::Rect<int>(x*32, k*x*32+m, 32, 32));
+	tiles.push_back(sf::Rect<int>(x*32, k*x*32+m, 32, 32));
 	}*/
 
 	for (int x = (p_A.x < p_B.x) ? p_A.x/32:p_B.x/32; x < ((p_A.x > p_B.x) ? p_A.x/32:p_B.x/32); x++)

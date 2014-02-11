@@ -105,19 +105,20 @@ void Boss::die() {
 }
 
 void Boss::update_normal(sf::Time dt,  sf::Vector2f & playerPosition, int* p_health, std::vector<std::vector<gen::Tile>>* map) {
-	// if !inrange to attack, move towards player
-	m_attack_time = sf::seconds(GetAttackSpeed(type));
+	if (!dead) {
+		// if !inrange to attack, move towards player
+		m_attack_time = sf::seconds(GetAttackSpeed(type));
 
-	if (math::distance(getPosition(), playerPosition) > m_attack_range) {
-		followPath(dt);
-		move(velocity);
-		checkCollision(map, playerPosition);
-		std::cout << path.size() << std::endl;
-	} else { // attack player
-		if (m_attack_clock.getElapsedTime() >= m_attack_time) {
-			dealDamage(p_health);
-			m_attack_clock.restart();
-			// TODO: Attack animation
+		if (math::distance(getPosition(), playerPosition) > m_attack_range) {
+			followPath(dt);
+			move(velocity);
+			checkCollision(map, playerPosition);
+		} else { // attack player
+			if (m_attack_clock.getElapsedTime() >= m_attack_time) {
+				dealDamage(p_health);
+				m_attack_clock.restart();
+				// TODO: Attack animation
+			}
 		}
 	}
 }

@@ -16,10 +16,8 @@ MinorMob::MinorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>
 	switch (type)
 	{
 	case TYPE::skeleton:
-		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
-		break;
-	case TYPE::special:
-		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
+		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
+		m_animation = Animation(sf::Vector2<int>(35, 30), 4, 0.2f);
 		break;
 	}
 	timeSincePath = 0.f;
@@ -48,10 +46,8 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 	switch (type)
 	{
 	case TYPE::skeleton:
-		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
-		break;
-	case TYPE::special:
-		sprite.setTexture(*textureHolder->getTexture(Textures::TestMob));
+		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
+		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 0.2f);
 		break;
 	}
 	timeSincePath = 0.f;
@@ -67,13 +63,13 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 	case skeleton:
 		Skeleton::update(map, deltaTime, playerPosition, p_health, ptr_mob, ptr_spells, ptr_arrows);
 		break;
-	case special:
+	case spider:
+		Spider::update(map, deltaTime, playerPosition, p_health, ptr_mob);
 		break;
 	default:
 		std::cout << "\033[0;31m" << "!!!ERROR!!!: TYPE NOT SUPPORTED\n";
 		break;
 	}
-
 	for (int i = 0; i < m_buffs.size(); i++)
 	{
 		if (m_buffs[i].m_duration > 0)
@@ -84,6 +80,7 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 			m_buffs.erase(m_buffs.begin() + i);
 		}
 	}
+	UpdateAnimation(playerPosition);
 }
 
 void MinorMob::draw(sf::RenderTarget & target, sf::RenderStates states) const{
@@ -132,11 +129,11 @@ bool MinorMob::operator ==(MinorMob const& rhs){
 	return (ID == rhs.ID);
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions////Mob type specific functions//
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma region Skeleton
 void Skeleton::attack(const sf::Vector2<float>& p_player_position, std::vector<projectile::Arrow>* ptr_arrows, Mob* ptr_mob, std::vector<std::vector<gen::Tile>>* ptr_tiles){
 	float angle = std::atan2f(p_player_position.y - ptr_mob->getPosition().y, p_player_position.x - ptr_mob->getPosition().x);
 	sf::Sprite arrow_sprite;
@@ -200,3 +197,65 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 		}
 	}
 }
+#pragma endregion
+
+#pragma region Spider
+void Spider::attack(int* ptr_health, Mob* ptr_mob){
+	ptr_mob->dealDamage(ptr_health);
+	ptr_mob->m_attack_timer = GetAttackSpeed(ptr_mob->type);
+}
+
+void Spider::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_dt, sf::Vector2<float>& p_player_position, int* ptr_health, Mob* ptr_mob){
+	if (ptr_mob->health <= 0)
+	{
+		ptr_mob->die();
+	}else
+	{
+		if (ptr_mob->aggro)
+		{
+			if (ptr_mob->updatePath > 0)
+			{
+				ptr_mob->updatePath -= p_dt.asSeconds();
+			}
+			if (math::distance(ptr_mob->getPosition(), p_player_position) <= GetAtackDistance(ptr_mob->type))
+			{
+				if (ptr_mob->m_attack_timer > 0)
+				{
+					ptr_mob->m_attack_timer -= p_dt.asSeconds();
+				}else
+				{
+					ptr_mob->m_attack_timer = GetAttackSpeed(ptr_mob->type);
+				}
+			}
+		}
+		if (!ptr_mob->aggro && ptr_mob->path.empty())
+		{
+			ptr_mob->timeSincePath += p_dt.asSeconds();
+		}
+		ptr_mob->checkCollision(ptr_map, p_player_position);
+		//if (!playerCollision)
+		{
+			if (!ptr_mob->aggro)
+			{
+				ptr_mob->followPath(p_dt);
+			}else
+			{
+				if (math::distance(p_player_position, ptr_mob->getPosition()) > GetAtackDistance(ptr_mob->type))
+				{
+					ptr_mob->followPath(p_dt);
+				}else
+				{
+					if (ptr_mob->m_attack_timer <= 0)
+					{
+						attack(ptr_health, ptr_mob);
+					}
+				}
+			}
+			if (!ptr_mob->IntersectsWall(sf::Rect<int>(ptr_mob->getPosition().x - ptr_mob->width/2 + ptr_mob->velocity.x + 3, ptr_mob->getPosition().y + ptr_mob->velocity.y, ptr_mob->width - 6, ptr_mob->height/2 - 3), *ptr_map))
+			{
+				ptr_mob->move(ptr_mob->velocity);
+			}
+		}
+	}
+}
+#pragma endregion

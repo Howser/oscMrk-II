@@ -11,11 +11,9 @@ namespace Textures
 		Mini_Map_sheet,
 		Titlescreen,
 		Losescreen,
+		Winscreen,
 		Button,
 		Player,
-		TestMob,
-		Boss,
-		TestMobDead,
 		MouseClick,
 		Mouse,
 		InventorySlot,
@@ -30,6 +28,12 @@ namespace Textures
 		Ability,
 		gui_Inventory,
 		gui_LootInventory,
+
+		///<summary>Mobs</summary>
+		Skeleton,
+		Spider,
+		Boss,
+		TestMobDead,
 
 		///<summary>Items.</summary>
 		Arrow,

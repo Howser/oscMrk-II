@@ -125,7 +125,7 @@ static int GetDamage(Items item){
 		return 5;
 		break;
 	case TestAOE:
-		return 50;
+		return 3;
 		break;
 	default:
 		return 0;

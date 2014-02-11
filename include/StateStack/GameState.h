@@ -65,4 +65,5 @@ private:
 	Textures::ID			mCurrentMapTexture;
 
 	bool					m_lost;
+	bool					m_win;
 };

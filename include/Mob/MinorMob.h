@@ -20,4 +20,5 @@ static struct Skeleton : public MinorMob{
 
 static struct Spider : public MinorMob{
 	static void update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_dt, sf::Vector2<float>& p_player_position, int* ptr_health, Mob* ptr_mob);
+	static void attack(int* ptr_health, Mob* ptr_mob);
 };

@@ -26,5 +26,7 @@ namespace projectile{
 		sf::Vector2f m_position;
 		///<summary>An id generated from the player class.</summary>
 		int ID;
+		
+		operator Light();
 	};
 };

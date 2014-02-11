@@ -262,16 +262,22 @@ void GameState::draw()
 		// Set the all the shader properties
 
 		std::vector<Light> all_lights = m_light_manager.m_lights;
-
-		for (int i = 0; i < m_projectile_manager.m_spells.size(); i++)
+		if (all_lights.size() + m_projectile_manager.m_spells.size() <= 130)
 		{
-			if (i < 130)
+			all_lights.insert(all_lights.end(), m_projectile_manager.m_spells.begin(), m_projectile_manager.m_spells.end());
+		}else
+		{
+			all_lights.insert(all_lights.end(), m_projectile_manager.m_spells.begin(), m_projectile_manager.m_spells.begin() + 130 - m_light_manager.m_lights.size());
+			/*for (int i = 0; i < m_projectile_manager.m_spells.size(); i++)
 			{
-				all_lights.push_back(m_projectile_manager.m_spells[i].m_light);
-			}else
-			{
-				break;
-			}
+				if (all_lights.size() < 130)
+				{
+					all_lights.push_back(m_projectile_manager.m_spells[i].m_light);
+				}else
+				{
+					break;
+				}
+			}*/
 		}
 
 		passLightsToShader(&mShader, &all_lights, &mView);

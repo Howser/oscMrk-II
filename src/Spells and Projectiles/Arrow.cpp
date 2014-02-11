@@ -14,12 +14,11 @@ Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sp
 	ps = p_ps;
 
 	//Delete the arrow after 30 seconds.
-	timer = 30.f;
+	timer = 3.f;
 }
 Arrow::~Arrow(){}
 
 void Arrow::update(sf::Time & p_dt){
-	timer -= p_dt.asSeconds();
 	for (unsigned int x = getPosition().x/32 - 1, y = getPosition().y/32  - 1; x < getPosition().x/32 + 1; x++)
 	{
 		for (y = getPosition().y/32  - 1; y < getPosition().y/32 + 1; y++)

@@ -72,28 +72,33 @@ void ProjectileManager::update(sf::Time & p_dt){
 		switch (m_arrows[i].m_item)
 		{
 		case Arrow:
-			if (m_arrows[i].timer > 0)
+			if (m_arrows[i].dead)
 			{
-				if (!m_arrows[i].dead)
+				m_arrows[i].timer -= p_dt.asSeconds();
+			}
+			else
+			{
+				m_arrows[i].update(p_dt);
+				if (!m_arrows[i].m_damage_player)
 				{
-					m_arrows[i].update(p_dt);
-					if (!m_arrows[i].m_damage_player)
+					Mob* mob = m_mobManager->getAtPosition(m_arrows[i].getPosition());
+					if (mob != nullptr && !mob->dead)
 					{
-						Mob* mob = m_mobManager->getAtPosition(m_arrows[i].getPosition());
-						if (mob != nullptr && !mob->dead)
-						{
-							mob->takeDamage(m_arrows[i].m_damage);
-							m_arrows[i].kill();
-							m_arrows.erase(m_arrows.begin() + i);
-						}
-					}else
-					{
-						
+						mob->takeDamage(m_arrows[i].m_damage);
+						m_arrows[i].kill();
+						m_arrows.erase(m_arrows.begin() + i);
 					}
+				}else
+				{
+					//damage player
 				}
-			}else
+			}if (m_arrows[i].timer <= 0)
 			{
-				m_arrows.erase(m_arrows.begin() + i);
+				m_arrows[i].m_sprite.setColor(sf::Color(m_arrows[i].m_sprite.getColor().r, m_arrows[i].m_sprite.getColor().g, m_arrows[i].m_sprite.getColor().b, m_arrows[i].m_sprite.getColor().a*0.9f));
+				if (m_arrows[i].m_sprite.getColor().a <= 1)
+				{
+					m_arrows.erase(m_arrows.begin() + i);
+				}
 			}
 			break;
 		}

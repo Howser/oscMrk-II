@@ -27,6 +27,7 @@ namespace projectile{
 		///<summary>An id generated from the player class.</summary>
 		int ID;
 		
+		///<summary>Used in order to utilize std::vector.insert for the lights.</summary>
 		operator Light();
 	};
 };

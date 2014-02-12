@@ -26,10 +26,23 @@ namespace _SPELL{
 			std::cout << "!!!ERROR!!!: SPELL: " << p_spell << " is NOT an ITEM!\n";
 			return Items::NOITEM;
 			break;
-			break;
 		}
 	}
 
+	///<summary>Seconds, returns -1 for no timer.</summary>
+	static float GetTimer(const Spell & p_spell){
+		switch (p_spell)
+		{
+		case TestSpell:
+			return 1;
+			break;
+		default:
+			std::cout << "!!!ERROR!!!: SPELL: " << p_spell << " is not implemented for 'GetTimer'!\n";
+			return Items::NOITEM;
+			break;
+		}
+	}
+	
 	static Spell ToSpell(const Items & p_item){
 		switch (p_item)
 		{
@@ -84,17 +97,17 @@ namespace _SPELL{
 	}
 
 	///<summary>Returns the damage for spell-type attacks and buffs/debuffs.</summary>
-	static int GetDamage(const Items & p_item){
-		switch (p_item)
+	static int GetDamage(const Spell & p_spell){
+		switch (p_spell)
 		{
 		default:
 			return 1;
 			break;
 		}
 	}
-	
-	static Light GetLight(const Items & p_item){
-		switch (p_item)
+
+	static Light GetLight(const Spell & p_spell){
+		switch (p_spell)
 		{
 		default:
 			return Light(sf::Color(255, 80, 40, 100), sf::Vector3f(0, 0, 0.075f), sf::Vector3f(0.f, 5.f, 0.f), false);
@@ -102,41 +115,35 @@ namespace _SPELL{
 		}
 	}
 
-	static float GetSpeed(const Items & p_item){
-		switch (p_item)
+	static float GetSpeed(const Spell & p_spell){
+		switch (p_spell)
 		{
 		default:
-			return 10.f;
+			return 1.f;
 			break;
 		}
 	}
 }
 
 namespace _AOE{
-	static float GetRadius(const Items & p_item){
-		if (_SPELL::IsSpell(p_item))
+	static float GetRadius(const _SPELL::Spell & p_spell){
+		switch (p_spell)
 		{
-			switch (p_item)
-			{
-			default:
-				return 121;
-				break;
-			}
+		default:
+			return 121;
+			break;
 		}
 		return 0;
 	}
 
 	///<summary>Seconds.</summary>
-	static float GetDuration(const Items & p_item){
-		if (_SPELL::IsSpell(p_item))
-		{
-			switch (p_item)
+	static float GetDuration(const _SPELL::Spell & p_spell){
+			switch (p_spell)
 			{
 			default:
 				return 2.5f;
 				break;
 			}
-		}
 		return 0;
 	}
 }
@@ -160,8 +167,8 @@ namespace _BUFF{
 	};
 
 	///<summary>Seconds.</summary>
-	static float GetDuration(const Items & p_item){
-		switch (p_item)
+	static float GetDuration(const _SPELL::Spell & p_spell){
+		switch (p_spell)
 		{
 		default:
 			return 9.f;
@@ -171,8 +178,8 @@ namespace _BUFF{
 	}
 
 	///<summary>Seconds.</summary>
-	static float GetInterval(const Items & p_item){
-		switch (p_item)
+	static float GetInterval(const _SPELL::Spell & p_spell){
+		switch (p_spell)
 		{
 		default:
 			return 0.5f;
@@ -181,11 +188,11 @@ namespace _BUFF{
 		return 0.f;
 	}
 
-	static void execute(int* ptr_value, const Items & p_item){
-		switch (p_item)
+	static void execute(int* ptr_value, const _SPELL::Spell & p_spell){
+		switch (p_spell)
 		{
 		default:
-			(*ptr_value) -= _SPELL::GetDamage(p_item);
+			(*ptr_value) -= _SPELL::GetDamage(p_spell);
 			break;
 		}
 	}

@@ -57,6 +57,16 @@ void ProjectileManager::update(sf::Time & p_dt){
 						m_spells[i].kill();
 					}
 				}
+				if (_SPELL::GetTimer(_SPELL::ToSpell(m_spells[i].m_item)) != -1)
+				{
+					if (m_spells[i].m_timer > 0)
+					{
+						m_spells[i].m_timer -= p_dt.asSeconds();
+					}else
+					{
+						m_spells.erase(m_spells.begin() + i);
+					}
+				}
 			}else
 			{
 				m_spells[i].kill();

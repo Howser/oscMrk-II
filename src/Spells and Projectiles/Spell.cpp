@@ -3,18 +3,19 @@
 using namespace projectile;
 
 Spell::Spell(const sf::Vector2f & p_position, float angle, const _SPELL::Spell & p_spell, sf::Sprite & p_sprite, std::vector<std::vector<gen::Tile>>* ptr_tiles, bool damage_player)
-	: m_light(_SPELL::GetLight(_SPELL::ToItem(p_spell))), m_position(p_position){
+	: m_light(_SPELL::GetLight(p_spell)), m_position(p_position){
 		m_light.ptr_follow = &m_position;
 		setPosition(p_position);
-		m_velocity = sf::Vector2f(std::cos(angle)*_SPELL::GetSpeed(_SPELL::ToItem(p_spell)), std::sin(angle)*_SPELL::GetSpeed(_SPELL::ToItem(p_spell)));
+		m_velocity = sf::Vector2f(std::cos(angle)*_SPELL::GetSpeed(p_spell), std::sin(angle)*_SPELL::GetSpeed(p_spell));
 		m_item = _SPELL::ToItem(p_spell);
 		m_sprite = p_sprite;
 		m_sprite.setOrigin(24, 1);
 		m_sprite.setRotation(angle*180/3.14);
-		m_damage = _SPELL::GetDamage(_SPELL::ToItem(p_spell));
+		m_damage = _SPELL::GetDamage(p_spell);
 		p_tiles = ptr_tiles;
 		m_damage_player = damage_player;
 		dead = false;
+		m_timer = _SPELL::GetTimer(p_spell);
 }
 
 Spell::~Spell(){

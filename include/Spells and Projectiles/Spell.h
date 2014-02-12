@@ -25,8 +25,12 @@ namespace projectile{
 		void kill();
 		Light m_light;
 		sf::Vector2f m_position;
+
 		///<summary>An id generated from the player class.</summary>
 		int ID;
+
+		///<summary>Delete the projectile from the world when this timer == 0.</summary>
+		float m_timer;
 		
 		///<summary>Used in order to utilize std::vector.insert for the lights.</summary>
 		operator Light();

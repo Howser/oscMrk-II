@@ -771,7 +771,7 @@ void Player::spell_attack(const Items & p_item, const sf::RenderWindow & p_windo
 			float angle = std::atan2f(sf::Mouse::getPosition(p_window).y - 720/2, sf::Mouse::getPosition(p_window).x - 1280/2);
 			sf::Sprite spell_sprite;
 			spell_sprite.setTexture(*p_texture_holder->getTexture(Textures::Armor_Chaos));
-			p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, Items::TestSpell, spell_sprite, ptr_tiles, false));
+			p_projectile_manager->m_spells.push_back(projectile::Spell(getPosition(), angle, _SPELL::ToSpell(Items::TestSpell), spell_sprite, ptr_tiles, false));
 			m_attackTimer.restart();
 		}
 		break;

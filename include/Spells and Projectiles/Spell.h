@@ -18,7 +18,7 @@
 namespace projectile{
 	class Spell : public Projectile{
 	public:
-		Spell(const sf::Vector2f & p_position, float angle, const Items & p_item, sf::Sprite & p_sprite, std::vector<std::vector<gen::Tile>>* ptr_tiles, bool damage_player);
+		Spell(const sf::Vector2f & p_position, float angle, const _SPELL::Spell & p_spell, sf::Sprite & p_sprite, std::vector<std::vector<gen::Tile>>* ptr_tiles, bool damage_player);
 		~Spell();
 		void update(sf::Time & p_dt);
 		void draw(sf::RenderTarget & target, sf::RenderStates states)const;

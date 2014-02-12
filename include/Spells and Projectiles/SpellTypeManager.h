@@ -6,34 +6,75 @@
 #include "Item\Items.h"
 
 namespace _SPELL{
+
+	static enum Spell{
+		TestSpell,
+		TestAOE,
+		NOSPELL,
+	};
+
+	static Items ToItem(const Spell & p_spell){
+		switch (p_spell)
+		{
+		case TestSpell:
+			return Items::TestSpell;
+			break;
+		case TestAOE:
+			return Items::TestAOE;
+			break;
+		default:
+			std::cout << "!!!ERROR!!!: SPELL: " << p_spell << " is NOT an ITEM!\n";
+			return Items::NOITEM;
+			break;
+			break;
+		}
+	}
+
+	static Spell ToSpell(const Items & p_item){
+		switch (p_item)
+		{
+		case Items::TestSpell:
+			return Spell::TestSpell;
+			break;
+		case Items::TestAOE:
+			return Spell::TestAOE;
+			break;
+		default:
+			std::cout << "!!!ERROR!!!: ITEM: " << p_item << " is NOT a SPELL!\n";
+			return NOSPELL;
+			break;
+			break;
+		}
+	}
+
 	static bool IsSpell(const Items & item){
 		switch (item)
 		{
-		case Helmet_Destruction:
+		case Items::Helmet_Destruction:
 			return false;
 			break;
-		case Helmet_Darkness:
+		case Items::Helmet_Darkness:
 			return false;
 			break;
-		case Helmet_Chaos:
+		case Items::Helmet_Chaos:
 			return false;
 			break;
-		case Armor_Chaos:
+		case Items::Armor_Chaos:
 			return false;
 			break;
-		case Armor_Darkness:
+		case Items::Armor_Darkness:
 			return false;
 			break;
-		case Armor_Destruction:
+		case Items::Armor_Destruction:
 			return false;
 			break;
-		case Bow:
+		case Items::Bow:
 			return false;
 			break;
-		case TestSpell:
+		case Items::TestSpell:
 			return true;
 			break;
-		case TestAOE:
+		case Items::TestAOE:
 			return true;
 			break;
 		default:

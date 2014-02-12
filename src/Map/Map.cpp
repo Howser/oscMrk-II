@@ -20,6 +20,7 @@ gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* 
 	m_mini_map_player.setPosition(1280/4/2, 1280/4/2);
 	m_mini_map_player.setSize(sf::Vector2f(4, 4));
 	m_mini_map_player.setFillColor(sf::Color::Magenta);
+	
 }
 
 gen::Map::~Map(void)
@@ -28,7 +29,7 @@ gen::Map::~Map(void)
 
 void gen::Map::Gen(){
 
-	srand(static_cast<int>(time(NULL)));
+	//srand(static_cast<int>(time(NULL)));
 
 	generating = true;
 	tiles.clear();
@@ -859,9 +860,9 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 }
 
 void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
-	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 1) ? X/WIDTH - 1280/WIDTH:0, y = 0; x < X/WIDTH + 1280/WIDTH; x++)
+	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 0) ? X/WIDTH - 1280/WIDTH:0, y = 0; x < X/WIDTH + 1280/WIDTH; x++)
 	{
-		for (y = (Y/HEIGHT - 1280/HEIGHT >= 1) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
+		for (y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
 		{
 			if (x > 0 && x < tiles.size() && y > 0 && y < tiles[0].size()) 
 			{

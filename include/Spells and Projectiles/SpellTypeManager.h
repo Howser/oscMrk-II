@@ -34,7 +34,7 @@ namespace _SPELL{
 		switch (p_spell)
 		{
 		case TestSpell:
-			return 1;
+			return -1;
 			break;
 		default:
 			std::cout << "!!!ERROR!!!: SPELL: " << p_spell << " is not implemented for 'GetTimer'!\n";

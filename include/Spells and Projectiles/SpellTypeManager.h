@@ -10,6 +10,8 @@ namespace _SPELL{
 	static enum Spell{
 		TestSpell,
 		TestAOE,
+		BossFireCircle,
+		BossLaser,
 		NOSPELL,
 	};
 
@@ -21,6 +23,12 @@ namespace _SPELL{
 			break;
 		case TestAOE:
 			return Items::TestAOE;
+			break;
+		case BossFireCircle:
+			return Items::BossFireCircle;
+			break;
+		case BossLaser:
+			return Items::BossLaser;
 			break;
 		default:
 			std::cout << "!!!ERROR!!!: SPELL: " << p_spell << " is NOT an ITEM!\n";
@@ -36,13 +44,19 @@ namespace _SPELL{
 		case TestSpell:
 			return -1;
 			break;
+		case BossLaser:
+			return 2;
+			break;
+		case BossFireCircle:
+			return 5;
+			break;
 		default:
 			std::cout << "!!!ERROR!!!: SPELL: " << p_spell << " is not implemented for 'GetTimer'!\n";
-			return Items::NOITEM;
+			return -1;
 			break;
 		}
 	}
-	
+
 	static Spell ToSpell(const Items & p_item){
 		switch (p_item)
 		{
@@ -52,10 +66,15 @@ namespace _SPELL{
 		case Items::TestAOE:
 			return Spell::TestAOE;
 			break;
+		case Items::BossFireCircle:
+			return Spell::BossFireCircle;
+			break;
+		case Items::BossLaser:
+			return Spell::BossLaser;
+			break;
 		default:
 			std::cout << "!!!ERROR!!!: ITEM: " << p_item << " is NOT a SPELL!\n";
 			return NOSPELL;
-			break;
 			break;
 		}
 	}
@@ -64,30 +83,25 @@ namespace _SPELL{
 		switch (item)
 		{
 		case Items::Helmet_Destruction:
-			return false;
-			break;
 		case Items::Helmet_Darkness:
-			return false;
-			break;
 		case Items::Helmet_Chaos:
-			return false;
-			break;
 		case Items::Armor_Chaos:
-			return false;
-			break;
 		case Items::Armor_Darkness:
-			return false;
-			break;
 		case Items::Armor_Destruction:
-			return false;
-			break;
 		case Items::Bow:
 			return false;
 			break;
+
 		case Items::TestSpell:
 			return true;
 			break;
 		case Items::TestAOE:
+			return true;
+			break;
+		case Items::BossFireCircle:
+			return true;
+			break;
+		case Items::BossLaser:
 			return true;
 			break;
 		default:
@@ -100,6 +114,11 @@ namespace _SPELL{
 	static int GetDamage(const Spell & p_spell){
 		switch (p_spell)
 		{
+		case Spell::BossFireCircle:
+		case Spell::BossLaser:
+			return 2;
+			break;
+
 		default:
 			return 1;
 			break;
@@ -118,6 +137,12 @@ namespace _SPELL{
 	static float GetSpeed(const Spell & p_spell){
 		switch (p_spell)
 		{
+		case Spell::BossFireCircle:
+			return 3;
+			break;
+		case Spell::BossLaser:
+			return 4;
+			break;
 		default:
 			return 1.f;
 			break;
@@ -138,12 +163,12 @@ namespace _AOE{
 
 	///<summary>Seconds.</summary>
 	static float GetDuration(const _SPELL::Spell & p_spell){
-			switch (p_spell)
-			{
-			default:
-				return 2.5f;
-				break;
-			}
+		switch (p_spell)
+		{
+		default:
+			return 2.5f;
+			break;
+		}
 		return 0;
 	}
 }

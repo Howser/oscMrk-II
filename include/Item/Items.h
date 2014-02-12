@@ -13,6 +13,8 @@ static enum Items
 	Bow,
 	TestSpell,
 	TestAOE,
+	BossFireCircle,
+	BossLaser,
 	NOITEM,
 	end,
 };

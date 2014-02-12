@@ -10,7 +10,7 @@ Spell::Spell(const sf::Vector2f & p_position, float angle, const _SPELL::Spell &
 		m_item = _SPELL::ToItem(p_spell);
 		m_sprite = p_sprite;
 		m_sprite.setOrigin(24, 1);
-		m_sprite.setRotation(angle*180/3.14);
+		m_sprite.setRotation(math::toDegrees(angle));
 		m_damage = _SPELL::GetDamage(p_spell);
 		p_tiles = ptr_tiles;
 		m_damage_player = damage_player;
@@ -23,9 +23,11 @@ Spell::~Spell(){
 }
 
 void Spell::update(sf::Time & p_dt){
-	switch (m_item)
+	switch (m_item) // Again, do we need this?
 	{
-	case TestSpell:
+	case TestSpell: 
+	case BossFireCircle:
+	case BossLaser:
 		for (unsigned int x = getPosition().x/32 - 1, y = getPosition().y/32 - 1; x < getPosition().x/32 + 1; x++)
 		{
 			for (y = getPosition().y/32 - 1; y < getPosition().y/32 + 1; y++)

@@ -42,9 +42,12 @@ void ProjectileManager::update(sf::Time & p_dt){
 	}
 	for (int i = 0; i < m_spells.size(); i++)
 	{
-		switch (m_spells[i].m_item)
+		switch (m_spells[i].m_item) // Is this really necessary? makes adding new spells a bitch
 		{
 		case TestSpell:
+		case BossFireCircle:
+		case BossLaser:
+
 			if (!m_spells[i].dead)
 			{
 				m_spells[i].update(p_dt);

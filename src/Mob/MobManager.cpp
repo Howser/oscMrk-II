@@ -35,7 +35,7 @@ void MobManager::Add(Mob & mob){
 		major_mob.lootTable = LootTables[major_mob.type];
 		majorMobs.push_back(major_mob);
 	}
-	std::cout << "x: " << mob.startPos.x << "     y: " << mob.startPos.y << "\n";
+	std::cout << "Type: " << mob.type << "     x: " << mob.startPos.x << "     y: " << mob.startPos.y << "\n";
 }
 
 void MobManager::Build_Tree(){

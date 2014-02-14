@@ -77,7 +77,7 @@ static float GetAttackSpeed(TYPE const& type){
 }
 
 ///<summary>Pixels.</summary>
-static float GetAtackDistance(const TYPE & p_type){
+static float GetAttackDistance(const TYPE & p_type){
 	switch (p_type)
 	{
 	case skeleton:
@@ -129,12 +129,7 @@ static int GetAggroDist(TYPE const& type){
 }
 
 static int GetUnAggroDist(const TYPE & type){
-	switch (type)
-	{
-	default:
-		return GetAggroDist(type) + 64;
-		break;
-	}
+	return GetAggroDist(type) + 64;
 }
 
 static int GetWidth(TYPE const& type){

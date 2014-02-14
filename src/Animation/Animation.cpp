@@ -58,7 +58,13 @@ void Animation::update()
 		{
 			if (++mCurrentFrame >= mMaxFrames)
 			{
-				(mLoop) ? mCurrentFrame = 0 : stop();
+				if (mLoop)
+				{
+					mCurrentFrame = 0;
+				}else
+				{
+					stop();
+				}
 			}
 			mFrameTimer.restart();
 			mFrame.left = mCurrentFrame * mFrame.width;

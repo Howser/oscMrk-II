@@ -135,7 +135,7 @@ std::vector<sf::Vector2i> PathFinder::GetPath(const sf::Vector2i & start, const 
 				open.erase(open.begin() + GetIndexOf(open, &nodes[currentNode]));
 			}
 
-			if (currentNode < 0 || currentNode > mapSize.x* mapSize.y)
+			if (currentNode <= 0 || currentNode > mapSize.x* mapSize.y)
 				break;
 
 			if (nodes[currentNode - 1].id == 1 && !nodes[currentNode - 1].closed)

@@ -218,8 +218,8 @@ void gen::Map::Cave(){
 								sf::Vector2f pos(cells[c].x, cells[c].y);
 								if (mobSpawners.size() < 15 && s <= 25 && math::distance(pos, rooms[0].getCenter()) > 50)
 								{
-									/*MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::test, math::random(1, 2), TYPE::special);
-									mobSpawners.push_back(spawner);*/
+									MobSpawner spawner(p.x, p.y, math::random(3, 5), TYPE::spider, 0, TYPE::special);
+									mobSpawners.push_back(spawner);
 									/*Torch torch = Torch(Light(sf::Color(200, 100, 100, 255), sf::Vector3<float>(p.x*32-100, p.y*32-100, 0.075f), sf::Vector3<float>(0, 10.f, 0), false), ptr_light_manager, ptr_texture_holder);
 									m_torches.push_back(torch); 
 									m_torches.back().ptr_light = &ptr_light_manager->m_lights.back();*/
@@ -393,14 +393,14 @@ void gen::Map::ApplyRoom(Room* room, bool* add, bool* cave){
 			if (type == Type::Hell)
 			{
 				//random tiles
-				if (rooms.size() < ROOMS - 1 && i < 5)
+				/*if (rooms.size() < ROOMS - 1 && i < 5)
 				{
 					if (x == room->x + 1 || x == room->x + room->width - 2)
 					{
 						int chance = math::random(0, 20);
 						if (chance >= 15)
 						{
-							//tiles[x][y].type = 2;
+							tiles[x][y].type = 2;
 							room->radius--;
 							i++;
 						}
@@ -410,12 +410,12 @@ void gen::Map::ApplyRoom(Room* room, bool* add, bool* cave){
 						int chance = math::random(0, 20);
 						if (chance >= 15)
 						{
-							//tiles[x][y].type = 2;
+							tiles[x][y].type = 2;
 							room->radius--;
 							i++;
 						}
 					}
-				}
+				}*/
 			}
 			//walls and floors
 			if (x == room->x || x == room->x + room->width - 1 || y == room->y || y == room->y + room->height - 1)
@@ -653,7 +653,7 @@ void gen::Map::Resize(){
 		temp.resize(size.x, std::vector<Tile>(size.y, Tile()));
 	}
 	catch (std::length_error e){
-		std::cout << e.what() << std::endl;//<---- O.o
+		std::cout << e.what() << std::endl;
 	}
 
 	for (unsigned int x = lowX, y = lowY; x < highX; x++)

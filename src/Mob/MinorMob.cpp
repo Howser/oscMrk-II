@@ -17,7 +17,14 @@ MinorMob::MinorMob(TYPE type, TextureHolder* textureHolder, std::vector<DeadMob>
 	{
 	case TYPE::skeleton:
 		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
+		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 0.2f);
+		break;
+	case TYPE::spider:
+		sprite.setTexture(*textureHolder->getTexture(Textures::Spider));
 		m_animation = Animation(sf::Vector2<int>(35, 30), 4, 0.2f);
+		break;
+	default:
+		std::cout << "!!!ERROR!!!: mob type " << type << " not supported. Check the mob constructors.\n";
 		break;
 	}
 	timeSincePath = 0.f;
@@ -49,6 +56,13 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 		sprite.setTexture(*textureHolder->getTexture(Textures::Skeleton));
 		m_animation = Animation(sf::Vector2<int>(24, 22), 3, 0.2f);
 		break;
+	case TYPE::spider:
+		sprite.setTexture(*textureHolder->getTexture(Textures::Spider));
+		m_animation = Animation(sf::Vector2<int>(35, 30), 4, 0.2f);
+		break;
+	default:
+		std::cout << "!!!ERROR!!!: mob type " << type << " not supported. Check the mob constructors.\n";
+		break;
 	}
 	timeSincePath = 0.f;
 	m_attack_timer = GetAttackSpeed(type);
@@ -58,18 +72,6 @@ MinorMob::MinorMob(Mob const& mob, std::vector<DeadMob>* p_deadMobs){
 }
 
 void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaTime, sf::Vector2f & playerPosition, int* p_health, Mob* ptr_mob, std::vector<projectile::Spell>* ptr_spells, std::vector<projectile::Arrow>* ptr_arrows){
-	switch (type)
-	{
-	case skeleton:
-		Skeleton::update(map, deltaTime, playerPosition, p_health, ptr_mob, ptr_spells, ptr_arrows);
-		break;
-	case spider:
-		Spider::update(map, deltaTime, playerPosition, p_health, ptr_mob);
-		break;
-	default:
-		std::cout << "\033[0;31m" << "!!!ERROR!!!: TYPE NOT SUPPORTED\n";
-		break;
-	}
 	for (int i = 0; i < m_buffs.size(); i++)
 	{
 		if (m_buffs[i].m_duration > 0)
@@ -81,6 +83,19 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		}
 	}
 	UpdateAnimation(playerPosition);
+
+	switch (type)
+	{
+	case skeleton:
+		Skeleton::update(map, deltaTime, playerPosition, p_health, ptr_mob, ptr_spells, ptr_arrows);
+		break;
+	case spider:
+		Spider::update(map, deltaTime, playerPosition, p_health, ptr_mob);
+		break;
+	default:
+		std::cout << "!!!ERROR!!!: TYPE " << ptr_mob->type << " NOT SUPPORTED\n";
+		break;
+	}
 }
 
 void MinorMob::draw(sf::RenderTarget & target, sf::RenderStates states) const{
@@ -156,7 +171,7 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 			{
 				ptr_mob->updatePath -= p_dt.asSeconds();
 			}
-			if (math::distance(ptr_mob->getPosition(), p_player_position) <= GetAtackDistance(ptr_mob->type))
+			if (math::distance(ptr_mob->getPosition(), p_player_position) <= GetAttackDistance(ptr_mob->type))
 			{
 				if (ptr_mob->m_attack_timer > 0)
 				{
@@ -179,7 +194,7 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 				ptr_mob->followPath(p_dt);
 			}else
 			{
-				if (math::distance(p_player_position, ptr_mob->getPosition()) > GetAtackDistance(ptr_mob->type) || !LineOfSight(p_player_position, ptr_mob->getPosition(), ptr_map))
+				if (math::distance(p_player_position, ptr_mob->getPosition()) > GetAttackDistance(ptr_mob->type) || !LineOfSight(p_player_position, ptr_mob->getPosition(), ptr_map))
 				{
 					ptr_mob->followPath(p_dt);
 				}else
@@ -217,7 +232,7 @@ void Spider::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_dt
 			{
 				ptr_mob->updatePath -= p_dt.asSeconds();
 			}
-			if (math::distance(ptr_mob->getPosition(), p_player_position) <= GetAtackDistance(ptr_mob->type))
+			if (math::distance(ptr_mob->getPosition(), p_player_position) <= GetAttackDistance(ptr_mob->type))
 			{
 				if (ptr_mob->m_attack_timer > 0)
 				{
@@ -240,11 +255,12 @@ void Spider::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_dt
 				ptr_mob->followPath(p_dt);
 			}else
 			{
-				if (math::distance(p_player_position, ptr_mob->getPosition()) > GetAtackDistance(ptr_mob->type))
+				if (math::distance(p_player_position, ptr_mob->getPosition()) > GetAttackDistance(ptr_mob->type))
 				{
 					ptr_mob->followPath(p_dt);
 				}else
 				{
+					ptr_mob->stop();
 					if (ptr_mob->m_attack_timer <= 0)
 					{
 						attack(ptr_health, ptr_mob);

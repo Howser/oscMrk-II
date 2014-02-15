@@ -67,7 +67,12 @@ void ProjectileManager::update(sf::Time & p_dt){
 						m_spells[i].m_timer -= p_dt.asSeconds();
 					}else
 					{
-						m_spells.erase(m_spells.begin() + i);
+						m_spells[i].kill();
+						m_spells[i].m_light.color.a*= 0.9f;
+						if (m_spells[i].m_light.color.a <= 1)
+						{
+							m_spells.erase(m_spells.begin() + i);
+						}
 					}
 				}
 			}else

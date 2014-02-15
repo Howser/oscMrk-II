@@ -32,7 +32,7 @@ Boss::Boss(TextureHolder* textureHolder, std::vector<DeadMob>* p_deadMobs, std::
 	m_phase_time = sf::seconds(5);
 
 	m_attack_time = sf::seconds(GetAttackSpeed(type));
-	m_attack_range = GetAtackDistance(type);
+	m_attack_range = GetAttackDistance(type);
 	m_attack_damage = GetDamage(type);
 }
 

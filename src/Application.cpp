@@ -35,13 +35,13 @@ void Application::run()
 		dt.restart();
 
 		handleEvents();
-
+		draw();
 		while (lag >= updateTime)
 		{
 			update(updateTime);
 			lag -= updateTime;
 		}
-		draw();
+		
 	}
 }
 

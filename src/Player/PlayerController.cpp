@@ -62,40 +62,56 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 		targetPtr = mobManagerPtr->getAtPosition(mpos.x, mpos.y);
 		if (targetPtr != NULL)
 		{
-			if (targetPtr->dead && math::distance(targetPtr->getPosition(), playerPtr->getPosition()) < WIDTH)
+			if (targetPtr->dead)// && math::distance(targetPtr->getPosition(), playerPtr->getPosition()) <= WIDTH)
 			{
 				playerPtr->m_lootInventory.clear(false);
-				for (int i = 0; i < mobManagerPtr->mobs.size(); i++)
+				sf::Vector2<int> points[2] = {sf::Vector2<int>(playerPtr->getPosition().x - LOOT_DISTANCE, playerPtr->getPosition().y - LOOT_DISTANCE), sf::Vector2<int>(playerPtr->getPosition().x + LOOT_DISTANCE, playerPtr->getPosition().y + LOOT_DISTANCE)};
+				std::vector<mobtree::Branch*> branches;
+				for (int x = points[0].x/mobtree::SIZE, y = points[0].y/mobtree::SIZE; x < points[1].x/mobtree::SIZE; x += mobtree::SIZE)
 				{
-					if (math::distance(mobManagerPtr->mobs[i]->getPosition(), playerPtr->getPosition()) <= LOOT_DISTANCE)
+					for (int y = points[0].y/mobtree::SIZE; y < points[1].y/mobtree::SIZE; y += mobtree::SIZE)
 					{
-						if (!mobManagerPtr->mobs[i]->inventory.empty())
+						mobtree::Branch* ptr_branch = mobManagerPtr->m_tree.search(sf::Vector2f(x*mobtree::SIZE, y*mobtree::SIZE));
+						if (ptr_branch != NULL)
 						{
-							bool broken = false;
-							playerPtr->m_lootMobs.push_back(mobManagerPtr->mobs[i]->ID);
-							for (int x = 0, y = 0; x < mobManagerPtr->mobs[i]->inventory.width; x++)
+							branches.push_back(ptr_branch);
+						}
+					}
+				}
+				for (int b = 0; b < branches.size(); b++)
+				{
+					for (int i = 0; i < branches[b]->mobs.size(); i++)
+					{
+						if (branches[b]->mobs[i]->dead && math::distance(branches[b]->mobs[i]->getPosition(), playerPtr->getPosition()) <= LOOT_DISTANCE)
+						{
+							if (!branches[b]->mobs[i]->inventory.empty())
 							{
-								if (broken)
-								{
-									break;
-								}
-								for (y = 0; y < mobManagerPtr->mobs[i]->inventory.height; y++)
+								bool broken = false;
+								playerPtr->m_lootMobs.push_back(branches[b]->mobs[i]->ID);
+								for (int x = 0, y = 0; x < branches[b]->mobs[i]->inventory.width; x++)
 								{
 									if (broken)
 									{
 										break;
 									}
-									for (int it = 0; it < mobManagerPtr->mobs[i]->inventory.slots[x][y].Items.size(); it++)
+									for (y = 0; y < branches[b]->mobs[i]->inventory.height; y++)
 									{
-										int X = playerPtr->m_lootInventory.GetFirstAvailableSlot(mobManagerPtr->mobs[i]->inventory.slots[x][y].Items[0].item).x;
-										int Y = playerPtr->m_lootInventory.GetFirstAvailableSlot(mobManagerPtr->mobs[i]->inventory.slots[x][y].Items[0].item).y;
-										if (X != -1 && Y != -1)
+										if (broken)
 										{
-											playerPtr->m_lootInventory.slots[X][Y].Items.push_back(mobManagerPtr->mobs[i]->inventory.slots[x][y].Items[it]);
-											if (playerPtr->m_lootInventory.full())
+											break;
+										}
+										for (int it = 0; it < branches[b]->mobs[i]->inventory.slots[x][y].Items.size(); it++)
+										{
+											int X = playerPtr->m_lootInventory.GetFirstAvailableSlot(branches[b]->mobs[i]->inventory.slots[x][y].Items[0].item).x;
+											int Y = playerPtr->m_lootInventory.GetFirstAvailableSlot(branches[b]->mobs[i]->inventory.slots[x][y].Items[0].item).y;
+											if (X != -1 && Y != -1)
 											{
-												broken = true;
-												break;
+												playerPtr->m_lootInventory.slots[X][Y].Items.push_back(branches[b]->mobs[i]->inventory.slots[x][y].Items[it]);
+												if (playerPtr->m_lootInventory.full())
+												{
+													broken = true;
+													break;
+												}
 											}
 										}
 									}
@@ -118,9 +134,8 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 					}
 					playerPtr->lootState = true;
 					playerPtr->inventoryState = true;
-					std::cout << "\n";
 				}
-				targetPtr = nullptr;
+				targetPtr = NULL;
 			}
 		}
 	}
@@ -133,10 +148,7 @@ void PlayerController::update(sf::Time dt, sf::RenderWindow const& window, sf::V
 		if (targetPtr == NULL)
 		{
 			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
-		}else if (!targetPtr->dead)
-		{
-			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
-		}else if (math::distance(targetPtr->getPosition(), playerPtr->getPosition()) > LOOT_DISTANCE)
+		}else if (!(targetPtr->dead && math::distance(targetPtr->getPosition(), playerPtr->getPosition()) > WIDTH && !targetPtr->inventory.empty()))
 		{
 			playerPtr->attack(window, (Attack)!sf::Mouse::isButtonPressed(sf::Mouse::Left));
 		}

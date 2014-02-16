@@ -74,7 +74,7 @@ bool GameState::update(sf::Time dt)
 				mPlayerController.update(dt, *getContext().window, mView, &m_light_manager);
 				mPlayer.update(dt, *getContext().window);
 			}
-			if (!mobManager.mobs.empty())
+			//if (!mobManager.mobs.empty())
 			{
 				mobManager.Update(dt, mPlayer.getPosition(), &mPlayer.m_health);
 			}
@@ -90,9 +90,6 @@ bool GameState::update(sf::Time dt)
 			requestStackPush(States::Lose);
 			m_lost = true;
 		} else if (m_lost) {
-			// this is a dirty hack xXKillahSlayahXx
-			// The first light will always be the players light 
-			// since that light is added when the map is created
 			m_light_manager.m_lights.front().m_alpha = -1;
 			m_light_manager.m_lights.front().color.a *= 0.99;
 		}

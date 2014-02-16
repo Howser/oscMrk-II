@@ -452,10 +452,7 @@ Mob* MobManager::getAtPosition(float x, float y)
 		if (sf::Rect<float>(mobs[i]->getPosition().x - mobs[i]->width/2, mobs[i]->getPosition().y - mobs[i]->height/2, mobs[i]->width, mobs[i]->height).intersects(sf::Rect<float>(x, y, 1, 1)))
 		{
 			p_mob = mobs[i];
-			if (!mobs[i]->dead)
-			{
 				return p_mob;
-			}
 		}
 	}
 	return p_mob;

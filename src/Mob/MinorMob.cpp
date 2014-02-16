@@ -153,7 +153,7 @@ void Skeleton::attack(const sf::Vector2<float>& p_player_position, std::vector<p
 	float angle = std::atan2f(p_player_position.y - ptr_mob->getPosition().y, p_player_position.x - ptr_mob->getPosition().x);
 	sf::Sprite arrow_sprite;
 	arrow_sprite.setTexture(*ptr_mob->textureHolder->getTexture(Textures::d_Arrow));
-	projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle, arrow_sprite, GetDamage(Items::Bow), Items::Arrow, NULL);
+	projectile::Arrow arrow = projectile::Arrow(ptr_tiles, angle + math::toRadians(math::random(-5, 5)), arrow_sprite, GetDamage(Items::Bow), Items::Arrow, NULL);
 	arrow.setPosition(ptr_mob->getPosition());
 	arrow.m_damage_player = true;
 	ptr_arrows->push_back(arrow);

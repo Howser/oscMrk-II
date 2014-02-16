@@ -253,11 +253,9 @@ void GameState::draw()
 		mDiffuseRender.clear();
 		mDiffuseRender.setView(mView);
 
-		// Map
-		mMap.SetBounds();
+		//Map
 		mDiffuseRender.draw(mMap);
 
-		// PROJECCASTE
 		mDiffuseRender.draw(m_projectile_manager);
 
 		// Walls for the map so that the spells can be under it

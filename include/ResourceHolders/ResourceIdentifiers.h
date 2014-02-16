@@ -57,6 +57,8 @@ namespace Textures
 		d_Armor_Darkness,
 		d_Armor_Chaos,
 		d_Bow,
+		d_Helmet_None,
+		d_Armor_None,
 	};
 }
 

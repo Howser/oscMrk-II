@@ -10,8 +10,6 @@
 #include <SFML\Graphics\Transformable.hpp>
 #include <SFML\Graphics\RenderTarget.hpp>
 
-#define SPEED 10
-
 namespace projectile{
 	class Arrow : public Projectile{
 	public:

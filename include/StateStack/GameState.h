@@ -37,6 +37,8 @@ private:
 	LightManager m_light_manager;
 	ProjectileManager m_projectile_manager;
 
+	std::vector<Light> m_all_lights;
+
 	gen::Map				mMap;
 
 	sf::View				mView;

@@ -96,6 +96,27 @@ bool GameState::update(sf::Time dt)
 			m_light_manager.m_lights.front().m_alpha = -1;
 			m_light_manager.m_lights.front().color.a *= 0.99;
 		}
+		m_all_lights = m_light_manager.m_lights;
+		if (!m_projectile_manager.m_spells.empty())
+		{
+			if (m_all_lights.size() + m_projectile_manager.m_spells.size() <= 130)
+			{
+				m_all_lights.insert(m_all_lights.end(), m_projectile_manager.m_spells.begin(), m_projectile_manager.m_spells.end());
+			}else
+			{
+				m_all_lights.insert(m_all_lights.end(), m_projectile_manager.m_spells.begin(), m_projectile_manager.m_spells.begin() + 130 - m_light_manager.m_lights.size());
+				/*for (int i = 0; i < m_projectile_manager.m_spells.size(); i++)
+				{
+				if (all_lights.size() < 130)
+				{
+				all_lights.push_back(m_projectile_manager.m_spells[i].m_light);
+				}else
+				{
+				break;
+				}
+				}*/
+			}
+		}
 	} else 
 	{
 		mMutex.lock();
@@ -261,32 +282,12 @@ void GameState::draw()
 		// Render diffuse texture to window using shader with normal map
 		// Set the all the shader properties
 
-		std::vector<Light> all_lights = m_light_manager.m_lights;
-		if (all_lights.size() + m_projectile_manager.m_spells.size() <= 130)
-		{
-			all_lights.insert(all_lights.end(), m_projectile_manager.m_spells.begin(), m_projectile_manager.m_spells.end());
-		}else
-		{
-			all_lights.insert(all_lights.end(), m_projectile_manager.m_spells.begin(), m_projectile_manager.m_spells.begin() + 130 - m_light_manager.m_lights.size());
-			/*for (int i = 0; i < m_projectile_manager.m_spells.size(); i++)
-			{
-				if (all_lights.size() < 130)
-				{
-					all_lights.push_back(m_projectile_manager.m_spells[i].m_light);
-				}else
-				{
-					break;
-				}
-			}*/
-		}
-
-		passLightsToShader(&mShader, &all_lights, &mView);
+		passLightsToShader(&mShader, &m_all_lights, &mView);
 
 		sf::Sprite sprite(mDiffuseRender.getTexture());
 		window->setView(window->getDefaultView());
 		window->draw(sprite, &mShader);
-		if (!m_lost || !m_win)
-			mMap.draw_mini_map(window, mView.getCenter().x, mView.getCenter().y);
+		mMap.draw_mini_map(window, mView.getCenter().x, mView.getCenter().y);
 		mPlayer.drawGUI(window, getContext().fonts);
 	} 
 	else 

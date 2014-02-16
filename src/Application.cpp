@@ -40,7 +40,6 @@ void Application::run()
 		{
 			update(updateTime);
 			lag -= updateTime;
-			
 		}
 		draw();
 	}
@@ -159,13 +158,15 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::Bow, "resources/graphics/item/inv/bow.png");
 
 		mTextures.loadTexture(Textures::d_Arrow, "resources/graphics/item/world/arrow.png");
-		mTextures.loadTexture(Textures::d_Helmet_Destruction, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Helmet_Darkness, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Helmet_Chaos, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Armor_Destruction, "resources/graphics/item/world/test.png");
-		mTextures.loadTexture(Textures::d_Armor_Darkness, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Helmet_Destruction, "resources/graphics/item/world/helmet_destruction.png");
+		mTextures.loadTexture(Textures::d_Helmet_Darkness, "resources/graphics/item/world/helmet_darkness.png");
+		mTextures.loadTexture(Textures::d_Helmet_Chaos, "resources/graphics/item/world/helmet_chaos.png");
+		mTextures.loadTexture(Textures::d_Armor_Destruction, "resources/graphics/item/world/armor_destruction.png");
+		mTextures.loadTexture(Textures::d_Armor_Darkness, "resources/graphics/item/world/armor_darkness.png");
 		mTextures.loadTexture(Textures::d_Armor_Chaos, "resources/graphics/item/world/armor_chaos.png");
 		mTextures.loadTexture(Textures::d_Bow, "resources/graphics/item/world/test.png");
+		mTextures.loadTexture(Textures::d_Armor_None, "resources/graphics/item/world/armor_none.png");
+		mTextures.loadTexture(Textures::d_Helmet_None, "resources/graphics/item/world/helmet_none.png");
 #pragma endregion
 
 		// Fonts

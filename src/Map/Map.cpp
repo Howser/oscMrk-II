@@ -16,8 +16,7 @@ gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* 
 {
 	m_mini_map_sprite.setTexture(m_mini_tileset);
 	m_mini_map_sprite.setColor(sf::Color(255, 255, 255, 100));
-	m_mini_map_sprite.setScale(0.25f, 0.25f);
-	m_mini_map_player.setPosition(1280/4/2, 1280/4/2);
+	m_mini_map_player.setPosition(1280/16, 1280/16);
 	m_mini_map_player.setSize(sf::Vector2f(4, 4));
 	m_mini_map_player.setFillColor(sf::Color::Magenta);
 	
@@ -28,9 +27,6 @@ gen::Map::~Map(void)
 }
 
 void gen::Map::Gen(){
-
-	//srand(static_cast<int>(time(NULL)));
-
 	generating = true;
 	tiles.clear();
 	rooms.clear();
@@ -860,16 +856,16 @@ void gen::Map::draw(sf::RenderTarget& target, sf::RenderStates states)const{
 }
 
 void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
-	for (unsigned int x = (X/WIDTH - 1280/WIDTH >= 0) ? X/WIDTH - 1280/WIDTH:0, y = 0; x < X/WIDTH + 1280/WIDTH; x++)
+	for (unsigned int x = (X/WIDTH - (1280/2)/WIDTH >= 0) ? X/WIDTH - (1280/2)/WIDTH:0, y = 0; x < X/WIDTH + (1280/2)/WIDTH; x++)
 	{
-		for (y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - 1280/HEIGHT:0; y < Y/HEIGHT + 1280/HEIGHT; y++)
+		for (y = (Y/HEIGHT - 1280/HEIGHT >= 0) ? Y/HEIGHT - (1280/2)/HEIGHT:0; y < Y/HEIGHT + (1280/2)/HEIGHT; y++)
 		{
 			if (x > 0 && x < tiles.size() && y > 0 && y < tiles[0].size()) 
 			{
 				if (tiles[x][y].m_explored && tiles[x][y].type != 0)
 				{
-					m_mini_map_sprite.setTextureRect(sf::Rect<int>((tiles[x][y].type-1)*16, 0, 16, 16));
-					m_mini_map_sprite.setPosition((x*4) - (X/WIDTH - 1280/WIDTH)*4, (y*4) - (Y/WIDTH - 1280/HEIGHT)*4);
+					m_mini_map_sprite.setTextureRect(sf::Rect<int>((tiles[x][y].type-1)*4, 0, 4, 4));
+					m_mini_map_sprite.setPosition((x*4) - (X/WIDTH - (1280/2)/WIDTH)*4, (y*4) - (Y/WIDTH - (1280/2)/HEIGHT)*4);
 					ptr_window->draw(m_mini_map_sprite);
 				}
 			}

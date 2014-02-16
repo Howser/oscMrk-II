@@ -82,6 +82,9 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_gui_loot_inventory.setTexture(*(textures->getTexture(Textures::gui_LootInventory)));
 	m_gui_loot_inventory.setPosition(m_gui_inventory.getPosition().x + m_gui_inventory.getTextureRect().width - 3, m_gui_inventory.getPosition().y);
 	m_dir = Direction::Down;
+
+	m_d_gear[0].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Helmet_None))));
+	m_d_gear[1].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Armor_None))));
 }
 
 Player::~Player()
@@ -196,7 +199,7 @@ void Player::update(sf::Time dt, sf::RenderWindow const& window)
 		}
 
 		m_d_gear[0].setPosition(getPosition().x - 16, getPosition().y - 16);
-		m_d_gear[1].setPosition(getPosition().x - 16, getPosition().y - 16);
+		m_d_gear[1].setPosition(getPosition().x - 20, getPosition().y - 20);
 		m_d_gear[2].setPosition(getPosition().x - 16, getPosition().y - 16);
 		m_d_gear[3].setPosition(getPosition().x - 16, getPosition().y - 16);
 	}
@@ -225,7 +228,7 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 
 	if (!m_stackManager.show && !m_deleteItem.show)
 	{
-		if (sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_invRect) || (lootState && sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_lootInvRect)) || sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(sf::Rect<int>(m_gui_inventory.getPosition().x + 372, m_gui_inventory.getPosition().y + 44, SLOTWIDTH*3, SLOTHEIGHT*2)))//here
+		if (sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_invRect) || (lootState && sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(m_lootInvRect)) || sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(sf::Rect<int>(m_gui_inventory.getPosition().x + 372, m_gui_inventory.getPosition().y + 44, SLOTWIDTH*3, SLOTHEIGHT*2)))
 		{
 			bool broken = false;
 			for (unsigned int i = 0; i < m_Gear.slots.size(); i++)
@@ -505,6 +508,14 @@ void Player::updateInventory(sf::RenderWindow const& window, TextureHolder & tex
 				if (sf::Rect<int>(m_mouseSlot.getPosition().x, m_mouseSlot.getPosition().y, 1, 1).intersects(sf::Rect<int>(m_Gear.slots[i].getPosition().x, m_Gear.slots[i].getPosition().y, SLOTWIDTH, SLOTHEIGHT)))
 				{
 					m_Gear.Command(&m_Gear.slots[i], &m_inventory);
+					if (m_Gear.slots[0].Items.empty())
+					{
+						m_d_gear[0].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Helmet_None))));
+					}
+					if (m_Gear.slots[1].Items.empty())
+					{
+						m_d_gear[1].m_sprite.setTexture(*(p_texture_holder->getTexture((Textures::ID)(Textures::d_Armor_None))));
+					}
 				}
 			}
 		}
@@ -579,9 +590,9 @@ bool Player::isPathing()
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
-	target.draw(m_sprite, states);
+	//target.draw(m_sprite, states);
 
-	for (int i = 0; i < m_Gear.slots.size(); i++)
+	for (int i = m_Gear.slots.size() - 1; i >= 0; i--)
 	{
 		if (!m_Gear.slots[i].Items.empty())
 		{
@@ -589,6 +600,9 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 			{
 				m_d_gear[i].draw(target, states);
 			}
+		}else
+		{
+			m_d_gear[i].draw(target, states);
 		}
 	}
 }

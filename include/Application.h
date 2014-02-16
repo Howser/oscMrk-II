@@ -16,6 +16,9 @@
 
 #include "Gui\Mouse.h"
 
+#define wWIDTH 1280
+#define wHEIGHT 720
+
 
 class Application : private sf::NonCopyable
 {

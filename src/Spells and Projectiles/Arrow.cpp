@@ -3,7 +3,7 @@
 using namespace projectile;
 
 Arrow::Arrow(std::vector<std::vector<gen::Tile>>* ptr_tiles, float angle, sf::Sprite & p_sprite, int p_damage, const Items & p_item, ParticleSystem* p_ps){
-	m_velocity = sf::Vector2f(std::cos(angle)*SPEED, std::sin(angle)*SPEED);
+	m_velocity = sf::Vector2f(std::cos(angle)*10, std::sin(angle)*10);
 	m_sprite = p_sprite;
 	m_sprite.setOrigin(24, 1);
 	m_sprite.setRotation(angle*180/3.14);

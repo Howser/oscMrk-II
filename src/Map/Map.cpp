@@ -876,7 +876,7 @@ void gen::Map::draw_mini_map(sf::RenderWindow* ptr_window, int X, int Y){
 
 void gen::Map::draw_walls(sf::RenderTarget* target, sf::RenderStates states)
 {
-	sf::Sprite sprite;
+	/*sf::Sprite sprite;
 	if (states.texture == nullptr) {
 		sprite.setTexture(tileset);
 	} else {
@@ -890,6 +890,30 @@ void gen::Map::draw_walls(sf::RenderTarget* target, sf::RenderStates states)
 			sprite.setPosition(i->x * WIDTH, i->y * HEIGHT);
 			sprite.setTextureRect(sf::Rect<int>(i->ID * WIDTH, 0, WIDTH, HEIGHT));
 			target->draw(sprite);
+		}
+	}*/
+	sf::Sprite sprite;
+	if (states.texture == nullptr)
+	{
+		sprite.setTexture(tileset);
+	}
+	else
+	{
+		sprite.setTexture(*states.texture);
+	}
+	for (int x = bounds.left/WIDTH, y = bounds.top/HEIGHT; x < bounds.left/WIDTH + bounds.width/WIDTH + 1; x++)
+	{
+		for (y = bounds.top/HEIGHT; y < bounds.top/HEIGHT + bounds.height/HEIGHT + 2; y++)
+		{
+			if (x < size.x && x >= 0 && y < size.y && y >= 0)
+			{
+				if (tiles[x][y].type == 2)
+				{
+					sprite.setTextureRect(sf::Rect<int>(tiles[x][y].ID*WIDTH, 0*HEIGHT, WIDTH, HEIGHT));
+					sprite.setPosition(x*WIDTH, y*HEIGHT);
+					target->draw(sprite);
+				}
+			}
 		}
 	}
 }

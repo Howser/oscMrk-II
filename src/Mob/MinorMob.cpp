@@ -96,6 +96,8 @@ void MinorMob::update(std::vector<std::vector<gen::Tile>>* map, sf::Time& deltaT
 		std::cout << "!!!ERROR!!!: TYPE " << ptr_mob->type << " NOT SUPPORTED\n";
 		break;
 	}
+
+	checkCollision(map, playerPosition);
 }
 
 void MinorMob::draw(sf::RenderTarget & target, sf::RenderStates states) const{
@@ -186,7 +188,6 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 		{
 			ptr_mob->timeSincePath += p_dt.asSeconds();
 		}
-		ptr_mob->checkCollision(ptr_map, p_player_position);
 		//if (!playerCollision)
 		{
 			if (!ptr_mob->aggro)
@@ -199,7 +200,7 @@ void Skeleton::update(std::vector<std::vector<gen::Tile>>* ptr_map, sf::Time& p_
 					ptr_mob->followPath(p_dt);
 				}else
 				{
-					if (ptr_mob->m_attack_timer <= 0)
+					if (ptr_mob->m_attack_timer <= (math::random(-5, 5)/10))
 					{
 						attack(p_player_position, ptr_arrows, ptr_mob, ptr_map);
 					}

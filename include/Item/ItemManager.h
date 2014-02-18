@@ -252,30 +252,28 @@ static bool IsSpell(const Items & item){
 }
 
 ///<summary>FORMAT: TYPE, case gear{GEAR SLOT, case weapon{DAMAGE, SPEED} case armor{ARMOR}} case misc{} case consumable{}</summary>
-static std::string GetStats(Items const& item, sf::Vector2i* size){
-	sf::Text text;
-	std::string stats = (std::string)w_ItemNames[item];
+static std::vector<std::string> GetStats(Items const& item){
+	std::vector<std::string> stats;
+	stats.push_back((std::string)w_ItemNames[item]);
 	if (GetType(item) == itemType::Gear)
 	{
 		if (GetSlot(item) == eGearSlot::rHand || GetSlot(item) == eGearSlot::lHand || GetSlot(item) == eGearSlot::OneHand|| GetSlot(item) == eGearSlot::TwoHand)
 		{
 			//weapon
-			stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + std::to_string(GetSpeed(item));
-			stats.erase (stats.find_last_not_of('0') + 1, std::string::npos);
+			//stats += "\nDamage: " + std::to_string(GetDamage(item)) + "\nSlot: " + GearSlotNames[GetSlot(item)] + "\nSpeed: " + std::to_string(GetSpeed(item));
+			
+			stats.push_back("Damage: " + std::to_string(GetDamage(item)));
+			stats.push_back("Slot: " + (std::string)GearSlotNames[GetSlot(item)]);
+			stats.push_back("Speed: " + std::to_string(GetSpeed(item)));
+			//stats.erase (stats.find_last_not_of('0') + 1, std::string::npos);
 		}else
 		{
 			//armor
-			stats += "\nArmor: " + std::to_string(GetArmor(item));
+			stats.push_back("Armor: " + std::to_string(GetArmor(item)));
 		}
-		text.setString(stats);
-		size->x = text.getLocalBounds().width;
-		size->y = text.getLocalBounds().height;
 		return stats;
 	}else if (GetType(item) == itemType::Normal)
 	{
-		text.setString(stats);
-		size->x = text.getLocalBounds().width;
-		size->y = text.getLocalBounds().height;
 		return stats;
 	}
 }

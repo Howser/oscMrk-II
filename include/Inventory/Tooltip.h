@@ -13,7 +13,7 @@ public:
 	Tooltip(TextureHolder const& textureHolder);
 	~Tooltip();
 	Slot* slot;
-	std::string stats;
+	std::vector<std::string> stats;
 	sf::Vector2i size;
 	sf::Sprite sprite, m_borders[4];
 	sf::Font font;

@@ -54,9 +54,6 @@ namespace gen{
 		bool generating;
 		gen::Type type; // This needs to be set to the right map before Gen() get's called
 
-		///<summary>For rendering purposes only. This does not affect collisions or any other gameplay aspect in any way.</summary>
-		std::vector<Tile> m_wall_tiles;
-
 		void Clear();
 
 	private:

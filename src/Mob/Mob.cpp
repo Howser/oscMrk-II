@@ -18,6 +18,7 @@ void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f 
 	{
 		if (x > 0 && x < (*map).size() - 1)
 		{
+			bool broken = false;
 			for (y = (getPosition().y - height)/32 - 1; y < (getPosition().y -height/2)/32 + 1; y++)
 			{
 				if (y > 0 && y < (*map)[x].size() - 1)
@@ -30,6 +31,8 @@ void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f 
 						}else
 						{
 							worldCollision = false;
+							broken = true;
+							break;
 						}
 						if (sf::IntRect(getPosition().x - width/2 + velocity.x, getPosition().y + velocity.y, width, height/2).intersects(sf::IntRect(x*32, y*32, 32, 32)))
 						{
@@ -53,6 +56,14 @@ void Mob::checkCollision(std::vector<std::vector<gen::Tile>>* map, sf::Vector2f 
 							}
 						}
 					}
+					if (broken)
+					{
+						break;
+					}
+				}
+				if (broken)
+				{
+					break;
 				}
 			}
 		}

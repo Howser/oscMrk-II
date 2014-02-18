@@ -11,8 +11,7 @@ gen::Map::Map(TextureHolder* textureHolder, FontHolder* fontHolder, MobManager* 
 	ptr_light_manager(ptr_light_manager),
 	loaded(false),
 	generating(false),
-	m_mutex(mutex),
-	m_wall_tiles()
+	m_mutex(mutex)
 {
 	m_mini_map_sprite.setTexture(m_mini_tileset);
 	m_mini_map_sprite.setColor(sf::Color(255, 255, 255, 100));
@@ -659,9 +658,6 @@ void gen::Map::Resize(){
 			temp[x - lowX][y - lowY] = tiles[x][y];
 			temp[x - lowX][y - lowY].x -= lowX;
 			temp[x - lowX][y - lowY].y -= lowY;
-			if (tiles[x][y].type == 2 || tiles[x][y].type == 3){
-				m_wall_tiles.push_back(temp[x - lowX][y - lowY]);
-			}
 		}
 	}
 
@@ -812,9 +808,9 @@ void gen::Map::ApplyID(){
 
 void gen::Map::update(sf::Time dt){
 	SetBounds();
-	for (int x = bounds.left/WIDTH, y = bounds.top/HEIGHT; x < bounds.left/WIDTH + bounds.width/WIDTH + 1; x++)
+	for (int x = ((float)bounds.left/WIDTH < 1) ? 0:bounds.left/WIDTH, y = ((float)bounds.top/HEIGHT < 1) ? 0:bounds.top/HEIGHT; x < bounds.left/WIDTH + bounds.width/WIDTH + 1; x++)
 	{
-		for (y = bounds.top/HEIGHT; y < bounds.top/HEIGHT + bounds.height/HEIGHT + 2; y++)
+		for (y = ((float)bounds.top/HEIGHT < 1) ? 0:bounds.top/HEIGHT; y < bounds.top/HEIGHT + bounds.height/HEIGHT + 2; y++)
 		{
 			if (x < size.x && x >= 0 && y < size.y && y >= 0)
 			{
@@ -925,5 +921,4 @@ bool gen::Map::isPathable(int x, int y) const
 
 void gen::Map::Clear(){
 	mobSpawners.clear();
-	m_wall_tiles.clear();
 }

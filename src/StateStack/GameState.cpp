@@ -153,7 +153,6 @@ bool GameState::update(sf::Time dt)
 			mobManager.deadMobs.clear();
 			m_light_manager.m_lights.clear();
 			mMap.mobSpawners.clear();
-			mMap.m_wall_tiles.clear();
 			mPlayer.m_path.clear();
 			pathFinder.Clear();
 			mobManager.m_update = false;
@@ -272,7 +271,7 @@ void GameState::draw()
 		mNormalRender.setView(mView);
 		mNormalRender.draw(mMap, mNormalTextures.getTexture(mCurrentMapTexture));
 		mMap.draw_walls(&mNormalRender, mNormalTextures.getTexture(mCurrentMapTexture));
-		mNormalRender.display();
+		//mNormalRender.display();
 
 		// Render diffuse texture to window using shader with normal map
 		// Set the all the shader properties

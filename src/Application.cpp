@@ -41,7 +41,6 @@ void Application::run()
 			update(updateTime);
 			lag -= updateTime;
 		}
-		
 	}
 }
 

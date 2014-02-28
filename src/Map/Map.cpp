@@ -380,6 +380,7 @@ void gen::Map::CreateRoom(int x, int y, short width, short height, bool add, boo
 }
 
 void gen::Map::ApplyRoom(Room* room, bool* add, bool* cave){
+	//m_torches.push_back(Torch(Light(sf::Color(), sf::Vector3<float>(), sf::Vector3<float>(), false), ptr_light_manager, ptr_texture_holder));
 	int i = 0;
 	for (unsigned int x = room->x, y = room->y; x < room->x + room->width; x++)
 	{
@@ -660,6 +661,11 @@ void gen::Map::Resize(){
 			temp[x - lowX][y - lowY].y -= lowY;
 		}
 	}
+
+	/*for (int i = 0; i < m_torches.size(); i++)
+	{
+		m_torches[i].setPosition(m_torches[i].getPosition().x - lowX, m_torches[i].getPosition().y - lowY);
+	}*/
 
 	if (rooms.size() > 0)
 	{

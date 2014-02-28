@@ -85,7 +85,7 @@ public:
 	std::vector<sf::Vector2f> m_path;
 	sf::Vector2f m_velocity;
 
-	int m_health;
+	int m_health, m_max_health;
 
 	mobtree::Tree* ptr_tree;
 

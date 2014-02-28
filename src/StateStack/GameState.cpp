@@ -79,7 +79,7 @@ bool GameState::update(sf::Time dt)
 				mobManager.Update(dt, mPlayer.getPosition(), &mPlayer.m_health);
 			}
 			mMap.update(dt);
-			m_projectile_manager.update(dt);
+			m_projectile_manager.update(dt, sf::Rect<float>(mPlayer.getPosition().x - 16, mPlayer.getPosition().y - 16, 32, 32), &mPlayer.m_health);
 			mParticleSystem.update(dt);
 			m_light_manager.update(&mView, dt);
 		}else
@@ -209,7 +209,6 @@ bool GameState::update(sf::Time dt)
 
 			Light l1(sf::Color(175, 175, 175, 255), sf::Vector3f(.5f, .5f, .075f), sf::Vector3f(0.f, 5.f, 0.f), true);
 			m_light_manager.m_lights.push_back(l1);
-
 		}
 		mobManager.m_update = true;
 		mMutex.unlock();

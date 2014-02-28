@@ -124,6 +124,9 @@ static float GetSpeed(const Items & item){
 	case TestSpell:
 		return 0.01f;
 		break;
+	case Arrow:
+		return 10.f;
+		break;
 	default:
 		return 0;
 		break;

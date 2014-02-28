@@ -14,6 +14,7 @@ Light::Light(sf::Color color, sf::Vector3f position, sf::Vector3f falloff, bool 
 	m_screen(p_screen),
 	ptr_follow(NULL)
 {
+	
 }
 
 void Light::update(sf::Time & p_dt){

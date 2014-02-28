@@ -70,7 +70,8 @@ Player::Player(TextureHolder* textures, FontHolder* fonts, std::vector<Mob*>* mo
 	m_healthbar.setPosition(0, 720 - 129);
 	m_healthbar.mLoaded.setColor(sf::Color(220, 40, 40, 255));
 	m_overlay.setPosition(m_healthbar.getPosition());
-	m_health = 100;
+	m_max_health = 100;
+	m_health = m_max_health;
 
 	m_ability[0].setTexture(*(textures->getTexture(Textures::Ability)));
 	m_ability[0].setPosition(1280 - 130, 720 - 129);
@@ -623,6 +624,12 @@ void Player::drawGUI(sf::RenderWindow* p_window, FontHolder* ptr_font_holder){
 	p_window->draw(m_healthbar);
 	p_window->draw(m_overlay);
 	p_window->draw(m_ability[0]);
+
+	sf::Text health;
+	health.setString(std::to_string(m_health) + "/" + std::to_string(m_max_health));
+	health.setFont(*ptr_font_holder->getFont(Fonts::Main));
+	health.setPosition(m_healthbar.getPosition().x, m_healthbar.getPosition().y - 32);
+	p_window->draw(health);
 	if (!m_Gear.slots[2].Items.empty())
 	{
 		p_window->draw(m_ability[1]);

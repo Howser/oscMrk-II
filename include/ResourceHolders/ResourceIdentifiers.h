@@ -28,6 +28,7 @@ namespace Textures
 		Ability,
 		gui_Inventory,
 		gui_LootInventory,
+		health_bar,
 
 		///<summary>Mobs</summary>
 		Skeleton,

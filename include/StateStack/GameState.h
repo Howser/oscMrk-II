@@ -68,4 +68,7 @@ private:
 
 	bool					m_lost;
 	bool					m_win;
+
+	PlayerValues m_player_values;
+	void SetPlayerValues();
 };

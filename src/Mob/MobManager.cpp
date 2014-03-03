@@ -11,6 +11,7 @@ MobManager::MobManager(TextureHolder & textureHolder, std::vector<std::vector<ge
 		LootTables.push_back(LootTable((TYPE)i));
 	}
 	m_update = true;
+	m_health_bar.setTexture(*textures->getTexture(Textures::health_bar));
 }
 
 MobManager::MobManager(){
@@ -275,24 +276,21 @@ void MobManager::SetView(sf::View const& view){
 }
 
 void MobManager::draw(sf::RenderTarget & target, sf::RenderStates states) const{
-	if (m_update)
+	sf::Rect<int>bounds((int)(view.getCenter().x - view.getSize().x / 2), (int)(view.getCenter().y - view.getSize().y / 2), (int)(view.getCenter().x + view.getSize().x / 2) - (int)(view.getCenter().x - view.getSize().x / 2), (int)(view.getCenter().y + view.getSize().y / 2) - (int)(view.getCenter().y - view.getSize().y / 2));
+	for (unsigned int i = 0; i < deadMobs.size(); ++i)
 	{
-		sf::Rect<int>bounds((int)(view.getCenter().x - view.getSize().x / 2), (int)(view.getCenter().y - view.getSize().y / 2), (int)(view.getCenter().x + view.getSize().x / 2) - (int)(view.getCenter().x - view.getSize().x / 2), (int)(view.getCenter().y + view.getSize().y / 2) - (int)(view.getCenter().y - view.getSize().y / 2));
-		for (unsigned int i = 0; i < deadMobs.size(); ++i)
+		if (bounds.intersects(sf::Rect<int>(deadMobs[i].getPosition().x, deadMobs[i].getPosition().y, GetWidth(*deadMobs[i].type), GetHeight(*deadMobs[i].type))))
 		{
-			if (bounds.intersects(sf::Rect<int>(deadMobs[i].getPosition().x, deadMobs[i].getPosition().y, GetWidth(*deadMobs[i].type), GetHeight(*deadMobs[i].type))))
-			{
-				target.draw(deadMobs[i], states);
-			}
+			target.draw(deadMobs[i], states);
 		}
-		for (Mobs::const_iterator i = mobs.begin(); i != mobs.end(); ++i)
+	}
+	for (Mobs::const_iterator i = mobs.begin(); i != mobs.end(); ++i)
+	{
+		if (!(*i)->dead)
 		{
-			if (!(*i)->dead)
+			if (bounds.intersects(sf::Rect<int>((*i)->getPosition().x, (*i)->getPosition().y, (*i)->width, (*i)->height)))
 			{
-				if (bounds.intersects(sf::Rect<int>((*i)->getPosition().x, (*i)->getPosition().y, (*i)->width, (*i)->height)))
-				{
-					(*i)->draw(target, states);
-				}
+				(*i)->draw(target, states);
 			}
 		}
 	}
@@ -452,7 +450,7 @@ Mob* MobManager::getAtPosition(float x, float y)
 		if (sf::Rect<float>(mobs[i]->getPosition().x - mobs[i]->width/2, mobs[i]->getPosition().y - mobs[i]->height/2, mobs[i]->width, mobs[i]->height).intersects(sf::Rect<float>(x, y, 1, 1)))
 		{
 			p_mob = mobs[i];
-				return p_mob;
+			return p_mob;
 		}
 	}
 	return p_mob;
@@ -479,4 +477,30 @@ void MobManager::Clear(){
 	minorMobs.clear();
 	majorMobs.clear();
 	deadMobs.clear();
+}
+
+void MobManager::draw_GUI(sf::RenderWindow* ptr_window){
+	sf::Sprite sprite = m_health_bar;
+	sf::Rect<int>bounds((int)(view.getCenter().x - view.getSize().x / 2), (int)(view.getCenter().y - view.getSize().y / 2), (int)(view.getCenter().x + view.getSize().x / 2) - (int)(view.getCenter().x - view.getSize().x / 2), (int)(view.getCenter().y + view.getSize().y / 2) - (int)(view.getCenter().y - view.getSize().y / 2));
+	sf::Vector2<int> points[2] = {sf::Vector2<int>(bounds.left, bounds.top), sf::Vector2<int>(bounds.left + bounds.width, bounds.top + bounds.height)};
+
+	for (int x = points[0].x/mobtree::SIZE, y = points[0].y/mobtree::SIZE; x < points[1].x/mobtree::SIZE; x += mobtree::SIZE)
+	{
+		for (	points[0].y/mobtree::SIZE; y < points[1].y/mobtree::SIZE; y += mobtree::SIZE)
+		{
+			mobtree::Branch* ptr_branch = m_tree.search(sf::Vector2f(x*mobtree::SIZE, y*mobtree::SIZE));
+			if (ptr_branch != NULL)
+			{
+				for (Mobs::const_iterator i = ptr_branch->mobs.begin(); i != ptr_branch->mobs.end(); ++i)
+				{
+					if (!(*i)->dead)
+					{
+						sprite.setTextureRect(sf::IntRect(0, 0, (int)((float)((*i)->health/GetHp((*i)->type)*32)), 5));
+						sprite.setPosition((*i)->getPosition().x - GetWidth((*i)->type)/2, (*i)->getPosition().y - GetHeight((*i)->type)/2 - 10);
+						ptr_window->draw(sprite);
+					}
+				}
+			}
+		}
+	}
 }

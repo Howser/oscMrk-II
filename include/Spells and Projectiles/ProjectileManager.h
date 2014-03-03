@@ -7,6 +7,12 @@
 #include "Effects\Particles\ParticleSystem.h"
 #include "SpellTypeManager.h"
 
+struct PlayerValues {
+	int* ptr_health;
+	float* ptr_armor;
+	sf::Rect<int> m_position;
+};
+
 class ProjectileManager : public sf::Drawable{
 public:
 	ProjectileManager();
@@ -18,7 +24,7 @@ public:
 
 	ParticleSystem* m_particleSystem;
 
-	void update(sf::Time & p_dt, const sf::Rect<float> & p_player_position, int* ptr_player_health);
+	void update(sf::Time & p_dt, const PlayerValues & p_player_values);
 	void draw(sf::RenderTarget & target, sf::RenderStates states)const;
 private:
 	MobManager* m_mobManager;

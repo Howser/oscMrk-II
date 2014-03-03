@@ -7,7 +7,7 @@ ProjectileManager::ProjectileManager(MobManager* const& p_mobManager, ParticleSy
 {}
 ProjectileManager::~ProjectileManager(){}
 
-void ProjectileManager::update(sf::Time & p_dt, const sf::Rect<float> & p_player_position, int* ptr_player_health){
+void ProjectileManager::update(sf::Time & p_dt, const PlayerValues & p_player_values){
 	for (int i = 0; i < m_AOE_spells.size(); i++)
 	{   
 		m_AOE_spells[i].update(p_dt);
@@ -61,9 +61,9 @@ void ProjectileManager::update(sf::Time & p_dt, const sf::Rect<float> & p_player
 					}
 				}else
 				{
-					if (sf::Rect<float>(m_spells[i].getPosition().x, m_spells[i].getPosition().y, 1, 1).intersects(p_player_position))
+					if (sf::Rect<int>(m_spells[i].getPosition().x, m_spells[i].getPosition().y, 1, 1).intersects(p_player_values.m_position))
 					{
-						*ptr_player_health -= m_spells[i].m_damage;
+						*p_player_values.ptr_health -= m_spells[i].m_damage;
 						m_spells[i].kill();
 						m_spells.erase(m_spells.begin() + i);
 					}
@@ -125,9 +125,9 @@ void ProjectileManager::update(sf::Time & p_dt, const sf::Rect<float> & p_player
 						}
 					}else
 					{
-						if (sf::Rect<float>(m_arrows[i].getPosition().x, m_arrows[i].getPosition().y, 1, 1).intersects(p_player_position))
+						if (sf::Rect<int>(m_arrows[i].getPosition().x, m_arrows[i].getPosition().y, 1, 1).intersects(p_player_values.m_position))
 						{
-							*ptr_player_health -= m_arrows[i].m_damage;
+							*p_player_values.ptr_health -= m_arrows[i].m_damage;
 							m_arrows[i].kill();
 							m_arrows.erase(m_arrows.begin() + i);
 						}

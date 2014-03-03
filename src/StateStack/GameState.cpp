@@ -79,7 +79,8 @@ bool GameState::update(sf::Time dt)
 				mobManager.Update(dt, mPlayer.getPosition(), &mPlayer.m_health);
 			}
 			mMap.update(dt);
-			m_projectile_manager.update(dt, sf::Rect<float>(mPlayer.getPosition().x - 16, mPlayer.getPosition().y - 16, 32, 32), &mPlayer.m_health);
+			SetPlayerValues();
+			m_projectile_manager.update(dt, m_player_values);
 			mParticleSystem.update(dt);
 			m_light_manager.update(&mView, dt);
 		}else
@@ -280,6 +281,7 @@ void GameState::draw()
 		sf::Sprite sprite(mDiffuseRender.getTexture());
 		window->setView(window->getDefaultView());
 		window->draw(sprite, &mShader);
+		mobManager.draw_GUI(window);
 		mMap.draw_mini_map(window, mView.getCenter().x, mView.getCenter().y);
 		mPlayer.drawGUI(window, getContext().fonts);
 	} 
@@ -296,4 +298,10 @@ void GameState::loadNormals()
 	mNormalTextures.loadTexture(Textures::Cave_Sheet, "resources/graphics/map/normals.png");
 	mNormalTextures.loadTexture(Textures::Prison_Sheet, "resources/graphics/map/tileset.png");
 	mNormalTextures.loadTexture(Textures::Hell_Sheet, "resources/graphics/map/tileset.png");
+}
+
+void GameState::SetPlayerValues(){
+	m_player_values.m_position = sf::Rect<int>(mPlayer.getPosition().x - 16, mPlayer.getPosition().y - 16, 32, 32);
+	m_player_values.ptr_armor = NULL;
+	m_player_values.ptr_health = &mPlayer.m_health;
 }

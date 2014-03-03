@@ -65,6 +65,7 @@ public:
 	void Update(sf::Time & deltaTime, sf::Vector2f const& playerPosition, int* p_health);
 	void SetView(sf::View const& view);
 	void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+	void draw_GUI(sf::RenderWindow* ptr_window);
 	
 	sf::View view;
 
@@ -85,6 +86,8 @@ public:
 
 private:
 	PathFinder* pathFinder;
+
+	sf::Sprite m_health_bar;
 };
 
 /*	   '.'´`\/´`'.'
@@ -95,14 +98,9 @@ private:
 |						   |		o			 _______________			><>                    ____|___________        o
 |						   |			´´		/				\		0  o                      / o o o o o o o o\___ ¨ ¨
 |						   |_/|			0		|				|_/|	`	  O                   \___________________(X) ~ ¨~
-| .______________________. |_-|		  O 0	    | .___________. |_-|		0´ ´           <><        ~ ' ´  ~   ~ 
+|.________________________.|_-|		  O 0	    | .___________. |_-|		0´ ´           <><        ~ ' ´  ~   ~ 
 \__________________________/ \|		o			\_______________/ \|	o ´o
 
 Two whales on an adventure.
-
----------------------------------------------------------------------------------------------------------------------------------------
-  *
- * *
-*   *
 */
 

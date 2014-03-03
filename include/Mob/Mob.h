@@ -81,6 +81,7 @@ protected:
 		Left,
 		Right,
 	};
+
 	///<summary>To know which animation to loop if the mob is standing still.</summary>
 	Direction m_direction;
 };

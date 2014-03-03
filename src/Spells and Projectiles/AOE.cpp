@@ -15,7 +15,7 @@ AOE::AOE(Items p_spell_type, float p_radius, float p_timer, const sf::Vector2f &
 
 	for (int x = points[0].x/mobtree::SIZE, y = points[0].y/mobtree::SIZE; x < points[1].x/mobtree::SIZE; x += mobtree::SIZE)
 	{
-		for (int y = points[0].y/mobtree::SIZE; y < points[1].y/mobtree::SIZE; y += mobtree::SIZE)
+		for (y = points[0].y/mobtree::SIZE; y < points[1].y/mobtree::SIZE; y += mobtree::SIZE)
 		{
 			mobtree::Branch* ptr_branch = ptr_tree->search(sf::Vector2f(x*mobtree::SIZE, y*mobtree::SIZE));
 			if (ptr_branch != NULL)

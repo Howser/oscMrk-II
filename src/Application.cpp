@@ -134,6 +134,7 @@ void Application::loadResources()
 		mTextures.loadTexture(Textures::Ability, "resources/graphics/player/ability.png");
 		mTextures.loadTexture(Textures::gui_Inventory, "resources/graphics/player/inventory.png");
 		mTextures.loadTexture(Textures::gui_LootInventory, "resources/graphics/player/loot_inventory.png");
+		mTextures.loadTexture(Textures::health_bar, "resources/graphics/gui/health_bar.png");
 
 #pragma region Spells
 		mTextures.loadTexture(Textures::TestAoe, "resources/graphics/item/world/testAOE.png");
